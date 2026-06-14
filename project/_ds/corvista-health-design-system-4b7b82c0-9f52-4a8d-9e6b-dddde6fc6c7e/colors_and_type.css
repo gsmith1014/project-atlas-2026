@@ -1,0 +1,253 @@
+/* =============================================================
+   CorVista Health — Core color and type foundations
+   -------------------------------------------------------------
+   Drop this file at the top of any HTML artifact built against
+   the CorVista brand. Pulls Onest + IBM Plex Mono from Google
+   Fonts. See FONTS section in README for substitution notes.
+   ============================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&family=Geist+Mono:wght@300;400;500;600&display=swap");
+
+:root {
+  /* ---------- Brand Core ----------
+     CorVista uses a tight palette: a deep navy ink, a single
+     bright sky blue, a warm parchment for editorial moments,
+     and a near-white slate for product / deck backgrounds. */
+
+  --cv-ink:            #212935;   /* primary ink — wordmark + headlines on light */
+  --cv-ink-deep:       #0E1F33;   /* deeper navy used as a full-bleed background */
+  --cv-ink-deepest:    #081627;   /* dropdown/modal backdrops on dark surfaces */
+
+  --cv-sky:            #5DB4E8;   /* primary brand blue — the "V" mark, "HEALTH" */
+  --cv-sky-bright:     #7CC3EF;   /* slightly lifted sky for hover/emphasis on dark */
+  --cv-sky-soft:       #BFE0F4;   /* tinted pills, soft surfaces on dark */
+  --cv-sky-wash:       #E6F2FB;   /* light callout / chart fill on light */
+
+  --cv-parchment:      #F4EFE6;   /* editorial cream — used in posters */
+  --cv-parchment-deep: #ECE4D2;   /* parchment hover / divider */
+
+  --cv-slate-bg:       #F2F4F7;   /* deck + product background */
+  --cv-slate-100:      #E5E9EE;
+  --cv-slate-200:      #CFD5DD;
+  --cv-slate-300:      #A6AEBA;
+  --cv-slate-400:      #6B7686;
+  --cv-slate-500:      #4A5462;
+
+  --cv-white:          #FFFFFF;
+
+  /* ---------- Semantic accents (use sparingly) ---------- */
+  --cv-gold:           #F3B51A;   /* big-dollar callouts ("$1.8T") */
+  --cv-coral:          #D85528;   /* "THE PROBLEM" labels, urgency stats */
+  --cv-green:          #2BC48A;   /* affirmative checks, "Improved" markers */
+
+  /* ---------- Functional tokens ----------
+     Most surfaces map to these — prefer them over raw brand
+     colors so dark/light variants stay consistent. */
+
+  --cv-fg-1:           var(--cv-ink);          /* primary text on light */
+  --cv-fg-2:           var(--cv-slate-500);    /* secondary text on light */
+  --cv-fg-3:           var(--cv-slate-400);    /* meta / captions on light */
+  --cv-fg-on-dark-1:   var(--cv-white);        /* primary text on navy */
+  --cv-fg-on-dark-2:   #BFCBD8;                /* secondary text on navy */
+  --cv-fg-on-dark-3:   #7A8898;                /* meta on navy */
+  --cv-accent:         var(--cv-sky);          /* eyebrows, links, highlights */
+
+  --cv-bg-base:        var(--cv-slate-bg);     /* page background */
+  --cv-bg-surface:     var(--cv-white);        /* card / panel */
+  --cv-bg-surface-2:   #FAFBFC;                /* nested surface */
+  --cv-bg-dark:        var(--cv-ink-deep);
+  --cv-bg-editorial:   var(--cv-parchment);
+
+  --cv-border:         #DCE1E8;
+  --cv-border-strong:  var(--cv-slate-200);
+  --cv-border-dark:    #1B2C40;                /* hairline on navy */
+
+  /* ---------- Type families ---------- */
+  --cv-font-display:   "Sora", "Söhne", "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cv-font-body:      "Manrope", "Söhne", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cv-font-mono:      "Geist Mono", "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* ---------- Type scale ----------
+     Scale is geared for medtech editorial: big, confident
+     headlines (often spanning multiple lines), and a body
+     that holds up at small caption sizes. */
+
+  --cv-fs-display-xl: 80px;   /* "Behind every breath, a question." */
+  --cv-fs-display-l:  64px;
+  --cv-fs-display-m:  48px;   /* poster headline */
+  --cv-fs-h1:         36px;   /* slide headline */
+  --cv-fs-h2:         28px;
+  --cv-fs-h3:         22px;
+  --cv-fs-h4:         18px;
+  --cv-fs-body:       16px;
+  --cv-fs-small:      14px;
+  --cv-fs-caption:    12px;
+  --cv-fs-eyebrow:    12px;   /* uppercase, tracked */
+  --cv-fs-footnote:   10px;
+
+  --cv-lh-tight:      1.05;
+  --cv-lh-snug:       1.15;
+  --cv-lh-normal:     1.35;
+  --cv-lh-relaxed:    1.55;
+
+  --cv-tracking-eyebrow: 0.18em;
+  --cv-tracking-mono:    0.04em;
+  --cv-tracking-tight:   -0.01em;
+
+  /* ---------- Spacing scale ---------- */
+  --cv-s-1: 4px;
+  --cv-s-2: 8px;
+  --cv-s-3: 12px;
+  --cv-s-4: 16px;
+  --cv-s-5: 24px;
+  --cv-s-6: 32px;
+  --cv-s-7: 48px;
+  --cv-s-8: 64px;
+  --cv-s-9: 96px;
+  --cv-s-10: 128px;
+
+  /* ---------- Radii ----------
+     CorVista is mostly square / lightly-rounded. Pills are
+     reserved for FDA-cleared style badges. Cards use 6px. */
+  --cv-radius-xs: 2px;
+  --cv-radius-sm: 4px;
+  --cv-radius-md: 6px;
+  --cv-radius-lg: 10px;
+  --cv-radius-pill: 999px;
+
+  /* ---------- Shadows ----------
+     Soft, low-contrast lift. No floating-card shadows on dark
+     surfaces — use 1px border in --cv-border-dark instead. */
+  --cv-shadow-1: 0 1px 2px rgba(14, 31, 51, 0.04), 0 1px 3px rgba(14, 31, 51, 0.06);
+  --cv-shadow-2: 0 4px 12px rgba(14, 31, 51, 0.06), 0 1px 3px rgba(14, 31, 51, 0.04);
+  --cv-shadow-3: 0 12px 32px rgba(14, 31, 51, 0.10), 0 2px 6px rgba(14, 31, 51, 0.04);
+
+  /* ---------- Motion ---------- */
+  --cv-ease:           cubic-bezier(0.2, 0.7, 0.2, 1);   /* the house easing */
+  --cv-ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --cv-dur-fast:       150ms;
+  --cv-dur-base:       220ms;
+  --cv-dur-slow:       420ms;
+}
+
+/* =============================================================
+   Semantic resets — keep these scoped so they don't fight host
+   styles. Apply by adding `.cv-typography` to a root container,
+   or use directly on body for full-brand pages.
+   ============================================================= */
+
+.cv-typography,
+.cv-typography :where(p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote) {
+  font-family: var(--cv-font-body);
+  color: var(--cv-fg-1);
+}
+
+.cv-typography {
+  font-size: var(--cv-fs-body);
+  line-height: var(--cv-lh-relaxed);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.cv-typography h1, .cv-display-l {
+  font-family: var(--cv-font-display);
+  font-weight: 600;
+  font-size: var(--cv-fs-display-l);
+  line-height: var(--cv-lh-tight);
+  letter-spacing: var(--cv-tracking-tight);
+  text-wrap: pretty;
+}
+
+.cv-typography h2, .cv-display-m {
+  font-family: var(--cv-font-display);
+  font-weight: 600;
+  font-size: var(--cv-fs-h1);
+  line-height: var(--cv-lh-snug);
+  letter-spacing: var(--cv-tracking-tight);
+  text-wrap: pretty;
+}
+
+.cv-typography h3 {
+  font-family: var(--cv-font-display);
+  font-weight: 600;
+  font-size: var(--cv-fs-h2);
+  line-height: var(--cv-lh-snug);
+}
+
+.cv-typography h4 {
+  font-family: var(--cv-font-display);
+  font-weight: 600;
+  font-size: var(--cv-fs-h3);
+  line-height: var(--cv-lh-snug);
+}
+
+.cv-typography p {
+  font-size: var(--cv-fs-body);
+  line-height: var(--cv-lh-relaxed);
+  color: var(--cv-fg-2);
+}
+
+/* Display-XL — the editorial poster headline (Tabloid 3 etc).
+   Often paired with one word italic for emphasis. */
+.cv-display-xl {
+  font-family: var(--cv-font-display);
+  font-weight: 600;
+  font-size: var(--cv-fs-display-xl);
+  line-height: var(--cv-lh-tight);
+  letter-spacing: -0.015em;
+  color: var(--cv-fg-1);
+  text-wrap: balance;
+}
+.cv-display-xl em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--cv-sky);
+}
+
+/* Eyebrow label — uppercase, mono, blue (very CorVista) */
+.cv-eyebrow {
+  font-family: var(--cv-font-mono);
+  font-size: var(--cv-fs-eyebrow);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--cv-tracking-eyebrow);
+  color: var(--cv-sky);
+}
+
+/* Section label — bold tracked label sitting above a sky underline */
+.cv-section-label {
+  display: inline-block;
+  font-family: var(--cv-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--cv-sky);
+  border-bottom: 2px solid var(--cv-sky);
+  padding-bottom: 6px;
+}
+
+/* Mono caption — small print / footnotes in posters */
+.cv-mono {
+  font-family: var(--cv-font-mono);
+  font-size: var(--cv-fs-caption);
+  font-weight: 400;
+  letter-spacing: var(--cv-tracking-mono);
+  color: var(--cv-fg-2);
+}
+
+/* Stat — the big-number style ("82%", "2.26 yrs") */
+.cv-stat {
+  font-family: var(--cv-font-display);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--cv-sky);
+  letter-spacing: -0.02em;
+}
+.cv-stat-unit {
+  font-size: 0.5em;
+  font-weight: 600;
+  color: var(--cv-sky);
+  margin-left: 2px;
+}

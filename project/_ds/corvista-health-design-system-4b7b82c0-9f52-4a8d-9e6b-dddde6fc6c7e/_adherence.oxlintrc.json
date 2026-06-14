@@ -1,0 +1,222 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "slides/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Sora|Manrope|Geist Mono))/i]",
+        "message": "Font not provided by the design system. Available: Sora, Manrope, Geist Mono."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--cv-accent",
+      "--cv-bg-base",
+      "--cv-bg-dark",
+      "--cv-bg-editorial",
+      "--cv-bg-surface",
+      "--cv-bg-surface-2",
+      "--cv-border",
+      "--cv-border-dark",
+      "--cv-border-strong",
+      "--cv-coral",
+      "--cv-dur-base",
+      "--cv-dur-fast",
+      "--cv-dur-slow",
+      "--cv-ease",
+      "--cv-ease-out",
+      "--cv-fg-1",
+      "--cv-fg-2",
+      "--cv-fg-3",
+      "--cv-fg-on-dark-1",
+      "--cv-fg-on-dark-2",
+      "--cv-fg-on-dark-3",
+      "--cv-font-body",
+      "--cv-font-display",
+      "--cv-font-mono",
+      "--cv-fs-body",
+      "--cv-fs-caption",
+      "--cv-fs-display-l",
+      "--cv-fs-display-m",
+      "--cv-fs-display-xl",
+      "--cv-fs-eyebrow",
+      "--cv-fs-footnote",
+      "--cv-fs-h1",
+      "--cv-fs-h2",
+      "--cv-fs-h3",
+      "--cv-fs-h4",
+      "--cv-fs-small",
+      "--cv-gold",
+      "--cv-green",
+      "--cv-ink",
+      "--cv-ink-deep",
+      "--cv-ink-deepest",
+      "--cv-lh-normal",
+      "--cv-lh-relaxed",
+      "--cv-lh-snug",
+      "--cv-lh-tight",
+      "--cv-parchment",
+      "--cv-parchment-deep",
+      "--cv-radius-lg",
+      "--cv-radius-md",
+      "--cv-radius-pill",
+      "--cv-radius-sm",
+      "--cv-radius-xs",
+      "--cv-s-1",
+      "--cv-s-10",
+      "--cv-s-2",
+      "--cv-s-3",
+      "--cv-s-4",
+      "--cv-s-5",
+      "--cv-s-6",
+      "--cv-s-7",
+      "--cv-s-8",
+      "--cv-s-9",
+      "--cv-shadow-1",
+      "--cv-shadow-2",
+      "--cv-shadow-3",
+      "--cv-sky",
+      "--cv-sky-bright",
+      "--cv-sky-soft",
+      "--cv-sky-wash",
+      "--cv-slate-100",
+      "--cv-slate-200",
+      "--cv-slate-300",
+      "--cv-slate-400",
+      "--cv-slate-500",
+      "--cv-slate-bg",
+      "--cv-tracking-eyebrow",
+      "--cv-tracking-mono",
+      "--cv-tracking-tight",
+      "--cv-white"
+    ],
+    "tokenKinds": {
+      "--cv-ink": "color",
+      "--cv-ink-deep": "color",
+      "--cv-ink-deepest": "color",
+      "--cv-sky": "color",
+      "--cv-sky-bright": "color",
+      "--cv-sky-soft": "color",
+      "--cv-sky-wash": "color",
+      "--cv-parchment": "color",
+      "--cv-parchment-deep": "color",
+      "--cv-slate-bg": "color",
+      "--cv-slate-100": "color",
+      "--cv-slate-200": "color",
+      "--cv-slate-300": "color",
+      "--cv-slate-400": "color",
+      "--cv-slate-500": "color",
+      "--cv-white": "color",
+      "--cv-gold": "color",
+      "--cv-coral": "color",
+      "--cv-green": "color",
+      "--cv-fg-1": "color",
+      "--cv-fg-2": "color",
+      "--cv-fg-3": "color",
+      "--cv-fg-on-dark-1": "color",
+      "--cv-fg-on-dark-2": "color",
+      "--cv-fg-on-dark-3": "color",
+      "--cv-accent": "color",
+      "--cv-bg-base": "color",
+      "--cv-bg-surface": "color",
+      "--cv-bg-surface-2": "color",
+      "--cv-bg-dark": "color",
+      "--cv-bg-editorial": "color",
+      "--cv-border": "color",
+      "--cv-border-strong": "color",
+      "--cv-border-dark": "color",
+      "--cv-font-display": "font",
+      "--cv-font-body": "font",
+      "--cv-font-mono": "font",
+      "--cv-fs-display-xl": "spacing",
+      "--cv-fs-display-l": "spacing",
+      "--cv-fs-display-m": "spacing",
+      "--cv-fs-h1": "spacing",
+      "--cv-fs-h2": "spacing",
+      "--cv-fs-h3": "spacing",
+      "--cv-fs-h4": "spacing",
+      "--cv-fs-body": "spacing",
+      "--cv-fs-small": "spacing",
+      "--cv-fs-caption": "spacing",
+      "--cv-fs-eyebrow": "spacing",
+      "--cv-fs-footnote": "spacing",
+      "--cv-lh-tight": "other",
+      "--cv-lh-snug": "other",
+      "--cv-lh-normal": "other",
+      "--cv-lh-relaxed": "other",
+      "--cv-tracking-eyebrow": "font",
+      "--cv-tracking-mono": "font",
+      "--cv-tracking-tight": "font",
+      "--cv-s-1": "spacing",
+      "--cv-s-2": "spacing",
+      "--cv-s-3": "spacing",
+      "--cv-s-4": "spacing",
+      "--cv-s-5": "spacing",
+      "--cv-s-6": "spacing",
+      "--cv-s-7": "spacing",
+      "--cv-s-8": "spacing",
+      "--cv-s-9": "spacing",
+      "--cv-s-10": "spacing",
+      "--cv-radius-xs": "radius",
+      "--cv-radius-sm": "radius",
+      "--cv-radius-md": "radius",
+      "--cv-radius-lg": "radius",
+      "--cv-radius-pill": "radius",
+      "--cv-shadow-1": "shadow",
+      "--cv-shadow-2": "shadow",
+      "--cv-shadow-3": "shadow",
+      "--cv-ease": "other",
+      "--cv-ease-out": "other",
+      "--cv-dur-fast": "other",
+      "--cv-dur-base": "other",
+      "--cv-dur-slow": "other"
+    },
+    "fontFamilies": [
+      "Geist Mono",
+      "Manrope",
+      "Sora"
+    ]
+  }
+}
