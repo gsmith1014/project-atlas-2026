@@ -1,5 +1,6 @@
 import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo } from '../components.jsx';
+import { CadAnimation, PhAnimation, HfAnimation } from '../animations.jsx';
 
 const CV_DISEASES = {
   cad: {
@@ -114,7 +115,14 @@ function DiseaseSubNav({ active }) {
   );
 }
 
+const DISEASE_ANIM = {
+  cad: CadAnimation,
+  ph: PhAnimation,
+  pcwp: HfAnimation,
+};
+
 function DiseasePage({ d, activeKey }) {
+  const DiseaseAnim = DISEASE_ANIM[activeKey];
   return (
     <div className="page-fade" data-screen-label={d.screenLabel} data-page={d.slug}>
       <div className="subhero">
@@ -154,6 +162,18 @@ function DiseasePage({ d, activeKey }) {
           </div>
         </div>
       </Section>
+
+      {DiseaseAnim && (
+        <Section>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 32 }}>
+            <Eyebrow>How the condition presents</Eyebrow>
+            <span className="meta">Interactive · real-time</span>
+          </div>
+          <div style={{ border: '1px solid var(--rule)', overflow: 'hidden', background: '#0A1120' }}>
+            <DiseaseAnim />
+          </div>
+        </Section>
+      )}
 
       <Section dark>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.2fr', gap: 80, alignItems: 'center' }}>
