@@ -177,7 +177,6 @@ export function HomePage({ tweaks }) {
       stats: [
         { label: 'Diagnostic cost', value: '−32', unit: '%' },
         { label: 'Cath lab yield', value: '+21', unit: '%' },
-        { label: 'Patients ineligible for stress', value: '60', unit: '%' },
       ]
     },
     ph: {
@@ -187,7 +186,6 @@ export function HomePage({ tweaks }) {
       stats: [
         { label: 'Total cost of care', value: '−44', unit: '%' },
         { label: 'Average diagnostic delay today', value: '2.5', unit: 'yrs' },
-        { label: 'Right-heart cath avoided', value: '1 in 3', unit: '' },
       ]
     },
     lvef: {
@@ -197,7 +195,6 @@ export function HomePage({ tweaks }) {
       stats: [
         { label: 'HF patients undiagnosed', value: '~50', unit: '%' },
         { label: 'Echo wait time today', value: '4–8', unit: 'wks' },
-        { label: 'In-office decision', value: '<8', unit: 'min' },
       ]
     }
   };
@@ -208,8 +205,8 @@ export function HomePage({ tweaks }) {
       <Hero tweaks={tweaks} />
 
       <Marquee items={[
-        'FDA-cleared', 'CE-marked (EU)', 'Health Canada', '50+ peer-reviewed publications',
-        'CAD · PH · PCWP', 'TCT · AHA · ACC', 'No radiation', 'No contrast'
+        'FDA-cleared', 'Breakthrough Designated', '10,000+ Patients Studied', '20+ peer-reviewed publications',
+        'CAD · PH · PCWP', 'No Stress', 'No radiation', 'No contrast'
       ]} />
 
       <Section>
@@ -228,7 +225,7 @@ export function HomePage({ tweaks }) {
               <div>
                 <Eyebrow>01</Eyebrow>
                 <h5 style={{ marginTop: 12 }}>Acquire</h5>
-                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>A 220-second resting signal capture using a single-use wearable sensor.</p>
+                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>A 220-second resting signal capture using a single-use sensors.</p>
               </div>
               <div>
                 <Eyebrow>02</Eyebrow>
@@ -340,7 +337,7 @@ export function HomePage({ tweaks }) {
         </div>
       </div>
       <div className="press-grid">
-        {['Fierce MedTech', 'Cardiovascular Bus.', 'DeviceTalks', 'Medical Device Network', 'Forbes', 'AI in Healthcare'].map(p => (
+        {['Fierce MedTech', 'Cardiovascular Bus.', 'DeviceTalks', 'TIME Magazine', 'Forbes', 'AI in Healthcare'].map(p => (
           <div key={p} className="press-cell">{p}</div>
         ))}
       </div>
