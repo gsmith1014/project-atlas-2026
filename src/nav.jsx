@@ -76,7 +76,7 @@ export function Footer() {
               </div>
             </div>
             <p style={{ color: '#98A2B3', maxWidth: 320, fontSize: 14, lineHeight: 1.5 }}>
-              The world's most comprehensive front-line cardiovascular test. Built to find disease earlier — in minutes, at the point of care.
+              The world's most comprehensive front-line cardiovascular test. Built to find disease earlier — at the point of care.
             </p>
             <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
               <a href="#contact" onClick={(e) => { e.preventDefault(); navTo('contact'); }} className="btn btn-primary" style={{ padding: '10px 18px', fontSize: 14 }}>
