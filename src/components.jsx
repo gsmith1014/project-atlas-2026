@@ -12,9 +12,9 @@ function BrandMark({ size = 26, color = "currentColor", accent = "#5BAFE8" }) {
 function Brand({ small = false }) {
   return (
     <a href="#home" className="brand" aria-label="CorVista Health home">
-      <BrandMark size={small ? 22 : 26} />
+      <BrandMark size={small ? 20 : 24} />
       <span className="brand-name">
-        Cor<span className="blue">Vista</span> <span style={{opacity: 0.55, fontWeight: 400}}>Health</span>
+        COR<span className="blue">VISTA</span><sup style={{ fontSize: '0.5em', verticalAlign: 'super', letterSpacing: 0 }}>®</sup>
       </span>
     </a>
   );

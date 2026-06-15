@@ -47,7 +47,8 @@
   --radius-lg: 14px;
 
   /* Fonts */
-  --f-sans: "Geist", -apple-system, system-ui, sans-serif;
+  --f-sans: "Sora", -apple-system, system-ui, sans-serif;
+  --f-body: "Manrope", -apple-system, system-ui, sans-serif;
   --f-serif: "Instrument Serif", Georgia, serif;
   --f-mono: "Geist Mono", ui-monospace, monospace;
 }
@@ -76,7 +77,7 @@
 html, body { margin: 0; padding: 0; }
 
 body {
-  font-family: var(--f-sans);
+  font-family: var(--f-body);
   font-size: var(--t-body);
   line-height: 1.5;
   color: var(--fg);
@@ -125,7 +126,7 @@ img { display: block; max-width: 100%; }
 
 h1, h2, h3, h4, h5 {
   font-family: var(--f-sans);
-  font-weight: 500;
+  font-weight: 700;
   margin: 0;
   letter-spacing: -0.02em;
   line-height: 1.04;
@@ -133,9 +134,9 @@ h1, h2, h3, h4, h5 {
 }
 h1 { font-size: var(--t-h1); letter-spacing: -0.035em; }
 h2 { font-size: var(--t-h2); letter-spacing: -0.03em; }
-h3 { font-size: var(--t-h3); letter-spacing: -0.02em; }
-h4 { font-size: var(--t-h4); }
-h5 { font-size: var(--t-h5); }
+h3 { font-size: var(--t-h3); letter-spacing: -0.02em; font-weight: 600; }
+h4 { font-size: var(--t-h4); font-weight: 600; }
+h5 { font-size: var(--t-h5); font-weight: 600; }
 
 .display {
   font-size: var(--t-display);
@@ -226,17 +227,19 @@ p { margin: 0; }
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  gap: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 .brand-mark {
-  width: 26px; height: 26px;
+  width: 24px; height: 24px;
 }
 .brand-name {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0;
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .brand-name .blue { color: var(--blue); }
 .nav {
@@ -353,7 +356,7 @@ p { margin: 0; }
   letter-spacing: -0.035em;
   line-height: 0.96;
   margin: 0;
-  font-weight: 400;
+  font-weight: 700;
 }
 .hero-title .em {
   font-family: var(--f-serif);
@@ -572,7 +575,7 @@ p { margin: 0; }
 
 /* Dark section */
 .section-dark {
-  background: var(--ink);
+  background: #091629;
   color: #F4F6F9;
 }
 .section-dark .eyebrow { color: #98A2B3; }

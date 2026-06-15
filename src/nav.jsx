@@ -71,8 +71,8 @@ export function Footer() {
                 <path d="M5 8 L16 22 L27 8" fill="none" stroke="#5BAFE8" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" />
                 <path d="M10 8 L16 16 L22 8" fill="none" stroke="#5BAFE8" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" />
               </svg>
-              <div style={{ fontSize: 19, fontWeight: 500, color: '#F4F6F9', letterSpacing: '-0.01em' }}>
-                Cor<span style={{ color: '#5BAFE8' }}>Vista</span> Health
+              <div style={{ fontFamily: 'var(--f-sans)', fontSize: 15, fontWeight: 800, color: '#F4F6F9', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                COR<span style={{ color: '#5BAFE8' }}>VISTA</span><sup style={{ fontSize: '0.5em', letterSpacing: 0 }}>®</sup>
               </div>
             </div>
             <p style={{ color: '#98A2B3', maxWidth: 320, fontSize: 14, lineHeight: 1.5 }}>

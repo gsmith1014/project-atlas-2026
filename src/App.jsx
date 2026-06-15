@@ -111,13 +111,13 @@ export default function App() {
       root.style.setProperty('--paper', '#0E1F33');
       root.style.setProperty('--card-bg', '#131F2E');
     } else {
-      root.style.setProperty('--bg', '#F2F4F7');
-      root.style.setProperty('--fg', '#3D4756');
-      root.style.setProperty('--fg-muted', '#6B7685');
-      root.style.setProperty('--rule', '#D9DDE5');
-      root.style.setProperty('--ink', '#212935');
-      root.style.setProperty('--paper', '#FFFFFF');
-      root.style.setProperty('--card-bg', '#FFFFFF');
+      root.style.setProperty('--bg', '#EDE8DC');
+      root.style.setProperty('--fg', '#0B1320');
+      root.style.setProperty('--fg-muted', '#6B7280');
+      root.style.setProperty('--rule', '#D4CFC3');
+      root.style.setProperty('--ink', '#091629');
+      root.style.setProperty('--paper', '#F5F1E8');
+      root.style.setProperty('--card-bg', '#F5F1E8');
     }
   }, [tweaks]);
 
