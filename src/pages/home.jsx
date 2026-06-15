@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { EcgLine, ImgPh, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo } from '../components.jsx';
-import { PhaseSpaceViz } from '../animations.jsx';
 
 function HeroEditorial({ tweaks }) {
   return (
@@ -243,10 +242,6 @@ export function HomePage({ tweaks }) {
               </div>
             </div>
           </div>
-        </div>
-
-        <div style={{ marginTop: 80, border: '1px solid var(--rule)', padding: 0, overflow: 'hidden', background: '#0A1120' }}>
-          <PhaseSpaceViz dark />
         </div>
       </Section>
 
