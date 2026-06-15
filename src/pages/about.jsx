@@ -104,12 +104,13 @@ export function AboutPage() {
         <div style={{ borderTop: '1px solid #1F2A3D' }}>
           {[
             ['2017', 'Analytics 4 Life named one of FierceMedTech\'s Fierce 15. Series B closed at $25M.'],
-            ['2018', 'Research agreement with Actelion for PH diagnostics. TCT 2018 presentation of multi-center CAD data.'],
-            ['2020', 'CADLAD study — early ejection fraction analysis published.'],
-            ['2022', 'Cardiac Phase Space Tomography validation in obese and elderly cohorts.'],
-            ['2023', 'FDA 510(k) clearance for CAD indication. Company rebrands to CorVista Health.'],
-            ['2024', 'CE Mark under EU MDR. Pivotal CAD study published.'],
-            ['2026', 'Commercial expansion across the US and EU. PH and LVEF programs.'],
+            ['2018', 'Research agreement with Johnson & Johnson (Actelion) for PH diagnostics. TCT 2018 presentation of multi-center CAD data.'],
+            ['2020', 'CADLAD study — early coronary artery disease analysis published.'],
+            ['2022', 'FDA grants Breakthrough Device Designation to CorVista PH'],
+            ['2023', 'FDA 510(k) clearance for CAD indication.'],
+            ['2024', 'FDA 510(k) clearance for PH indication.'],
+            ['2025', 'FDA 510(k) submitted for PCWP (HF) indication.'],
+            ['2026', 'CorVista and Mayo Clinic announce new collaboration for next gen PH diagnostics'],
           ].map(([y, d], i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 64, padding: '32px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'baseline', color: '#F4F6F9' }}>
               <div className="display" style={{ fontSize: 'clamp(48px, 5vw, 76px)', color: '#F4F6F9', letterSpacing: '-0.04em' }}>{y}</div>
