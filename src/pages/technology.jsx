@@ -44,7 +44,7 @@ export function TechnologyPage() {
             <p className="lead" style={{ color: '#C8D0DC', marginTop: 24 }}>
               CPST is a mathematical reconstruction technique: rather than analyzing waveforms in time, it reconstructs the heart's behavior across multiple dimensions of state space — revealing structural and functional patterns that conventional ECG and front-line tests cannot resolve.
             </p>
-            <ul className="bullets" style={{ color: '#C8D0DC',marginTop: 32 }}>
+            <ul className="bullets" style={{ color: '#F4F6F9', marginTop: 32 }}>
               <li>Patented signal reconstruction across 12+ dimensions</li>
               <li>Trained against gold-standard truth labels (angiography, RHC, MRI)</li>
               <li>Continuously validated through real-world deployment</li>
