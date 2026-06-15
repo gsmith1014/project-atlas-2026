@@ -27,7 +27,7 @@ export function PatientsPage() {
         <div className="row row-4">
           {[
             { n: '01', t: 'Before you arrive', c: 'Wear comfortable clothing. No fasting required, no medication changes.' },
-            { n: '02', t: 'In the office', c: 'A medical assistant places a small adhesive sensor on your chest, similar to an ECG patch.' },
+            { n: '02', t: 'In the office', c: 'A medical assistant places small adhesive sensors on your chest and back, similar to an ECG.' },
             { n: '03', t: 'During the scan', c: 'You rest quietly for about four minutes. There\'s no radiation, no injection, no exercise.' },
             { n: '04', t: 'After your visit', c: 'Your doctor receives a physician-reviewed report — usually within minutes — and will go over results with you.' },
           ].map(s => (
@@ -60,9 +60,9 @@ export function PatientsPage() {
         <SectionHeader eyebrow="Common questions" title="Things people ask." />
         <div style={{ borderTop: '1px solid var(--rule)' }}>
           {[
-            ['Is CorVista safe?', 'Yes. The CorVista test uses only resting biosignals — there is no radiation, no contrast injection, no exercise, no needles. The sensor is FDA-cleared and removed at the end of the visit.'],
-            ['How long does the test take?', 'The acquisition itself takes about four minutes. The full visit, including sensor placement and the upload, is typically under fifteen minutes.'],
-            ['How accurate is it?', 'CorVista has been validated against gold-standard tests (cardiac catheterization, right-heart catheterization, MRI) in peer-reviewed studies. Your doctor uses the report alongside your overall clinical picture.'],
+            ['Is CorVista safe?', 'Yes. The CorVista test uses only resting biosignals — there is no radiation, no contrast injection, no exercise, no needles. All sensors are FDA-cleared and removed at the end of the visit.'],
+            ['How long does the test take?', 'The acquisition itself takes about four minutes. The full visit, including sensor placement and the upload, is typically under thirty minutes.'],
+            ['How accurate is it?', 'CorVista has been validated against gold-standard tests (cardiac catheterization, right-heart catheterization, cardiac CT) in peer-reviewed studies. Your doctor uses the report alongside your overall clinical picture.'],
             ['Will my insurance cover it?', 'Coverage varies by plan and indication. Your provider\'s billing team can tell you what to expect.'],
             ['Where can I get one?', 'Ask your primary care provider or cardiologist. If they don\'t yet offer CorVista, they can request a kit from our team.'],
           ].map(([q, a], i) => (
