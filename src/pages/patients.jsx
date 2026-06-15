@@ -10,7 +10,7 @@ export function PatientsPage() {
             <div>
               <Eyebrow>For Patients</Eyebrow>
               <h1 style={{ marginTop: 28 }}>
-                The test takes <span className="em">eight minutes.</span><br />
+                The test takes <span className="em">minutes.</span><br />
                 The answer can change your life.
               </h1>
               <p className="lead">
