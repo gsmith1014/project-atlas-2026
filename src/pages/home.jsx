@@ -18,7 +18,7 @@ function HeroEditorial({ tweaks }) {
               of care.
             </h1>
             <p className="lead" style={{ marginTop: 36, maxWidth: '46ch' }}>
-              CorVista is the world's most comprehensive front-line cardiovascular test. One non-invasive scan. Three conditions. Results in minutes — without radiation, contrast, or stress.
+              CorVista is the world's most comprehensive front-line cardiovascular test.
             </p>
             <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
               <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
@@ -216,7 +216,7 @@ export function HomePage({ tweaks }) {
           </div>
           <div>
             <h2 style={{ fontSize: 'clamp(36px, 4.8vw, 72px)' }}>
-              A non-invasive scan that <span className="serif-i" style={{ color: 'var(--blue-deep)' }}>sees</span> what front-line cardiovascular tests miss.
+              A non-invasive test that <span className="serif-i" style={{ color: 'var(--blue-deep)' }}>sees</span> what front-line cardiovascular diagnostics miss.
             </h2>
             <p className="lead" style={{ marginTop: 36, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
               The CorVista® System combines non-invasive signal sensors, a cloud-based AI inference engine, and a physician-grade report. The result: a fast, comprehensive, accurate first answer about a patient's cardiovascular health — delivered where care begins.
