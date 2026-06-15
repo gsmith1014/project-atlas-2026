@@ -109,7 +109,7 @@ export function AboutPage() {
             ['2022', 'FDA grants Breakthrough Device Designation to CorVista PH'],
             ['2023', 'FDA 510(k) clearance for CAD indication.'],
             ['2024', 'FDA 510(k) clearance for PH indication.'],
-            ['2025', 'FDA 510(k) submitted for PCWP (HF) indication. CorVista Health named to TIME Magazine World's Top Healthcare Companies'],
+            ['2025', 'FDA 510(k) submitted for PCWP (HF) indication.'],
             ['2026', 'CorVista and Mayo Clinic announce new collaboration for next gen PH diagnostics'],
           ].map(([y, d], i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 64, padding: '32px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'baseline', color: '#F4F6F9' }}>
