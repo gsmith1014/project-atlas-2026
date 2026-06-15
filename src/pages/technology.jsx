@@ -11,7 +11,7 @@ export function TechnologyPage() {
             From signal to <span className="em">diagnosis</span>, in under eight minutes.
           </h1>
           <p className="lead">
-            The CorVista System captures resting biosignals and runs them through machine-learned algorithms trained on tens of thousands of patient cases — producing physician-grade insights without radiation, contrast, or stress.
+            The CorVista System captures resting biosignals and runs them through AI algorithms trained on tens of thousands of patient cases — producing physician-grade insights without radiation, contrast, or stress.
           </p>
         </div>
       </div>
@@ -22,8 +22,8 @@ export function TechnologyPage() {
           {[
             { n: '01', t: 'Non-invasive sensors', c: 'FDA-cleared electrical and blood flow sensors acquire 220 seconds of resting cardiovascular biosignals — no exercise, no contrast, no radiation.' },
             { n: '02', t: 'Cardiac Phase Tomography', c: 'Signals are reconstructed into a 3D phase-space representation of the heart\'s electrical and mechanical activity.' },
-            { n: '03', t: 'Machine-learned analysis', c: 'Models trained on tens of thousands of paired cases (cath, echo, RHC, MRI) generate predictive disease scores.' },
-            { n: '04', t: 'Physician-reviewed report', c: 'A board-certified physician reviews the output and signs the report into your portal — typically in minutes.' },
+            { n: '03', t: 'AI analysis', c: 'Models trained on tens of thousands of paired cases (cath, echo, RHC, MRI) generate predictive disease scores.' },
+            { n: '04', t: 'Physician report', c: 'Cloud-based reporting delivers patient results in minutes.' },
           ].map(s => (
             <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 24 }}>
               <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.14em' }}>{s.n}</div>
@@ -115,7 +115,7 @@ export function TechnologyPage() {
             {[
               ['A single resting capture', '220 seconds at rest — no exercise, no contrast, no radiation.'],
               ['Decision at the point of care', 'The first answer arrives in the same visit the patient presents.'],
-              ['Physician-reviewed in under 8 minutes', 'Disease probability scores and recommended next steps in the portal.'],
+              ['Physician-ready report in minutes', 'Disease probability scores and recommended next steps in the portal.'],
               ['Right test, right patient', 'Rule out without referral, or send the right patients downstream.'],
             ].map(([t, c], i) => (
               <div key={i} className="compare-row">
