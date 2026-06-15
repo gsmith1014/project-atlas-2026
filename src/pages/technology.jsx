@@ -8,7 +8,7 @@ export function TechnologyPage() {
         <div className="container">
           <Eyebrow>Technology</Eyebrow>
           <h1 style={{ marginTop: 28 }}>
-            From signal to <span className="em">diagnosis</span>, in under eight minutes.
+            From signal to <span className="em">diagnosis</span>, in minutes.
           </h1>
           <p className="lead">
             The CorVista System captures resting biosignals and runs them through AI algorithms trained on tens of thousands of patient cases — producing physician-grade insights without radiation, contrast, or stress.
@@ -132,7 +132,7 @@ export function TechnologyPage() {
           <div>
             <Eyebrow><span style={{ color: '#98A2B3' }}>The economics</span></Eyebrow>
             <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(34px, 4vw, 56px)' }}>
-              Cost comes out of the <span style={{ color: '#5BAFE8' }}>pathway</span>, not the care.
+              Reducing costs throughout the <span style={{ color: '#5BAFE8' }}>pathway</span>, while improving care.
             </h2>
             <p className="lead" style={{ color: '#C8D0DC', marginTop: 24 }}>
               Savings come from doing less of what doesn't help: fewer low-yield catheterizations, fewer redundant scans, and far less time spent waiting for an answer the front line can now deliver. Earlier detection bends the long-tail cost of disease that goes unmanaged.
