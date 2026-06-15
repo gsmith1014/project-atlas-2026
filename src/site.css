@@ -126,7 +126,7 @@ img { display: block; max-width: 100%; }
 
 h1, h2, h3, h4, h5 {
   font-family: var(--f-sans);
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
   letter-spacing: -0.02em;
   line-height: 1.04;
@@ -134,9 +134,9 @@ h1, h2, h3, h4, h5 {
 }
 h1 { font-size: var(--t-h1); letter-spacing: -0.035em; }
 h2 { font-size: var(--t-h2); letter-spacing: -0.03em; }
-h3 { font-size: var(--t-h3); letter-spacing: -0.02em; font-weight: 600; }
-h4 { font-size: var(--t-h4); font-weight: 600; }
-h5 { font-size: var(--t-h5); font-weight: 600; }
+h3 { font-size: var(--t-h3); letter-spacing: -0.02em; }
+h4 { font-size: var(--t-h4); }
+h5 { font-size: var(--t-h5); }
 
 .display {
   font-size: var(--t-display);
@@ -356,7 +356,7 @@ p { margin: 0; }
   letter-spacing: -0.035em;
   line-height: 0.96;
   margin: 0;
-  font-weight: 700;
+  font-weight: 400;
 }
 .hero-title .em {
   font-family: var(--f-serif);

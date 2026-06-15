@@ -111,7 +111,7 @@ export default function App() {
       root.style.setProperty('--paper', '#0E1F33');
       root.style.setProperty('--card-bg', '#131F2E');
     } else {
-      root.style.setProperty('--bg', '#EDE8DC');
+      root.style.setProperty('--bg', '#F2F4F7');
       root.style.setProperty('--fg', '#0B1320');
       root.style.setProperty('--fg-muted', '#6B7280');
       root.style.setProperty('--rule', '#D4CFC3');
