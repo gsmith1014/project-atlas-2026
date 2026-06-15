@@ -4,12 +4,13 @@ import { Eyebrow, Section, SectionHeader, ImgPh, NavA, Stat } from '../component
 const TEAM = [
   { name: 'Adrian Lam', role: 'President & Chief Executive Officer', group: 'leadership' },
   { name: 'Charles R. Bridges, M.D., Sc.D.', role: 'EVP & Chief Scientific Officer', group: 'leadership' },
-  { name: 'Horace R. Gillins', role: 'VP of Clinical Affairs', group: 'leadership' },
+  { name: 'Nikki Troiano Gainey', role: 'Chief Customer Officer', group: 'leadership' },
   { name: 'Shyam Ramchandani, Ph.D., MBA', role: 'VP of Research', group: 'leadership' },
   { name: 'Karen McCord', role: 'VP, Chief of Staff', group: 'leadership' },
-  { name: 'Ian Shadforth, MBA', role: 'VP & General Manager', group: 'leadership' },
+  { name: 'Ian Shadforth, MBA', role: 'Chief Strategy Officer', group: 'leadership' },
   { name: 'Jonathan Woodward', role: 'CTO & General Manager, A4L', group: 'leadership' },
-  { name: 'Stephen Davies', role: 'Senior Director of Quality', group: 'leadership' },
+  { name: 'Horace R. Gillins', role: 'VP of Clinical Affairs', group: 'leadership' },
+  { name: 'Grant Smith', role: 'VP, Marketing & Communication', group: 'leadership' },
   { name: 'Aaron L. Berez, M.D.', role: 'Medical Advisory Board', group: 'mab' },
   { name: 'Derek V. Exner, M.D.', role: 'Medical Advisory Board', group: 'mab' },
   { name: 'Junbo Ge, M.D.', role: 'Medical Advisory Board', group: 'mab' },
@@ -23,7 +24,6 @@ const TEAM = [
   { name: 'Elspeth Murray', role: 'Board of Directors', group: 'board' },
   { name: 'Guido Neels', role: 'Board of Directors', group: 'board' },
   { name: 'Dino Trevisani', role: 'Board of Directors', group: 'board' },
-  { name: 'Grant Smith', role: 'Board of Directors', group: 'board' },
 ];
 
 export function AboutPage() {
