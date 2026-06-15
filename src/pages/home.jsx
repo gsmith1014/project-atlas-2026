@@ -96,7 +96,7 @@ function HeroDataViz({ tweaks }) {
       <div className="container">
         <div className="hero-eyebrow">
           <Eyebrow>The CorVista® System</Eyebrow>
-          <span className="tag">FDA-cleared · CAD · PH · LVEF</span>
+          <span className="tag">FDA-cleared · CAD · PH · PCWP</span>
         </div>
         <h1 className="hero-title" style={{ fontSize: 'clamp(56px, 9.2vw, 168px)', marginBottom: 56 }}>
           The most comprehensive<br />
@@ -222,7 +222,7 @@ export function HomePage({ tweaks }) {
               A non-invasive scan that <span className="serif-i" style={{ color: 'var(--blue-deep)' }}>sees</span> what front-line cardiovascular tests miss.
             </h2>
             <p className="lead" style={{ marginTop: 36, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
-              The CorVista® System combines a wearable signal sensor, a cloud-based AI inference engine, and a physician-grade report. The result: a fast, comprehensive, accurate first answer about a patient's cardiovascular health — delivered where care begins.
+              The CorVista® System combines non-invasive signal sensors, a cloud-based AI inference engine, and a physician-grade report. The result: a fast, comprehensive, accurate first answer about a patient's cardiovascular health — delivered where care begins.
             </p>
             <div className="row row-3" style={{ marginTop: 56 }}>
               <div>
@@ -238,7 +238,7 @@ export function HomePage({ tweaks }) {
               <div>
                 <Eyebrow>03</Eyebrow>
                 <h5 style={{ marginTop: 12 }}>Act</h5>
-                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Physician-reviewed report returns to the clinician's portal — usually in under eight minutes.</p>
+                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Physician-reviewed report returns to the clinician's portal in minutes.</p>
               </div>
             </div>
           </div>
