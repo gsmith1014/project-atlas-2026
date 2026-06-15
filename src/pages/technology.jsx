@@ -52,7 +52,7 @@ export function TechnologyPage() {
           </div>
           <div style={{ position: 'relative' }}>
             <ImgPh label="Phase-space visualization (3D)" ratio="1/1" dark />
-            <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#F4F6F9', letterSpacing: '0.14em', textTransform: 'uppercase', background: '#0B1320', padding: '6px 10px', border: '1px solid #25324A' }}>
+            <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5BAFE8', letterSpacing: '0.14em', textTransform: 'uppercase', background: '#0B1320', padding: '6px 10px', border: '1px solid #25324A' }}>
               FIG. 02 — CPST RECONSTRUCTION
             </div>
           </div>
