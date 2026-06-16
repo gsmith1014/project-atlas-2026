@@ -2,7 +2,7 @@ import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, NavA, Stat } from '../components.jsx';
 
 const TEAM = [
-  { name: 'Adrian Lam', role: 'President & Chief Executive Officer', group: 'leadership' },
+  { name: 'Adrian Lam', role: 'President & Chief Executive Officer', group: 'leadership', group: 'board' },
   { name: 'Charles R. Bridges, M.D., Sc.D.', role: 'EVP & Chief Scientific Officer', group: 'leadership' },
   { name: 'Nikki Troiano Gainey', role: 'Chief Customer Officer', group: 'leadership' },
   { name: 'Shyam Ramchandani, Ph.D., MBA', role: 'VP of Research', group: 'leadership' },
