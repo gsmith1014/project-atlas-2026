@@ -11,7 +11,7 @@ const TEAM = [
   { name: 'Jonathan Woodward', role: 'CTO & General Manager, A4L', group: 'leadership' },
   { name: 'Horace R. Gillins', role: 'VP of Clinical Affairs', group: 'leadership' },
   { name: 'Grant Smith', role: 'VP, Marketing & Communication', group: 'leadership' },
-  { name: 'Aaron L. Berez, M.D.', role: 'Medical Advisory Board', group: 'mab' },
+  { name: 'Aaron L. Berez, M.D.', role: 'Board of Directors', group: 'board' },
   { name: 'Derek V. Exner, M.D.', role: 'Medical Advisory Board', group: 'mab' },
   { name: 'Junbo Ge, M.D.', role: 'Medical Advisory Board', group: 'mab' },
   { name: 'Puneet K. Khanna, M.D.', role: 'Medical Advisory Board', group: 'mab' },
