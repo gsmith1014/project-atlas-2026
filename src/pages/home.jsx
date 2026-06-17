@@ -134,7 +134,7 @@ function HeroPatient({ tweaks }) {
     <div className="hero" style={{ padding: 0, position: 'relative' }}>
       <div style={{ position: 'relative', minHeight: '76vh', background: 'var(--ink)', color: '#F4F6F9', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
-          <ImgPh label="Patient portrait — full bleed" ratio="auto" style={{ width: '100%', height: '100%', borderRadius: 0, border: 0 }} dark />
+          <div style={{ width: '100%', height: '100%', background: '#0d1e33' }} />
         </div>
         <div className="container" style={{ position: 'relative', zIndex: 2, paddingTop: 96, paddingBottom: 80, minHeight: '76vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div className="hero-eyebrow">
@@ -318,7 +318,7 @@ export function HomePage({ tweaks }) {
 
       <Section>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-          <ImgPh label="Tracy Neal, MD — portrait" ratio="3/4" />
+          <div style={{ background: 'var(--card-bg)', borderRadius: 4, aspectRatio: '3/4', width: '100%' }} />
           <div>
             <Eyebrow>From the field</Eyebrow>
             <p className="quote" style={{ marginTop: 28 }}>
