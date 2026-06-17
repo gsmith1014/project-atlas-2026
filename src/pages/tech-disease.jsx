@@ -79,7 +79,7 @@ const CV_DISEASES = {
     problems: [
       { t: 'Roughly half of HF goes undiagnosed', c: 'Preserved-EF heart failure is easy to miss on front-line exam and easy to mistake for deconditioning or age.' },
       { t: 'Echo capacity is the bottleneck', c: 'Confirmatory echocardiography carries wait times of 4–8 weeks in many systems — long enough for a patient to decompensate.' },
-      { t: 'The first diagnosis is often the ED', c: 'Without an in-office signal, elevated filling pressures frequently surface only at acute presentation.' },
+      { t: 'The first diagnosis is often the ER', c: 'Without an in-office signal, elevated filling pressures frequently surface only at acute presentation.' },
     ],
     perf: { sens: '82%', spec: '83%', npv: '>99%' },
     perfNote: 'Increased pulmonary capillary wedge pressure, consistent with heart failure with preserved ejection fraction. Submitted to the FDA; performance shown from validation cohorts.',
