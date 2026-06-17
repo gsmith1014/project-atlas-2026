@@ -301,7 +301,7 @@ export function HomePage({ tweaks }) {
         />
         <div className="row row-3" style={{ gap: 0, borderTop: '1px solid var(--rule)' }}>
           {[
-            ['clinicians', 'For Clinicians', 'Integrate CorVista into your front-line workup. Order kits, train staff, view reports.'],
+            ['clinicians', 'For Clinicians', 'Integrate CorVista into your front-line workup. Request a demo, train staff, view reports.'],
             ['patients', 'For Patients', 'Understand what a CorVista test is, what to expect, and how to ask your doctor.'],
             ['evidence', 'Clinical Evidence', 'Peer-reviewed publications, real-world data, and regulatory milestones.'],
           ].map(([slug, title, copy]) => (
