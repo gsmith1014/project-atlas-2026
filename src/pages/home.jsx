@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { EcgLine, ImgPh, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo } from '../components.jsx';
+import { EcgLine, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo } from '../components.jsx';
+import heroImg from '/hero-clinician.jpg';
 
 function HeroEditorial({ tweaks }) {
   return (
@@ -26,7 +27,7 @@ function HeroEditorial({ tweaks }) {
             </div>
           </div>
           <div>
-            <ImgPh label="Hero — clinician + patient" ratio="4/5" />
+            <img src={heroImg} alt="Clinician with patient at point of care" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
               <span>FIG. 01</span>
               <span>Point-of-care testing</span>
