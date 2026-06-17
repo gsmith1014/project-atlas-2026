@@ -230,7 +230,7 @@ export function HomePage({ tweaks }) {
               <div>
                 <Eyebrow>02</Eyebrow>
                 <h5 style={{ marginTop: 12 }}>Analyze</h5>
-                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Phase-space tomography and machine-learned algorithms generate disease probability scores.</p>
+                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Phase-space tomography and machine-learned algorithms generate unique scores, predictive of disease.</p>
               </div>
               <div>
                 <Eyebrow>03</Eyebrow>
