@@ -158,7 +158,7 @@ export function TechnologyPage() {
               Validated. Peer-reviewed. Deployed.
             </h2>
             <p className="lead" style={{ marginTop: 24 }}>
-              CorVista has been validated against gold-standard truth labels — cardiac catheterization for CAD, right-heart catheterization for PH and PCWP — across 20,000+ patients and 40+ clinical sites.
+              CorVista has been validated against gold-standard truth labels — cardiac catheterization for CAD, right-heart catheterization for PH and PCWP — across 10,000+ patients and 40+ clinical sites.
             </p>
             <NavA to="evidence" className="btn btn-ghost" style={{ marginTop: 32, display: 'inline-flex' }}>
               See the full evidence base<span className="arrow">→</span>
