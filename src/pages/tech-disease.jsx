@@ -91,7 +91,7 @@ const CV_DISEASES = {
     stats: [
       { label: 'HF patients undiagnosed', value: '~50', unit: '%', desc: 'The population a front-line signal can reach.' },
       { label: 'Echo wait time today', value: '4–8', unit: 'wks', desc: 'Replaced by an in-office read in minutes.' },
-      { label: 'In-office decision', value: '<8', unit: 'min', desc: 'Scan to physician-reviewed report.' },
+      { label: 'In-office decision', value: '<30', unit: 'min', desc: 'Scan to physician-reviewed report.' },
     ],
     studies: [
       { title: 'Assessing Reduced LVEF Using Resting Biosignals and Machine Learning', journal: 'JACC: Heart Failure', meta: 'First-in-human', n: 'n = 612' },
