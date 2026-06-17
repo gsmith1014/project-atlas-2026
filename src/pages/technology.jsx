@@ -146,8 +146,6 @@ export function TechnologyPage() {
           <div className="row row-2" style={{ gap: 32 }}>
             <Stat label="PH total cost of care" value="−44" unit="%" desc="Reduction across the full care episode." />
             <Stat label="CAD diagnostic pathway" value="−32" unit="%" desc="Avoids downstream imaging and low-yield cath." />
-            <Stat label="Per-test cost" value="~$1,200" unit="" desc="Versus $3,000–8,000 for typical downstream imaging." />
-            <Stat label="Time to physician report" value="<8" unit="min" desc="Scan to signed result." />
           </div>
         </div>
       </Section>
