@@ -23,3 +23,6 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 - `README.md` — this file
 - `chats/` — conversation transcripts (read these!)
 - `project/` — the `CorVista Website` project files (HTML prototypes, assets, components)
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2d9258ac-a958-4217-93f6-9dfa5d3e4ddb" />
