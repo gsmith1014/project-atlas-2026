@@ -621,6 +621,9 @@ p { margin: 0; }
   font-size: 15px;
   color: var(--fg);
 }
+.section-dark .bullets li {
+  color: #C8D0DC;
+}
 .bullets li::before {
   content: '';
   width: 8px; height: 8px;
