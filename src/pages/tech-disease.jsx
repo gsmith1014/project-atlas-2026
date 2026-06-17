@@ -41,7 +41,7 @@ const CV_DISEASES = {
     status: 'FDA-cleared',
     screenLabel: '02b PH',
     title: <>Put pulmonary hypertension on the <span className="em">differential</span> — sooner.</>,
-    lead: 'PH presents like everything else — asthma, COPD, deconditioning — so it is diagnosed an average of 2.5 years late. CorVista flags pulmonary hypertension from a resting capture, at the front line of care, where the workup begins.',
+    lead: 'PH can present like everything else — asthma, COPD, ILD — so it is diagnosed an average of 2.5 years late. CorVista flags pulmonary hypertension from a resting capture, at the front line of care, where the workup begins.',
     problemTitle: 'Behind every breath, a question.',
     problemLead: 'Breathlessness is one of the most common — and most ambiguous — presentations in medicine. PH hides inside it.',
     problems: [
