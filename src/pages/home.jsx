@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { EcgLine, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo } from '../components.jsx';
 import heroImg from '/hero-clinician.jpg';
+import tracyImg from '/tracy-neal.jpg';
 
 function HeroEditorial({ tweaks }) {
   return (
@@ -318,7 +319,7 @@ export function HomePage({ tweaks }) {
 
       <Section>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-          <div style={{ background: 'var(--card-bg)', borderRadius: 4, aspectRatio: '3/4', width: '100%' }} />
+          <img src={tracyImg} alt="Tracy Neal, MD" style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
           <div>
             <Eyebrow>From the field</Eyebrow>
             <p className="quote" style={{ marginTop: 28 }}>
