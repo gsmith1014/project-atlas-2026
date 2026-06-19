@@ -156,38 +156,49 @@ export function TechnologyPage() {
       </Section>
 
       <Section>
-        <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.2fr', gap: 80, alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap', marginBottom: 56 }}>
           <div>
             <Eyebrow>The performance numbers</Eyebrow>
-            <h2 style={{ marginTop: 20, fontSize: 'clamp(34px, 4vw, 56px)' }}>
+            <h2 style={{ marginTop: 20, fontSize: 'clamp(34px, 4vw, 56px)', maxWidth: '18ch' }}>
               Validated. Peer-reviewed. Deployed.
             </h2>
-            <p className="lead" style={{ marginTop: 24 }}>
-              CorVista has been validated against gold-standard truth labels — cardiac catheterization for CAD, right-heart catheterization for PH and PCWP — across 10,000+ patients and 40+ clinical sites.
+          </div>
+          <div style={{ maxWidth: '44ch' }}>
+            <p className="lead">
+              Validated against gold-standard truth labels — cardiac catheterization for CAD, right-heart catheterization for PH and PCWP — across 10,000+ patients and 40+ clinical sites.
             </p>
-            <NavA to="evidence" className="btn btn-ghost" style={{ marginTop: 32, display: 'inline-flex' }}>
+            <NavA to="evidence" className="btn btn-ghost" style={{ marginTop: 24, display: 'inline-flex' }}>
               See the full evidence base<span className="arrow">→</span>
             </NavA>
           </div>
-          <div className="row row-3" style={{ gap: 0 }}>
-            {[
-              { abbr: 'CAD', sens: '88%', spec: '51%', npv: '99%' },
-              { abbr: 'PH', sens: '82%', spec: '92%', npv: '>99%' },
-              { abbr: 'PCWP', sens: '82%', spec: '83%', npv: '>99%' },
-            ].map((m) => (
-              <div key={m.abbr} style={{ padding: '28px 0', borderTop: '1px solid var(--rule)' }}>
-                <div className="chip chip-blue" style={{ marginBottom: 18 }}>{m.abbr}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {[['Sensitivity', m.sens], ['Specificity', m.spec], ['NPV', m.npv]].map(([k, v]) => (
-                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
-                      <div className="meta">{k}</div>
-                      <div style={{ fontFamily: 'var(--f-sans)', fontSize: 26, fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--blue-deep)' }}>{v}</div>
-                    </div>
-                  ))}
-                </div>
+        </div>
+
+        <div style={{ borderTop: '1px solid var(--rule)' }}>
+          {/* Header row */}
+          <div style={{ display: 'grid', gridTemplateColumns: '160px repeat(3, 1fr)', padding: '16px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
+            <div />
+            {['CAD', 'PH', 'PCWP'].map(abbr => (
+              <div key={abbr} style={{ paddingLeft: 24 }}>
+                <span className="chip chip-blue">{abbr}</span>
               </div>
             ))}
           </div>
+
+          {/* Data rows */}
+          {[
+            { label: 'Sensitivity', values: ['88%', '82%', '82%'] },
+            { label: 'Specificity', values: ['51%', '92%', '83%'] },
+            { label: 'NPV',         values: ['99%', '>99%', '>99%'] },
+          ].map((row) => (
+            <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '160px repeat(3, 1fr)', padding: '28px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{row.label}</div>
+              {row.values.map((v, i) => (
+                <div key={i} style={{ paddingLeft: 24 }}>
+                  <span style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(40px, 4.5vw, 64px)', fontWeight: 500, letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1 }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </Section>
     </div>
