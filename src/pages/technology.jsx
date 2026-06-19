@@ -177,11 +177,11 @@ export function TechnologyPage() {
             ].map((m) => (
               <div key={m.abbr} style={{ padding: '28px 0', borderTop: '1px solid var(--rule)' }}>
                 <div className="chip chip-blue" style={{ marginBottom: 18 }}>{m.abbr}</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
-                  {[['Sens.', m.sens], ['Spec.', m.spec], ['NPV', m.npv]].map(([k, v]) => (
-                    <div key={k}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {[['Sensitivity', m.sens], ['Specificity', m.spec], ['NPV', m.npv]].map(([k, v]) => (
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
                       <div className="meta">{k}</div>
-                      <div style={{ fontFamily: 'var(--f-sans)', fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--blue-deep)', marginTop: 4 }}>{v}</div>
+                      <div style={{ fontFamily: 'var(--f-sans)', fontSize: 26, fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--blue-deep)' }}>{v}</div>
                     </div>
                   ))}
                 </div>
