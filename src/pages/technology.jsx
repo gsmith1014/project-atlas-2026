@@ -51,7 +51,12 @@ export function TechnologyPage() {
             </ul>
           </div>
           <div style={{ position: 'relative' }}>
-            <ImgPh label="Phase-space visualization (3D)" ratio="1/1" dark />
+            <iframe
+              src="/phase-viz.html"
+              title="Phase-space visualization — CPST reconstruction"
+              style={{ width: '100%', aspectRatio: '1/1', border: 'none', display: 'block', borderRadius: 4 }}
+              loading="lazy"
+            />
             <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5BAFE8', letterSpacing: '0.14em', textTransform: 'uppercase', background: '#0B1320', padding: '6px 10px', border: '1px solid #25324A' }}>
               FIG. 02 — CPST RECONSTRUCTION
             </div>
