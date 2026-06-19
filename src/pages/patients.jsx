@@ -42,8 +42,16 @@ export function PatientsPage() {
       </Section>
 
       <Section dark>
-        <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
-          <ImgPh label="Patient + clinician moment" ratio="4/5" dark />
+        <div className="row row-2" style={{ gridTemplateColumns: '1.3fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: 6, overflow: 'hidden', background: '#000' }}>
+            <iframe
+              src="https://player.vimeo.com/video/1058659213?badge=0&autopause=0&player_id=0&app_id=58479"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+              title="Why it matters — CorVista"
+            />
+          </div>
           <div>
             <Eyebrow><span style={{ color: '#98A2B3' }}>Why it matters</span></Eyebrow>
             <h2 style={{ color: '#F4F6F9', marginTop: 24, fontSize: 'clamp(36px, 4.4vw, 64px)' }}>
