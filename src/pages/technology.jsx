@@ -156,30 +156,30 @@ export function TechnologyPage() {
       </Section>
 
       <Section>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap', marginBottom: 56 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap', marginBottom: 48 }}>
           <div>
             <Eyebrow>The performance numbers</Eyebrow>
-            <h2 style={{ marginTop: 20, fontSize: 'clamp(34px, 4vw, 56px)', maxWidth: '18ch' }}>
+            <h2 style={{ marginTop: 16, fontSize: 'clamp(32px, 3.6vw, 52px)', maxWidth: '18ch', letterSpacing: '-0.02em' }}>
               Validated. Peer-reviewed. Deployed.
             </h2>
           </div>
-          <div style={{ maxWidth: '44ch' }}>
-            <p className="lead">
+          <div style={{ maxWidth: '42ch' }}>
+            <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--fg-muted)' }}>
               Validated against gold-standard truth labels — cardiac catheterization for CAD, right-heart catheterization for PH and PCWP — across 10,000+ patients and 40+ clinical sites.
             </p>
-            <NavA to="evidence" className="btn btn-ghost" style={{ marginTop: 24, display: 'inline-flex' }}>
+            <NavA to="evidence" className="btn btn-ghost" style={{ marginTop: 20, display: 'inline-flex' }}>
               See the full evidence base<span className="arrow">→</span>
             </NavA>
           </div>
         </div>
 
         <div style={{ borderTop: '1px solid var(--rule)' }}>
-          {/* Header row */}
-          <div style={{ display: 'grid', gridTemplateColumns: '160px repeat(3, 1fr)', padding: '16px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
+          {/* Column header row */}
+          <div style={{ display: 'grid', gridTemplateColumns: '148px repeat(3, 1fr)', padding: '12px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
             <div />
             {['CAD', 'PH', 'PCWP'].map(abbr => (
-              <div key={abbr} style={{ paddingLeft: 24 }}>
-                <span className="chip chip-blue">{abbr}</span>
+              <div key={abbr} style={{ paddingLeft: 20 }}>
+                <span className="chip chip-blue" style={{ fontSize: 11 }}>{abbr}</span>
               </div>
             ))}
           </div>
@@ -190,11 +190,11 @@ export function TechnologyPage() {
             { label: 'Specificity', values: ['51%', '92%', '83%'] },
             { label: 'NPV',         values: ['99%', '>99%', '>99%'] },
           ].map((row) => (
-            <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '160px repeat(3, 1fr)', padding: '28px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{row.label}</div>
+            <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '148px repeat(3, 1fr)', padding: '22px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.1em', textTransform: 'uppercase', paddingRight: 16 }}>{row.label}</div>
               {row.values.map((v, i) => (
-                <div key={i} style={{ paddingLeft: 24 }}>
-                  <span style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(40px, 4.5vw, 64px)', fontWeight: 500, letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1 }}>{v}</span>
+                <div key={i} style={{ paddingLeft: 20 }}>
+                  <span style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(32px, 3.2vw, 46px)', fontWeight: 500, letterSpacing: '-0.025em', color: 'var(--blue)', lineHeight: 1 }}>{v}</span>
                 </div>
               ))}
             </div>
