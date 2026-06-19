@@ -11,11 +11,11 @@ export function CliniciansPage() {
             A better first <span className="em">answer</span> — without the wait.
           </h1>
           <p className="lead">
-            Order a CorVista test from the same workflow you use today. Get a physician-reviewed report back in minutes. Move confidently into next steps, or rule out disease without a downstream referral.
+            Get a physician-reviewed report back in minutes. Move confidently into next steps, or rule out disease without a downstream referral.
           </p>
           <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
             <NavA to="contact" className="btn btn-primary">Request a demo<span className="arrow">→</span></NavA>
-            <a href="#" className="btn btn-ghost">Order a kit<span className="arrow">→</span></a>
+            <NavA to="evidence" className="btn btn-ghost">See the evidence<span className="arrow">→</span></NavA>
           </div>
         </div>
       </div>

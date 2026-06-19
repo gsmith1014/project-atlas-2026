@@ -6,7 +6,6 @@ export function ContactPage() {
   const [sent, setSent] = useState(false);
   const intents = [
     { id: 'demo', label: 'Request a demo' },
-    { id: 'order', label: 'Order a kit' },
     { id: 'partner', label: 'Partner with us' },
     { id: 'press', label: 'Press / media' },
     { id: 'careers', label: 'Careers' },
@@ -80,7 +79,6 @@ export function ContactPage() {
                 </h3>
                 <p style={{ color: 'var(--fg-muted)', marginBottom: 16, maxWidth: '52ch' }}>
                   {intent === 'demo' && "Tell us a bit about your practice and we'll set up a 30-minute walkthrough."}
-                  {intent === 'order' && "Send us your shipping details and we'll get a starter kit out to you within 48 hours."}
                   {intent === 'partner' && "We work with health systems, payers, and global distributors. Tell us where you fit."}
                   {intent === 'press' && "Reach our media team for interviews, statements, or background briefings."}
                   {intent === 'careers' && "Tell us where you'd like to make an impact — we'll send back open roles."}
