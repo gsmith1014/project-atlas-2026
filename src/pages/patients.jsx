@@ -1,5 +1,27 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA } from '../components.jsx';
+import Player from '@vimeo/player';
+
+function VimeoEmbed({ videoId, title }) {
+  const iframeRef = useRef(null);
+  useEffect(() => {
+    if (!iframeRef.current) return;
+    const player = new Player(iframeRef.current);
+    const onEnded = () => player.setCurrentTime(0).then(() => player.pause());
+    player.on('ended', onEnded);
+    return () => { player.off('ended', onEnded); };
+  }, [videoId]);
+  return (
+    <iframe
+      ref={iframeRef}
+      src={`https://player.vimeo.com/video/${videoId}?badge=0&autopause=0&player_id=0&app_id=58479`}
+      frameBorder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+      title={title}
+    />
+  );
+}
 
 export function PatientsPage() {
   return (
@@ -44,13 +66,7 @@ export function PatientsPage() {
       <Section dark>
         <div className="row row-2" style={{ gridTemplateColumns: '1.3fr 1fr', gap: 64, alignItems: 'center' }}>
           <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: 6, overflow: 'hidden', background: '#000' }}>
-            <iframe
-              src="https://player.vimeo.com/video/1058659213?badge=0&autopause=0&player_id=0&app_id=58479"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-              title="Why it matters — CorVista"
-            />
+            <VimeoEmbed videoId="1058659213" title="Why it matters — CorVista" />
           </div>
           <div>
             <Eyebrow><span style={{ color: '#98A2B3' }}>Why it matters</span></Eyebrow>
