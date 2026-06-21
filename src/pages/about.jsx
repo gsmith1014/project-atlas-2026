@@ -91,8 +91,8 @@ export function AboutPage() {
               {TEAM.filter(t => t.group === g.id).map(t => (
                 <div key={t.name + t.group} className="team-card">
                   {t.photo
-                    ? <img src={t.photo} alt={t.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'top', display: 'block', borderRadius: 4 }} />
-                    : <div style={{ width: '100%', aspectRatio: '1/1', background: 'var(--card-bg)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    ? <img src={t.photo} alt={t.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'top', display: 'block', borderRadius: '20%' }} />
+                    : <div style={{ width: '100%', aspectRatio: '1/1', background: 'var(--card-bg)', borderRadius: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <span style={{ fontFamily: 'var(--f-sans)', fontSize: 28, fontWeight: 600, color: 'var(--mid)', letterSpacing: '-0.01em' }}>
                           {t.name.split(' ').map(w => w[0]).slice(0, 2).join('')}
                         </span>
