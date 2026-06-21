@@ -2,7 +2,7 @@ import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, NavA, Stat } from '../components.jsx';
 
 const TEAM = [
-  { name: 'Adrian Lam',                        role: 'President & Chief Executive Officer', group: 'leadership', photo: null },
+  { name: 'Adrian Lam',                        role: 'President & Chief Executive Officer', group: 'leadership', photo: '/team-adrian-lam.jpg' },
   { name: 'Charles R. Bridges, M.D., Sc.D.',   role: 'EVP & Chief Scientific Officer',      group: 'leadership', photo: '/team-charles-bridges.jpg' },
   { name: 'Nikki Troiano Gainey',               role: 'Chief Customer Officer',              group: 'leadership', photo: '/team-nikki-gainey.jpg' },
   { name: 'Shyam Ramchandani, Ph.D., MBA',      role: 'VP of Research',                      group: 'leadership', photo: '/team-shyam-ramchandani.jpg' },
@@ -19,12 +19,12 @@ const TEAM = [
   { name: 'Mark Rabbat, M.D.',                  role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-mark-rabbat.jpg' },
   { name: 'Anjali Tiku Owens, M.D.',            role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-anjali-owens.jpg' },
   { name: 'Tim Attebery',                       role: 'Board of Directors',                  group: 'board',      photo: '/team-tim-attebery.jpg' },
-  { name: 'Adrian Lam',                         role: 'President & Chief Executive Officer', group: 'board',      photo: null },
+  { name: 'Adrian Lam',                         role: 'President & Chief Executive Officer', group: 'board',      photo: '/team-adrian-lam.jpg' },
   { name: 'Aaron L. Berez, M.D.',               role: 'Board of Directors',                  group: 'board',      photo: '/team-aaron-berez.jpg' },
   { name: 'James McLaren',                      role: 'Board of Directors',                  group: 'board',      photo: '/team-james-mclaren.jpg' },
   { name: 'Elspeth Murray',                     role: 'Board of Directors',                  group: 'board',      photo: '/team-elspeth-murray.jpg' },
-  { name: 'Guido Neels',                        role: 'Board of Directors',                  group: 'board',      photo: null },
-  { name: 'Dino Trevisani',                     role: 'Board of Directors',                  group: 'board',      photo: null },
+  { name: 'Guido Neels',                        role: 'Board of Directors',                  group: 'board',      photo: '/team-guido-neels.jpg' },
+  { name: 'Dino Trevisani',                     role: 'Board of Directors',                  group: 'board',      photo: '/team-dino-trevisani.jpg' },
 ];
 
 export function AboutPage() {
