@@ -1,6 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA } from '../components.jsx';
 import Player from '@vimeo/player';
+import stepArrival  from '/patient-step-arrival.jpg';
+import stepSensors  from '/patient-step-sensors.jpg';
+import stepScan     from '/patient-step-scan.jpg';
+import stepResults  from '/patient-step-results.jpg';
+
+const STEP_IMGS = [stepArrival, stepSensors, stepScan, stepResults];
 
 function VimeoEmbed({ videoId, title }) {
   const iframeRef = useRef(null);
@@ -52,9 +58,9 @@ export function PatientsPage() {
             { n: '02', t: 'In the office', c: 'A medical assistant places small adhesive sensors on your chest and back, similar to an ECG.' },
             { n: '03', t: 'During the scan', c: 'You rest quietly for about four minutes. There\'s no radiation, no injection, no exercise.' },
             { n: '04', t: 'After your visit', c: 'Your doctor receives a physician-reviewed report — usually within minutes — and will go over results with you.' },
-          ].map(s => (
+          ].map((s, i) => (
             <div key={s.n}>
-              <ImgPh label={`Step ${s.n}`} ratio="4/5" />
+              <img src={STEP_IMGS[i]} alt={s.t} style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
               <div style={{ marginTop: 18, fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.14em' }}>{s.n}</div>
               <h5 style={{ marginTop: 8 }}>{s.t}</h5>
               <p style={{ marginTop: 10, color: 'var(--fg-muted)', fontSize: 14 }}>{s.c}</p>
