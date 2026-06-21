@@ -32,6 +32,7 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 <img width="600" height="800" alt="4" src="https://github.com/user-attachments/assets/bf25e55f-6153-491e-b569-bee5a74d4ddc" />
 <img width="600" height="800" alt="3" src="https://github.com/user-attachments/assets/a660d154-8732-400d-ac92-cc2fa971b4d3" />
 <img width="600" height="800" alt="2" src="https://github.com/user-attachments/assets/d6b26fa7-a07f-497c-bcac-b056b6b86413" />
+<img width="600" height="800" alt="6" src="https://github.com/user-attachments/assets/18e67410-daa1-4d58-adf1-482f9b8712c5" />
 
 
 
