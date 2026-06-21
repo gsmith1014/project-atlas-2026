@@ -5,6 +5,7 @@ import stepArrival  from '/patient-step-arrival.jpg';
 import stepSensors  from '/patient-step-sensors.jpg';
 import stepScan     from '/patient-step-scan.jpg';
 import stepResults  from '/patient-step-results.jpg';
+import patientHero  from '/patient-hero.jpg';
 
 const STEP_IMGS = [stepResults, stepScan, stepSensors, stepArrival];
 
@@ -45,7 +46,7 @@ export function PatientsPage() {
                 If your doctor is looking into chest discomfort, shortness of breath, or unexplained fatigue, CorVista can help find — or rule out — heart disease quickly, comfortably, and without radiation or contrast.
               </p>
             </div>
-            <ImgPh label="Patient portrait — warm" ratio="3/4" />
+            <img src={patientHero} alt="Patient at point of care" style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
           </div>
         </div>
       </div>
