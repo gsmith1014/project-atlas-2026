@@ -6,7 +6,7 @@ import stepSensors  from '/patient-step-sensors.jpg';
 import stepScan     from '/patient-step-scan.jpg';
 import stepResults  from '/patient-step-results.jpg';
 
-const STEP_IMGS = [stepArrival, stepSensors, stepScan, stepResults];
+const STEP_IMGS = [stepResults, stepScan, stepSensors, stepArrival];
 
 function VimeoEmbed({ videoId, title }) {
   const iframeRef = useRef(null);
