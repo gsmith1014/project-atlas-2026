@@ -33,6 +33,26 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 <img width="600" height="800" alt="3" src="https://github.com/user-attachments/assets/a660d154-8732-400d-ac92-cc2fa971b4d3" />
 <img width="600" height="800" alt="2" src="https://github.com/user-attachments/assets/d6b26fa7-a07f-497c-bcac-b056b6b86413" />
 <img width="600" height="800" alt="6" src="https://github.com/user-attachments/assets/18e67410-daa1-4d58-adf1-482f9b8712c5" />
+<img width="256" height="256" alt="Vallerie_V_-McLaughlin" src="https://github.com/user-attachments/assets/563ac304-9475-4876-8e08-8a9418cb8679" />
+<img width="256" height="256" alt="Tim-Attebery" src="https://github.com/user-attachments/assets/c60f39ca-c7cf-42bb-8586-f8dff09727d7" />
+<img width="256" height="256" alt="Shyam_Ramchandani" src="https://github.com/user-attachments/assets/b4321c22-8ac3-4db7-b701-f8bbd1d73e9a" />
+<img width="256" height="256" alt="Rodney_Raabe" src="https://github.com/user-attachments/assets/eb88e679-0f7d-4378-a05e-dd600ab40026" />
+<img width="256" height="256" alt="Puneet_K_-Khanna" src="https://github.com/user-attachments/assets/3d986eda-ef38-4153-a88b-ac0dd83ca26e" />
+<img width="500" height="500" alt="Nikki_Troiano_Gainey" src="https://github.com/user-attachments/assets/4cd361c9-dd4a-4e68-a052-316de1cd9532" />
+<img width="255" height="256" alt="Mark_Rabbat" src="https://github.com/user-attachments/assets/20deff40-77d8-40e0-8ff1-6b8eda6ebe79" />
+<img width="401" height="529" alt="KarenMcCord_Headshot_v2" src="https://github.com/user-attachments/assets/0278b780-5600-4a46-a37f-2ee8cf996401" />
+<img width="256" height="256" alt="Junbo_Ge" src="https://github.com/user-attachments/assets/6122ffde-6d79-4645-8c31-78309d352044" />
+<img width="256" height="256" alt="Jonathan_Woodward" src="https://github.com/user-attachments/assets/c938fd39-10eb-4a6f-bd2c-2d9f67dd4ee3" />
+<img width="256" height="256" alt="James_McLaren" src="https://github.com/user-attachments/assets/b813a86c-b891-4031-aa68-d275034990b6" />
+<img width="325" height="325" alt="ian-shadforth" src="https://github.com/user-attachments/assets/64d68435-41e8-49b2-a98b-9e481f79fb7d" />
+<img width="256" height="256" alt="Horace_R_Gillins" src="https://github.com/user-attachments/assets/26ec1e07-0bca-40d2-a669-5c6b9c6721f7" />
+<img width="500" height="500" alt="Grant_Smith" src="https://github.com/user-attachments/assets/bbe28ed2-8611-4289-8c47-cc11414fc0e2" />
+<img width="255" height="256" alt="Elspeth_Murray" src="https://github.com/user-attachments/assets/c6e912b7-1a15-4398-b138-2fbeb94d7766" />
+<img width="256" height="256" alt="Derek_V_Exner" src="https://github.com/user-attachments/assets/b3fe1a8d-6bf6-4829-bdb0-c0fde94c400a" />
+<img width="256" height="256" alt="Charles_R_Bridges" src="https://github.com/user-attachments/assets/c7d7f831-3d53-456d-b16c-d76b3db80a82" />
+<img width="256" height="256" alt="anjali_tiku_owens" src="https://github.com/user-attachments/assets/b284031a-f844-453f-80c5-f289e5c01950" />
+<img width="256" height="256" alt="Aaron_L_-Berez" src="https://github.com/user-attachments/assets/7933d84b-ed2f-4fe3-af83-a3de0b797939" />
+
 
 
 
