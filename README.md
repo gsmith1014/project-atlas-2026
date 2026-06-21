@@ -52,6 +52,9 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 <img width="256" height="256" alt="Charles_R_Bridges" src="https://github.com/user-attachments/assets/c7d7f831-3d53-456d-b16c-d76b3db80a82" />
 <img width="256" height="256" alt="anjali_tiku_owens" src="https://github.com/user-attachments/assets/b284031a-f844-453f-80c5-f289e5c01950" />
 <img width="256" height="256" alt="Aaron_L_-Berez" src="https://github.com/user-attachments/assets/7933d84b-ed2f-4fe3-af83-a3de0b797939" />
+<img width="500" height="500" alt="Guido Neels" src="https://github.com/user-attachments/assets/fe93fd1d-3867-49c3-89bd-139e91037889" />
+<img width="500" height="500" alt="Dino Trevisani" src="https://github.com/user-attachments/assets/2254f25e-7d36-48a7-bbaf-24429b0a93d0" />
+<img width="1080" height="1080" alt="Adrian-Lam_Headshot-300x300 19062" src="https://github.com/user-attachments/assets/1a7da0f9-ff40-4c4a-87f7-a3886c0246d6" />
 
 
 
