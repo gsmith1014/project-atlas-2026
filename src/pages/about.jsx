@@ -2,29 +2,29 @@ import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, NavA, Stat } from '../components.jsx';
 
 const TEAM = [
-  { name: 'Adrian Lam', role: 'President & Chief Executive Officer', group: 'leadership' },
-  { name: 'Charles R. Bridges, M.D., Sc.D.', role: 'EVP & Chief Scientific Officer', group: 'leadership' },
-  { name: 'Nikki Troiano Gainey', role: 'Chief Customer Officer', group: 'leadership' },
-  { name: 'Shyam Ramchandani, Ph.D., MBA', role: 'VP of Research', group: 'leadership' },
-  { name: 'Karen McCord', role: 'VP, Chief of Staff', group: 'leadership' },
-  { name: 'Ian Shadforth, MBA', role: 'Chief Strategy Officer', group: 'leadership' },
-  { name: 'Jonathan Woodward', role: 'CTO & General Manager, A4L', group: 'leadership' },
-  { name: 'Horace R. Gillins', role: 'VP of Clinical Affairs', group: 'leadership' },
-  { name: 'Grant Smith', role: 'VP, Marketing & Communication', group: 'leadership' },
-  { name: 'Vallerie V. McLaughlin, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Derek V. Exner, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Junbo Ge, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Puneet K. Khanna, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Rodney Raabe, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Mark Rabbat, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Anjali Tiku Owens, M.D.', role: 'Medical Advisory Board', group: 'mab' },
-  { name: 'Tim Attebery', role: 'Board of Directors', group: 'board' },
-  { name: 'Adrian Lam', role: 'President & Chief Executive Officer', group: 'board' },
-  { name: 'Aaron L. Berez, M.D.', role: 'Board of Directors', group: 'board' },
-  { name: 'James McLaren', role: 'Board of Directors', group: 'board' },
-  { name: 'Elspeth Murray', role: 'Board of Directors', group: 'board' },
-  { name: 'Guido Neels', role: 'Board of Directors', group: 'board' },
-  { name: 'Dino Trevisani', role: 'Board of Directors', group: 'board' },
+  { name: 'Adrian Lam',                        role: 'President & Chief Executive Officer', group: 'leadership', photo: null },
+  { name: 'Charles R. Bridges, M.D., Sc.D.',   role: 'EVP & Chief Scientific Officer',      group: 'leadership', photo: '/team-charles-bridges.jpg' },
+  { name: 'Nikki Troiano Gainey',               role: 'Chief Customer Officer',              group: 'leadership', photo: '/team-nikki-gainey.jpg' },
+  { name: 'Shyam Ramchandani, Ph.D., MBA',      role: 'VP of Research',                      group: 'leadership', photo: '/team-shyam-ramchandani.jpg' },
+  { name: 'Karen McCord',                       role: 'VP, Chief of Staff',                  group: 'leadership', photo: '/team-karen-mccord.jpg' },
+  { name: 'Ian Shadforth, MBA',                 role: 'Chief Strategy Officer',              group: 'leadership', photo: '/team-ian-shadforth.jpg' },
+  { name: 'Jonathan Woodward',                  role: 'CTO & General Manager, A4L',          group: 'leadership', photo: '/team-jonathan-woodward.jpg' },
+  { name: 'Horace R. Gillins',                  role: 'VP of Clinical Affairs',              group: 'leadership', photo: '/team-horace-gillins.jpg' },
+  { name: 'Grant Smith',                        role: 'VP, Marketing & Communication',       group: 'leadership', photo: '/team-grant-smith.jpg' },
+  { name: 'Vallerie V. McLaughlin, M.D.',       role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-vallerie-mclaughlin.jpg' },
+  { name: 'Derek V. Exner, M.D.',               role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-derek-exner.jpg' },
+  { name: 'Junbo Ge, M.D.',                     role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-junbo-ge.jpg' },
+  { name: 'Puneet K. Khanna, M.D.',             role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-puneet-khanna.jpg' },
+  { name: 'Rodney Raabe, M.D.',                 role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-rodney-raabe.jpg' },
+  { name: 'Mark Rabbat, M.D.',                  role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-mark-rabbat.jpg' },
+  { name: 'Anjali Tiku Owens, M.D.',            role: 'Medical Advisory Board',              group: 'mab',        photo: '/team-anjali-owens.jpg' },
+  { name: 'Tim Attebery',                       role: 'Board of Directors',                  group: 'board',      photo: '/team-tim-attebery.jpg' },
+  { name: 'Adrian Lam',                         role: 'President & Chief Executive Officer', group: 'board',      photo: null },
+  { name: 'Aaron L. Berez, M.D.',               role: 'Board of Directors',                  group: 'board',      photo: '/team-aaron-berez.jpg' },
+  { name: 'James McLaren',                      role: 'Board of Directors',                  group: 'board',      photo: '/team-james-mclaren.jpg' },
+  { name: 'Elspeth Murray',                     role: 'Board of Directors',                  group: 'board',      photo: '/team-elspeth-murray.jpg' },
+  { name: 'Guido Neels',                        role: 'Board of Directors',                  group: 'board',      photo: null },
+  { name: 'Dino Trevisani',                     role: 'Board of Directors',                  group: 'board',      photo: null },
 ];
 
 export function AboutPage() {
@@ -89,9 +89,16 @@ export function AboutPage() {
             </div>
             <div className="team-grid">
               {TEAM.filter(t => t.group === g.id).map(t => (
-                <div key={t.name} className="team-card">
-                  <ImgPh label={t.name.split(' ').slice(0,2).join(' ')} ratio="4/5" />
-                  <div className="name">{t.name}</div>
+                <div key={t.name + t.group} className="team-card">
+                  {t.photo
+                    ? <img src={t.photo} alt={t.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'top', display: 'block', borderRadius: 4 }} />
+                    : <div style={{ width: '100%', aspectRatio: '1/1', background: 'var(--card-bg)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span style={{ fontFamily: 'var(--f-sans)', fontSize: 28, fontWeight: 600, color: 'var(--mid)', letterSpacing: '-0.01em' }}>
+                          {t.name.split(' ').map(w => w[0]).slice(0, 2).join('')}
+                        </span>
+                      </div>
+                  }
+                  <div className="name" style={{ marginTop: 14 }}>{t.name}</div>
                   <div className="role">{t.role}</div>
                 </div>
               ))}
