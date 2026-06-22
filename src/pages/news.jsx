@@ -1,21 +1,58 @@
 import React, { useState } from 'react';
-import { Eyebrow, Section, SectionHeader, ImgPh, NavA, Tabs } from '../components.jsx';
+import { Eyebrow, Section, NavA, Tabs } from '../components.jsx';
 
-const NEWS = [
-  { date: '2026-04-22', cat: 'Press release', title: 'CorVista Health appoints Adrian Lam as President & CEO to lead commercial expansion.' },
-  { date: '2026-03-14', cat: 'Press release', title: 'CorVista System achieves CE Mark under EU MDR for cardiovascular disease assessment.' },
-  { date: '2026-02-02', cat: 'Article', title: 'A new world of non-invasive cardiac diagnostics: What CorVista changes at the point of care.' },
-  { date: '2025-11-30', cat: 'Press release', title: 'CorVista presents long-term PH validation data at AHA Scientific Sessions 2025.' },
-  { date: '2025-09-18', cat: 'Article', title: 'I was worried about artificial intelligence — until it saved my life.' },
-  { date: '2025-07-08', cat: 'Press release', title: 'Pivotal CAD diagnostic accuracy data published in JACC: Cardiovascular Imaging.' },
-  { date: '2025-05-22', cat: 'Podcast', title: 'Straight from the heart: rebuilding the front line of cardiovascular diagnostics.' },
-  { date: '2025-04-15', cat: 'Article', title: 'AI and new cardiac imaging technology assesses for CAD without radiation.' },
-  { date: '2024-11-02', cat: 'Press release', title: 'CorVista announces 510(k) clearance for the CorVista System.' },
-];
+const modules = import.meta.glob('../content/news/*.mdx', { eager: true });
 
-export function NewsPage() {
+const ARTICLES = Object.entries(modules)
+  .map(([path, mod]) => ({
+    slug: path.split('/').pop().replace('.mdx', ''),
+    Component: mod.default,
+    ...mod.frontmatter,
+  }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function ArticleView({ slug }) {
+  const article = ARTICLES.find(a => a.slug === slug);
+  if (!article) return (
+    <div className="page-fade" data-page="news">
+      <Section>
+        <p>Article not found.</p>
+        <NavA to="news" className="btn btn-ghost" style={{ marginTop: 20, display: 'inline-flex' }}>← Back to News</NavA>
+      </Section>
+    </div>
+  );
+  const { Component, title, date, category } = article;
+  return (
+    <div className="page-fade" data-page="news-article">
+      <div className="subhero">
+        <div className="container">
+          <NavA to="news" className="btn btn-ghost" style={{ marginBottom: 32, display: 'inline-flex', fontSize: 14 }}>
+            ← Back to News
+          </NavA>
+          <div className="meta" style={{ marginBottom: 16 }}>{formatDate(date)} · {category}</div>
+          <h1 style={{ maxWidth: '24ch' }}>{title}</h1>
+        </div>
+      </div>
+      <Section>
+        <div className="article-body">
+          <Component />
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+export function NewsPage({ articleSlug }) {
   const [filter, setFilter] = useState('all');
-  const filtered = filter === 'all' ? NEWS : NEWS.filter(n => n.cat === filter);
+
+  if (articleSlug) return <ArticleView slug={articleSlug} />;
+
+  const filtered = filter === 'all' ? ARTICLES : ARTICLES.filter(a => a.category === filter);
+  const featured = ARTICLES[0];
 
   return (
     <div className="page-fade" data-screen-label="07 News" data-page="news">
@@ -31,21 +68,35 @@ export function NewsPage() {
         </div>
       </div>
 
-      <Section>
-        <div className="row row-2" style={{ gridTemplateColumns: '1.2fr 1fr', gap: 64, alignItems: 'center' }}>
-          <ImgPh label="Featured story — hero image" ratio="16/10" />
-          <div>
-            <div className="meta">{NEWS[0].date} · {NEWS[0].cat}</div>
-            <h2 style={{ marginTop: 18, fontSize: 'clamp(28px, 3vw, 44px)', letterSpacing: '-0.02em' }}>
-              {NEWS[0].title}
-            </h2>
-            <p className="lead" style={{ marginTop: 24, fontSize: 18 }}>
-              The company welcomes Adrian Lam as President & CEO to drive commercial growth, regulatory milestones, and continued investment in clinical evidence.
-            </p>
-            <a href="#" className="btn btn-ghost" style={{ marginTop: 28 }}>Read the announcement<span className="arrow">→</span></a>
+      {featured && (
+        <Section>
+          <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
+            <div style={{ borderTop: '3px solid var(--blue)', paddingTop: 24 }}>
+              <div className="meta">{formatDate(featured.date)} · {featured.category}</div>
+              <h2 style={{ marginTop: 18, fontSize: 'clamp(28px, 3vw, 44px)', letterSpacing: '-0.02em' }}>
+                {featured.title}
+              </h2>
+              <p className="lead" style={{ marginTop: 24, fontSize: 18, color: 'var(--fg-muted)' }}>
+                {featured.excerpt}
+              </p>
+              <NavA to={`news/${featured.slug}`} className="btn btn-ghost" style={{ marginTop: 28, display: 'inline-flex' }}>
+                Read the full story<span className="arrow">→</span>
+              </NavA>
+            </div>
+            <div>
+              <div style={{ marginBottom: 16, paddingBottom: 16, borderBottom: '1px solid var(--rule)' }}>
+                <Eyebrow>Latest</Eyebrow>
+              </div>
+              {ARTICLES.slice(1, 4).map(a => (
+                <NavA key={a.slug} to={`news/${a.slug}`} style={{ display: 'block', padding: '16px 0', borderBottom: '1px solid var(--rule)', textDecoration: 'none', color: 'inherit' }}>
+                  <div className="meta">{formatDate(a.date)} · {a.category}</div>
+                  <div style={{ marginTop: 6, fontWeight: 500, letterSpacing: '-0.01em', lineHeight: 1.4 }}>{a.title}</div>
+                </NavA>
+              ))}
+            </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      )}
 
       <Section>
         <Tabs
@@ -55,19 +106,18 @@ export function NewsPage() {
             { id: 'all', label: 'All' },
             { id: 'Press release', label: 'Press releases' },
             { id: 'Article', label: 'Articles' },
-            { id: 'Podcast', label: 'Podcasts' },
           ]}
         />
         <div>
-          {filtered.map((n, i) => (
-            <a key={i} href="#" className="news-card hover-lift">
-              <div className="news-date">{n.date}</div>
+          {filtered.map((a) => (
+            <NavA key={a.slug} to={`news/${a.slug}`} className="news-card hover-lift">
+              <div className="news-date">{formatDate(a.date)}</div>
               <div>
-                <div className="news-cat">{n.cat}</div>
-                <div className="news-title" style={{ marginTop: 8 }}>{n.title}</div>
+                <div className="news-cat">{a.category}</div>
+                <div className="news-title" style={{ marginTop: 8 }}>{a.title}</div>
               </div>
               <span style={{ fontFamily: 'var(--f-mono)', fontSize: 22 }}>↗</span>
-            </a>
+            </NavA>
           ))}
         </div>
       </Section>
@@ -96,7 +146,7 @@ export function NewsPage() {
                 fontFamily: 'var(--f-sans)',
                 fontSize: 16,
                 outline: 'none',
-                borderRadius: 0
+                borderRadius: 0,
               }}
             />
             <button type="submit" className="btn btn-primary">Subscribe<span className="arrow">→</span></button>

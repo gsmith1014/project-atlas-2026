@@ -39,7 +39,7 @@ function tint(hex, amount = 0.85) {
   return '#' + [r, g, b].map(c => Math.round(c + (255 - c) * amount).toString(16).padStart(2, '0')).join('');
 }
 
-function getPage(slug, tweaks) {
+function getPage(slug, sub, tweaks) {
   switch (slug) {
     case 'home': return <HomePage tweaks={tweaks} />;
     case 'technology': return <TechnologyPage />;
@@ -50,20 +50,23 @@ function getPage(slug, tweaks) {
     case 'patients': return <PatientsPage />;
     case 'evidence': return <EvidencePage />;
     case 'about': return <AboutPage />;
-    case 'news': return <NewsPage />;
+    case 'news': return <NewsPage articleSlug={sub} />;
     case 'investors': return <InvestorsPage />;
     case 'contact': return <ContactPage />;
     default: return <HomePage tweaks={tweaks} />;
   }
 }
 
-function getSlugFromHash() {
+function getRouteFromHash() {
   const hash = window.location.hash.replace('#', '').trim();
-  return hash || 'home';
+  if (!hash) return { page: 'home', sub: null };
+  const slash = hash.indexOf('/');
+  if (slash === -1) return { page: hash, sub: null };
+  return { page: hash.slice(0, slash), sub: hash.slice(slash + 1) };
 }
 
 export default function App() {
-  const [page, setPage] = useState(getSlugFromHash);
+  const [{ page, sub }, setRoute] = useState(getRouteFromHash);
   const [tweaks, setTweakState] = useState(TWEAK_DEFAULTS);
 
   const setTweak = useCallback((key, value) => {
@@ -72,7 +75,7 @@ export default function App() {
 
   // Hash-based routing
   useEffect(() => {
-    const onHashChange = () => setPage(getSlugFromHash());
+    const onHashChange = () => setRoute(getRouteFromHash());
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
@@ -82,7 +85,7 @@ export default function App() {
     const onNav = (e) => {
       const slug = e.detail;
       window.location.hash = slug;
-      setPage(slug);
+      setRoute(getRouteFromHash());
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     window.addEventListener('cv-navigate', onNav);
@@ -124,8 +127,8 @@ export default function App() {
   return (
     <>
       <Header page={page} />
-      <main key={page}>
-        {getPage(page, tweaks)}
+      <main key={page + (sub || '')}>
+        {getPage(page, sub, tweaks)}
       </main>
       <Footer />
       <SiteTweaks tweaks={tweaks} setTweak={setTweak} />
