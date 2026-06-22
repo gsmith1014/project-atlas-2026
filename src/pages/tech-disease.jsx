@@ -59,7 +59,7 @@ const CV_DISEASES = {
     stats: [
       { label: 'PH total cost of care', value: '−44', unit: '%', desc: 'Identifies PH earlier, before care costs compound.' },
       { label: 'Average diagnostic delay today', value: '2.5', unit: 'yrs', desc: 'The gap CorVista is built to close.' },
-      { label: 'Right-heart cath avoided', value: '1 in 3', unit: '', desc: 'A negative result safely defers invasive testing.' },
+      { label: 'Average hospitalizations avoided', value: '1 to 4', unit: '', desc: 'Identifying PAH earlier, before progression occurs.' },
     ],
     studies: [
       { title: 'Noninvasive Detection of Pulmonary Hypertension Using Resting Phase Signals and Advanced Machine Learning', journal: 'Pulmonary Circulation', meta: 'Multi-center · 9 sites', n: 'n = 524' },
