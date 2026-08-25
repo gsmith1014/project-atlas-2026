@@ -4,14 +4,19 @@ import { Eyebrow, Section, SectionHeader, Tabs, NavA, Stat } from '../components
 export function EvidencePage() {
   const [filter, setFilter] = useState('all');
   const studies = [
-    { y: '2024', cat: 'cad', title: 'Diagnostic Accuracy of Machine-Learned Algorithms Utilizing Cardiac Phase Tomography vs SPECT in the Assessment of CAD', journal: 'JACC: Cardiovascular Imaging', n: 'n = 1,968', meta: 'Pivotal study · PRIDE-CAD' },
-    { y: '2024', cat: 'ph', title: 'Noninvasive Detection of Pulmonary Hypertension Using Resting Phase Signals and Advanced Machine Learning', journal: 'Pulmonary Circulation', n: 'n = 524', meta: 'Multi-center · 9 sites' },
-    { y: '2023', cat: 'cad', title: 'Coronary Artery Disease Learning and Algorithm Development Study (CADLAD)', journal: 'Mayo Clinic Proceedings', n: 'n = 2,209', meta: 'Development cohort' },
-    { y: '2023', cat: 'ph', title: 'Cardiac Phase Space Tomography: A Novel Method of Assessing Coronary Artery Disease Utilizing Machine Learning', journal: 'European Heart Journal — Digital Health', n: 'n = 712', meta: 'Validation' },
-    { y: '2022', cat: 'cad', title: 'Gender-Based Assessment of CAD by Cardiac Phase Tomography Using Machine-Learned Algorithms (TCT-154)', journal: 'TCT Scientific Symposium', n: 'n = 1,486', meta: 'Sub-analysis' },
-    { y: '2022', cat: 'lvef', title: 'Assessing Reduced LVEF Using Resting Biosignals and Machine Learning', journal: 'JACC: Heart Failure', n: 'n = 612', meta: 'First-in-human' },
-    { y: '2021', cat: 'cad', title: 'Assessing CAD by Cardiac Phase Tomography in Obese and Elderly Subjects (TCT-177)', journal: 'TCT Scientific Symposium', n: 'n = 824', meta: 'Sub-analysis' },
-    { y: '2021', cat: 'cad', title: 'Machine-Learned Algorithms Utilizing Novel Tomography for Evaluating CAD (TCT-233)', journal: 'TCT Scientific Symposium', n: 'n = 1,124', meta: 'Abstract' },
+    { y: '2026', cat: 'cad', title: 'Utility of a Novel Point-of-Care Test in Detecting Coronary Artery Disease Following Negative Nuclear Testing: A Case Series', journal: 'European Heart Journal — Case Reports', n: 'n = 5 cases', meta: 'Case series', doi: 'https://doi.org/10.1093/ehjcr/ytag016' },
+    { y: '2026', cat: 'cad', title: 'Noninvasive Detection of Ischemia in Patients with Functionally Significant Coronary Artery Disease (ACC.26)', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · ACC 2026', doi: '' },
+    { y: '2026', cat: 'cad', title: 'CorVista CAD Algorithm Identifies Patients with Ischemia with Non-Obstructive Coronary Arteries (INOCA) (ACC.26)', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · ACC 2026', doi: '' },
+    { y: '2026', cat: 'ph', title: 'Improving Trust in AI Diagnosis of Pulmonary Hypertension with Patient-Specific Insight', journal: 'Intelligence-Based Medicine', n: 'n = 252', meta: 'Explainability study · PHLEX/PHGEX', doi: 'https://doi.org/10.1016/j.ibmed.2026.100390' },
+    { y: '2025', cat: 'cad', title: 'Efficacy of a US-Developed Machine-Learned Coronary Artery Disease Algorithm in China', journal: 'Discover Medicine', n: 'n = 458', meta: 'International validation', doi: 'https://doi.org/10.1007/s44337-025-00255-3' },
+    { y: '2025', cat: 'ph', title: 'Facilitating Earlier Diagnosis of Pulmonary Hypertension Using a Novel Noninvasive Diagnostic', journal: 'JACC: Case Reports', n: 'n = 4 cases', meta: 'Case series', doi: 'https://doi.org/10.1016/j.jaccas.2025.104876' },
+    { y: '2025', cat: 'ph', title: 'Clinical Validation of a Machine-Learned, Point-of-Care System to IDENTIFY Pulmonary Hypertension', journal: 'ERJ Open Research', n: 'n = 462', meta: 'Prospective · 18 sites', doi: 'https://doi.org/10.1183/23120541.01287-2024' },
+    { y: '2025', cat: 'pcwp', title: 'Development of a Machine-Learned Algorithm for Noninvasive Assessment of Pulmonary Capillary Wedge Pressure (ACC.25)', journal: 'JACC Supplements', n: 'n = 283', meta: 'Conference abstract · ACC 2025', doi: '' },
+    { y: '2025', cat: 'pcwp', title: 'Validation of a Noninvasive Machine-Learned Algorithm for PCWP Assessment in Symptomatic Patients (AHA 2025)', journal: 'Circulation Supplements', n: 'n = 255', meta: 'Conference abstract · AHA 2025', doi: 'https://doi.org/10.1161/circ.152.suppl_3.4365733' },
+    { y: '2025', cat: 'pcwp', title: 'Noninvasive PCWP Algorithm for Identifying Heart Failure Populations in Clinical Settings (HFSA 2025)', journal: 'Journal of Cardiac Failure', n: '', meta: 'Conference abstract · HFSA 2025', doi: '' },
+    { y: '2025', cat: 'pcwp', title: 'Physiological Insights into a Machine-Learned Algorithm for Noninvasive PCWP Detection (HFSA 2025)', journal: 'Journal of Cardiac Failure', n: 'n = 283', meta: 'Conference abstract · HFSA 2025', doi: '' },
+    { y: '2024', cat: 'cad', title: 'Clinical Validation of a Machine-Learned, Point-of-Care System to IDENTIFY Functionally Significant Coronary Artery Disease', journal: 'Diagnostics', n: 'n = 1,816', meta: 'IDENTIFY trial · 18 sites', doi: 'https://doi.org/10.3390/diagnostics14100987' },
+    { y: '2024', cat: 'cad', title: 'Signal Acquisition, Score Interpretation, and Economics of a Non-Invasive Point-of-Care Test for Coronary Artery Disease', journal: 'Journal of Visualized Experiments', n: '', meta: 'Methods & economics', doi: 'https://doi.org/10.3791/66933' },
   ];
   const filtered = filter === 'all' ? studies : studies.filter(s => s.cat === filter);
 
@@ -32,9 +37,9 @@ export function EvidencePage() {
       <Section>
         <div className="row row-4">
           <Stat label="Peer-reviewed" value="50" unit="+" desc="Publications and conference abstracts." />
-          <Stat label="Patients studied" value="20K" unit="+" desc="Across CAD, PH, and LVEF cohorts." />
-          <Stat label="Clinical sites" value="40" unit="+" desc="In the US, EU, and Canada." />
-          <Stat label="Years of data" value="9" unit="" desc="Since the founding CADLAD study." />
+          <Stat label="Patients studied" value="20K" unit="+" desc="Across CAD, PH, and PCWP cohorts." />
+          <Stat label="Clinical sites" value="40" unit="+" desc="In the US, EU, Canada, and China." />
+          <Stat label="Years of data" value="9" unit="" desc="Spanning CAD, PH, and heart failure." />
         </div>
       </Section>
 
@@ -47,7 +52,7 @@ export function EvidencePage() {
             { id: 'all', label: 'All studies' },
             { id: 'cad', label: 'CAD' },
             { id: 'ph', label: 'Pulmonary hypertension' },
-            { id: 'lvef', label: 'LVEF · Heart failure' },
+            { id: 'pcwp', label: 'PCWP · Heart failure' },
           ]}
         />
         <div>
@@ -59,8 +64,8 @@ export function EvidencePage() {
                 <div className="meta" style={{ marginTop: 6 }}>{s.journal} · {s.meta}</div>
               </div>
               <div className="meta">{s.n}</div>
-              <div><span className="chip chip-blue">{s.cat.toUpperCase()}</span></div>
-              <a href="#" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink">PDF →</a>
+              <div><span className={`chip chip-blue`} style={s.cat === 'pcwp' ? { color: '#7C5CFC', borderColor: '#7C5CFC' } : s.cat === 'ph' ? { color: '#2E9E6B', borderColor: '#2E9E6B' } : {}}>{s.cat === 'pcwp' ? 'PCWP' : s.cat.toUpperCase()}</span></div>
+              {s.doi ? <a href={s.doi} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink">DOI →</a> : <div />}
             </div>
           ))}
         </div>
