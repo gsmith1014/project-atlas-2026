@@ -15,6 +15,17 @@ function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+function ArticleLink({ article, children, ...props }) {
+  if (article.sourceUrl) {
+    return (
+      <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" {...props}>
+        {children}
+      </a>
+    );
+  }
+  return <NavA to={`news/${article.slug}`} {...props}>{children}</NavA>;
+}
+
 function ArticleView({ slug }) {
   const article = ARTICLES.find(a => a.slug === slug);
   if (!article) return (
@@ -79,19 +90,19 @@ export function NewsPage({ articleSlug }) {
               <p className="lead" style={{ marginTop: 24, fontSize: 18, color: 'var(--fg-muted)' }}>
                 {featured.excerpt}
               </p>
-              <NavA to={`news/${featured.slug}`} className="btn btn-ghost" style={{ marginTop: 28, display: 'inline-flex' }}>
+              <ArticleLink article={featured} className="btn btn-ghost" style={{ marginTop: 28, display: 'inline-flex' }}>
                 Read the full story<span className="arrow">→</span>
-              </NavA>
+              </ArticleLink>
             </div>
             <div>
               <div style={{ marginBottom: 16, paddingBottom: 16, borderBottom: '1px solid var(--rule)' }}>
                 <Eyebrow>Latest</Eyebrow>
               </div>
               {ARTICLES.slice(1, 4).map(a => (
-                <NavA key={a.slug} to={`news/${a.slug}`} style={{ display: 'block', padding: '16px 0', borderBottom: '1px solid var(--rule)', textDecoration: 'none', color: 'inherit' }}>
+                <ArticleLink key={a.slug} article={a} style={{ display: 'block', padding: '16px 0', borderBottom: '1px solid var(--rule)', textDecoration: 'none', color: 'inherit' }}>
                   <div className="meta">{formatDate(a.date)} · {a.category}</div>
                   <div style={{ marginTop: 6, fontWeight: 500, letterSpacing: '-0.01em', lineHeight: 1.4 }}>{a.title}</div>
-                </NavA>
+                </ArticleLink>
               ))}
             </div>
           </div>
@@ -110,14 +121,14 @@ export function NewsPage({ articleSlug }) {
         />
         <div>
           {filtered.map((a) => (
-            <NavA key={a.slug} to={`news/${a.slug}`} className="news-card hover-lift">
+            <ArticleLink key={a.slug} article={a} className="news-card hover-lift">
               <div className="news-date">{formatDate(a.date)}</div>
               <div>
                 <div className="news-cat">{a.category}</div>
                 <div className="news-title" style={{ marginTop: 8 }}>{a.title}</div>
               </div>
               <span style={{ fontFamily: 'var(--f-mono)', fontSize: 22 }}>↗</span>
-            </NavA>
+            </ArticleLink>
           ))}
         </div>
       </Section>
