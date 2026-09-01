@@ -38,6 +38,7 @@ export function Header({ page }) {
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
     { slug: 'investors', label: 'Investors' },
+    { slug: 'medical-affairs', label: 'Medical Affairs' },
   ];
   return (
     <header className="header">
@@ -101,6 +102,7 @@ export function Footer() {
           </div>
           <div>
             <h6>Resources</h6>
+            <a href="#" onClick={(e) => { e.preventDefault(); navTo('medical-affairs'); }}>Medical Affairs</a>
             <a href="#">Publications</a>
             <a href="#">Press kit</a>
             <a href="#">Careers</a>
