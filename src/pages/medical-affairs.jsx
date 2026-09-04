@@ -541,41 +541,10 @@ export function MedicalAffairsPage() {
             </div>
           </div>
 
-          {/* Resource cards */}
+          {/* CDS Tool */}
           <Section>
-            <div className="row row-3" style={{ gap:24, marginBottom:64 }}>
-              <a href="#cds-anchor" onClick={e => { e.preventDefault(); document.getElementById('cds-anchor')?.scrollIntoView({ behavior:'smooth' }); }} style={{ display:'block', textDecoration:'none' }} className="hover-lift">
-                <div className="card" style={{ padding:28, height:'100%', borderTop:'3px solid var(--blue)' }}>
-                  <div style={{ fontSize:32, marginBottom:12 }}>🧠</div>
-                  <div style={{ fontFamily:'var(--f-sans)', fontWeight:700, fontSize:16, color:'var(--fg)', marginBottom:8 }}>Three-Test CDS Tool</div>
-                  <p style={{ fontSize:14, color:'var(--fg-muted)', lineHeight:1.6, fontFamily:'var(--f-body)', margin:0 }}>
-                    Guideline-aligned clinical decision support for CAD, PH, and PCWP test combinations, with ESC 2019 pre-test probability auto-calculation.
-                  </p>
-                </div>
-              </a>
-              <NavA to="evidence" style={{ display:'block', textDecoration:'none' }} className="hover-lift">
-                <div className="card" style={{ padding:28, height:'100%', borderTop:'3px solid var(--blue)' }}>
-                  <div style={{ fontSize:32, marginBottom:12 }}>📄</div>
-                  <div style={{ fontFamily:'var(--f-sans)', fontWeight:700, fontSize:16, color:'var(--fg)', marginBottom:8 }}>Clinical Evidence</div>
-                  <p style={{ fontSize:14, color:'var(--fg-muted)', lineHeight:1.6, fontFamily:'var(--f-body)', margin:0 }}>
-                    Peer-reviewed publications from the IDENTIFY trial, ERJ Open Research, JACC Case Reports, and more — with direct DOI links.
-                  </p>
-                </div>
-              </NavA>
-              <NavA to="contact" style={{ display:'block', textDecoration:'none' }} className="hover-lift">
-                <div className="card" style={{ padding:28, height:'100%', borderTop:'3px solid var(--blue)' }}>
-                  <div style={{ fontSize:32, marginBottom:12 }}>✉️</div>
-                  <div style={{ fontFamily:'var(--f-sans)', fontWeight:700, fontSize:16, color:'var(--fg)', marginBottom:8 }}>Contact Medical Affairs</div>
-                  <p style={{ fontSize:14, color:'var(--fg-muted)', lineHeight:1.6, fontFamily:'var(--f-body)', margin:0 }}>
-                    Questions about the CorVista System, clinical studies, or medical education? Our Medical Affairs team is here to help.
-                  </p>
-                </div>
-              </NavA>
-            </div>
-
-            {/* CDS Tool */}
             <div id="cds-anchor">
-              <div style={{ borderTop:'1px solid var(--rule)', paddingTop:48, marginBottom:40 }}>
+              <div style={{ marginBottom:40 }}>
                 <Eyebrow>Clinical Decision Support</Eyebrow>
                 <h2 style={{ marginTop:16, marginBottom:12 }}>Three-Test Combination Framework</h2>
                 <p className="lead" style={{ maxWidth:'56ch', marginBottom:8 }}>
