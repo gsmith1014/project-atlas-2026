@@ -21,10 +21,10 @@ function PipelineChart() {
   const [ref, visible] = useReveal(0.2);
   const indications = [
     { label: 'CAD', fill: 100, status: 'cleared', note: 'FDA-cleared 2023' },
-    { label: 'PH', fill: 100, status: 'cleared', note: 'FDA-cleared 2024' },
+    { label: 'PH', fill: 100, status: 'cleared', note: 'FDA-cleared 2024 · Breakthrough Designated' },
     { label: 'PCWP', fill: 100, status: 'cleared', note: 'FDA-cleared 2026' },
-    { label: 'INOCA', fill: 60, status: 'invest', note: 'Breakthrough Designated · Under investigation' },
-    { label: 'Valvular', fill: 25, status: 'planned', note: 'Planned indication' },
+    { label: 'INOCA', fill: 60, status: 'invest', note: 'Under investigation' },
+    { label: 'Additional Indications', fill: 20, status: 'planned', note: 'Planned indications in development' },
   ];
   return (
     <div ref={ref} className="pipeline" style={{ marginTop: 40, maxWidth: 680 }}>
@@ -297,7 +297,7 @@ export function TechnologyPage() {
         <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--rule)', display: 'flex', gap: 28, flexWrap: 'wrap' }}>
           {[
             { dot: 'cleared', label: 'FDA-cleared' },
-            { dot: 'invest', label: 'Investigational (Breakthrough Designated)' },
+            { dot: 'invest', label: 'Investigational' },
             { dot: 'planned', label: 'Planned' },
           ].map(s => (
             <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
