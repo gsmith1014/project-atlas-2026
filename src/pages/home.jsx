@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { EcgLine, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo } from '../components.jsx';
+import { CountUp } from '../hooks.jsx';
 import heroImg from '/hero-clinician.jpg';
 import tracyImg from '/tracy-neal.jpg';
 
@@ -210,6 +211,39 @@ export function HomePage({ tweaks }) {
         'FDA-cleared', 'Breakthrough Designated', '10,000+ Patients Studied', '20+ peer-reviewed publications',
         'CAD · PH · PCWP', 'No Stress', 'No radiation', 'No contrast'
       ]} />
+
+      {/* Problem stats section */}
+      <section className="section section-dark" style={{ paddingBlock: 'var(--section-y)' }}>
+        <div className="container">
+          <Eyebrow><span style={{ color: '#98A2B3' }}>The problem</span></Eyebrow>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap', marginTop: 20 }}>
+            <h2 style={{ color: '#F4F6F9', fontSize: 'clamp(32px, 4vw, 52px)', maxWidth: '28ch', lineHeight: 1.15 }}>
+              Timely diagnosis — not treatment — is the <span className="serif-i" style={{ color: 'var(--blue)' }}>bottleneck</span>.
+            </h2>
+            <p style={{ color: '#98A2B3', fontSize: 15, maxWidth: '42ch', lineHeight: 1.6 }}>
+              Today the first physician a patient sees still has little more than a stethoscope and an ECG. The cardiac workup has not kept pace with the burden of disease.
+            </p>
+          </div>
+        </div>
+        <div className="prob-grid">
+          {[
+            { num: 1, suffix: '', prefix: '#', label: 'Heart disease is the leading cause of death in the U.S.', source: 'CDC Heart Disease Facts' },
+            { num: 22, suffix: 'M', prefix: '', label: 'Americans live in counties with no practicing cardiologist.', source: 'Khan et al., Cardiology deserts in the U.S.' },
+            { num: 32.7, decimals: 1, suffix: '', prefix: '', unit: 'days', label: 'Average wait to see a cardiologist after referral.', source: 'AMN Healthcare, 2025 Physician Appointment Survey' },
+            { num: 2.26, decimals: 2, suffix: '', prefix: '', unit: 'yrs', label: 'Median delay from unexplained dyspnea to PAH diagnosis.', source: 'JACC Advances, PAH diagnostic delay literature' },
+          ].map((s, i) => (
+            <div key={i} className="prob-tile">
+              <div className="prob-num">
+                {s.prefix}<CountUp end={s.num} decimals={s.decimals || 0} duration={1600} />
+                {s.unit && <span style={{ fontSize: '0.38em', verticalAlign: 'middle', marginLeft: 4, fontWeight: 700 }}>{s.unit}</span>}
+                {s.suffix && <span style={{ fontSize: '0.55em', verticalAlign: 'super', fontWeight: 700 }}>{s.suffix}</span>}
+              </div>
+              <div className="prob-label">{s.label}</div>
+              <div className="prob-source">{s.source}</div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <Section>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.4fr', alignItems: 'start', gap: 80 }}>

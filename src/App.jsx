@@ -13,6 +13,7 @@ import { NewsPage } from './pages/news.jsx';
 import { InvestorsPage } from './pages/investors.jsx';
 import { ContactPage } from './pages/contact.jsx';
 import { MedicalAffairsPage } from './pages/medical-affairs.jsx';
+import { ReimbursementPage } from './pages/reimbursement.jsx';
 
 const TWEAK_DEFAULTS = {
   heroVariant: 'editorial',
@@ -55,6 +56,7 @@ function getPage(slug, sub, tweaks) {
     case 'investors': return <InvestorsPage />;
     case 'contact': return <ContactPage />;
     case 'medical-affairs': return <MedicalAffairsPage />;
+    case 'reimbursement': return <ReimbursementPage />;
     default: return <HomePage tweaks={tweaks} />;
   }
 }

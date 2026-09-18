@@ -1,6 +1,57 @@
 import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo } from '../components.jsx';
 
+function useReveal(threshold = 0.15) {
+  const ref = React.useRef(null);
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+function PipelineChart() {
+  const [ref, visible] = useReveal(0.2);
+  const indications = [
+    { label: 'CAD', fill: 100, status: 'cleared', note: 'FDA-cleared 2023' },
+    { label: 'PH', fill: 100, status: 'cleared', note: 'FDA-cleared 2024' },
+    { label: 'PCWP', fill: 100, status: 'cleared', note: 'FDA-cleared 2026' },
+    { label: 'INOCA', fill: 60, status: 'invest', note: 'Breakthrough Designated · Under investigation' },
+    { label: 'Valvular', fill: 25, status: 'planned', note: 'Planned indication' },
+  ];
+  return (
+    <div ref={ref} className="pipeline" style={{ marginTop: 40, maxWidth: 680 }}>
+      {indications.map((ind, i) => (
+        <div key={ind.label} className="pipeline-row">
+          <div className="pipeline-label">{ind.label}</div>
+          <div>
+            <div className="pipeline-bar-wrap">
+              <div
+                className={`pipeline-bar ${ind.status}`}
+                style={{ width: visible ? `${ind.fill}%` : '0%', transitionDelay: `${i * 120}ms` }}
+              />
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--fg-muted)', marginTop: 4 }}>{ind.note}</div>
+          </div>
+          <div className={`pipeline-status ${ind.status}`}>
+            {ind.status === 'cleared' ? 'FDA-Cleared' : ind.status === 'invest' ? 'Investigational' : 'Planned'}
+          </div>
+        </div>
+      ))}
+      <div style={{ marginTop: 16, fontSize: 13, color: 'var(--fg-muted)' }}>
+        <strong style={{ color: 'var(--fg)' }}>~90%</strong> of non-arrhythmia heart disease presentations — within reach of one platform.
+      </div>
+    </div>
+  );
+}
+
 export function TechnologyPage() {
   return (
     <div className="page-fade" data-screen-label="02 Technology" data-page="technology">
@@ -199,6 +250,69 @@ export function TechnologyPage() {
               ))}
             </div>
           ))}
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="Signal depth" title="More data. More dimensions. Fewer blind spots." />
+        <div className="row row-2" style={{ gap: 48, alignItems: 'start', marginTop: 0 }}>
+          <div>
+            <p style={{ fontSize: 17, lineHeight: 1.65, color: 'var(--fg-muted)', maxWidth: '48ch' }}>
+              A standard ECG captures approximately three heartbeats in two dimensions. CorVista analyzes 270 heartbeats across a three-dimensional phase-space reconstruction — extracting over 3,300 signal-derived features that single-signal tools cannot see.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.65, color: 'var(--fg-muted)', maxWidth: '48ch', marginTop: 16 }}>
+              Both signals — electrical (OVG) and hemodynamic (PPG) — are captured simultaneously, revealing the interface where most cardiac disease actually lives.
+            </p>
+          </div>
+          <div className="ecg-compare">
+            <div className="ecg-compare-head">
+              <div className="ecg-compare-head-cell">Metric</div>
+              <div className="ecg-compare-head-cell">Standard ECG</div>
+              <div className="ecg-compare-head-cell">CorVista</div>
+            </div>
+            {[
+              { label: 'Heartbeats analyzed', ecg: '~3', cv: '270' },
+              { label: 'Sample frequency', ecg: '<500 Hz', cv: '8,000 Hz' },
+              { label: 'Features extracted', ecg: '~12', cv: '3,300+' },
+              { label: 'Signal dimension', ecg: '2D waveform', cv: '3D phase-space' },
+              { label: 'Hemodynamic data', ecg: 'None', cv: 'Full PPG channel' },
+              { label: 'Respiration signal', ecg: 'None', cv: 'Captured' },
+            ].map((row, i) => (
+              <div key={i} className="ecg-row">
+                <div className="ecg-cell">{row.label}</div>
+                <div className="ecg-cell ecg-cell-dim">{row.ecg}</div>
+                <div className="ecg-cell">{row.cv}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="Platform roadmap" title="One platform. Expanding toward 90% of heart disease." />
+        <p className="lead" style={{ maxWidth: '58ch', marginTop: -8 }}>
+          Each new indication algorithm is informed by the work that came before it — reducing development time by 88% from CAD to PCWP. The platform compounds with every release.
+        </p>
+        <PipelineChart />
+        <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--rule)', display: 'flex', gap: 28, flexWrap: 'wrap' }}>
+          {[
+            { dot: 'cleared', label: 'FDA-cleared' },
+            { dot: 'invest', label: 'Investigational (Breakthrough Designated)' },
+            { dot: 'planned', label: 'Planned' },
+          ].map(s => (
+            <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{
+                width: 10, height: 10, borderRadius: '50%',
+                background: s.dot === 'cleared' ? 'var(--blue)' : s.dot === 'invest' ? 'var(--gold, #F3B51A)' : 'var(--mid)',
+                border: s.dot === 'planned' ? '1.5px dashed var(--mid)' : 'none',
+                flexShrink: 0
+              }} />
+              <span style={{ fontSize: 13, color: 'var(--fg-muted)' }}>{s.label}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 8, fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--mid-2)', letterSpacing: '0.04em' }}>
+          Coverage estimate based on AHA 2026 statistics for non-arrhythmia cardiovascular disease presentations.
         </div>
       </Section>
     </div>

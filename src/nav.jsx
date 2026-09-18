@@ -38,6 +38,7 @@ export function Header({ page }) {
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
     { slug: 'investors', label: 'Investors' },
+    { slug: 'reimbursement', label: 'Reimbursement' },
     { slug: 'medical-affairs', label: 'Medical Affairs' },
   ];
   return (

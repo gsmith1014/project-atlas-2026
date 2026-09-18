@@ -5,7 +5,7 @@ const SOC_STEPS = [
   {
     id: 'cad',
     label: 'CAD Workup',
-    time: '⏱ 2–6 weeks to result',
+    time: '2–6 weeks to result',
     detail: 'Stress testing (exercise ECG, nuclear imaging, or CT coronary angiography) to assess for obstructive coronary artery disease. Typical referral-to-report time spans several weeks across multiple specialist visits.',
     posLabel: 'CAD treatment initiated',
     restart: 'Negative — workup restarts for pulmonary hypertension',
@@ -13,7 +13,7 @@ const SOC_STEPS = [
   {
     id: 'ph',
     label: 'PH Workup',
-    time: '⏱ 2–6 more weeks to result',
+    time: '2–6 more weeks to result',
     detail: 'Echocardiography, V/Q scan, and potentially right heart catheterization to assess for pulmonary hypertension. Requires a new referral cycle — often through a different specialist — after the CAD workup concludes.',
     posLabel: 'PH treatment initiated',
     restart: 'Negative — workup restarts for HFpEF',
@@ -21,7 +21,7 @@ const SOC_STEPS = [
   {
     id: 'hfpef',
     label: 'HFpEF Workup',
-    time: '⏱ 2–6 more weeks to result',
+    time: '2–6 more weeks to result',
     detail: 'Stress echocardiography with diastolic assessment, cardiac MRI, or invasive hemodynamic testing for heart failure with preserved ejection fraction — the most commonly missed diagnosis in unexplained dyspnea workup.',
     posLabel: 'HFpEF treatment initiated',
     restart: null,
@@ -98,7 +98,7 @@ function WorkflowComparison() {
             <div className="wf-vline wf-vline-red" />
             <div className="wf-pill wf-pill-red">
               Months of delays — still no diagnosis
-              <div className="wf-pill-sub">Patient may be lost between referrals</div>
+              <div className="wf-pill-sub">Up to 50% of patients lost to follow-up between referral cycles</div>
             </div>
           </div>
         </div>
@@ -215,6 +215,73 @@ export function CliniciansPage() {
       <Section>
         <SectionHeader eyebrow="The serial testing problem" title="One study. Three answers." />
         <WorkflowComparison />
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="Real-world impact" title="What standard workup missed — CorVista caught." />
+        <div className="case-grid">
+
+          {/* Case 1: PH/HFpEF */}
+          <div className="case-card">
+            <div className="case-head">
+              <div className="case-head-eyebrow">Case study · Published JACC: Case Reports, 2025</div>
+              <div className="case-head-title">75-year-old woman — atrial fibrillation, worsening dyspnea, fatigue, and palpitations</div>
+            </div>
+            <div className="case-steps">
+              <div className="case-step">
+                <div className="case-step-n">01 · Presentation</div>
+                <div className="case-step-title">Standard workup</div>
+                <div className="case-step-body">Three echocardiograms, all negative for PH. Six years of evaluation. Equivocal stress test. Workup pointed toward coronary disease — cardiac catheterization planned.</div>
+              </div>
+              <div className="case-step cv-step">
+                <div className="case-step-n">02 · CorVista PH test</div>
+                <div className="case-step-title">CorVista added before cath</div>
+                <div className="case-step-body">CorVista PH test returned a positive result — 10.3 positive likelihood ratio — prompting addition of right heart catheterization to the planned procedure.</div>
+              </div>
+              <div className="case-step" style={{ gridColumn: '1 / -1', borderBottom: 'none' }}>
+                <div className="case-step-n">03 · Diagnosis</div>
+                <div className="case-step-title">Group 2 PH / HFpEF confirmed</div>
+                <div className="case-step-body">mPAP 35 mmHg · PCWP 31 mmHg · No significant CAD. Patient referred to PH specialist and started on SGLT2 inhibitor. Six years of workup resolved in one additional test.</div>
+              </div>
+            </div>
+            <div className="case-outcome">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+              Correct diagnosis reached after six years of missed workup — directed to appropriate specialist and treatment
+            </div>
+            <div className="case-cite">Aben R, Burton T, Fathieh F, et al. Facilitating Earlier Diagnosis of Pulmonary Hypertension Using a Novel Noninvasive Diagnostic. J Am Coll Cardiol Case Rep. 2025;30(26):104876.</div>
+          </div>
+
+          {/* Case 2: CAD */}
+          <div className="case-card">
+            <div className="case-head">
+              <div className="case-head-eyebrow">Case study · Published European Heart Journal — Case Reports, 2026</div>
+              <div className="case-head-title">63-year-old man — exertional chest pain, multiple risk factors, strong family history</div>
+            </div>
+            <div className="case-steps">
+              <div className="case-step">
+                <div className="case-step-n">01 · Standard workup</div>
+                <div className="case-step-title">Three negative tests</div>
+                <div className="case-step-body">Pretest CAD risk 35–44%. Normal echocardiogram. Negative SPECT nuclear perfusion imaging. Standard workup complete — no indication for catheterization.</div>
+              </div>
+              <div className="case-step cv-step">
+                <div className="case-step-n">02 · CorVista CAD test</div>
+                <div className="case-step-title">CorVista positive</div>
+                <div className="case-step-body">CorVista CAD score 0.20 — positive result. Patient sent directly to invasive cardiac catheterization on the strength of CorVista's finding.</div>
+              </div>
+              <div className="case-step" style={{ gridColumn: '1 / -1', borderBottom: 'none' }}>
+                <div className="case-step-n">03 · Catheterization</div>
+                <div className="case-step-title">Severe multivessel disease found and treated</div>
+                <div className="case-step-body">80% LAD stenosis · 2× 80% LCX stenosis · Subtotal RCA occlusion. Four lesions stented. Three standard-of-care tests had missed balanced ischemia that CorVista detected.</div>
+              </div>
+            </div>
+            <div className="case-outcome">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+              Severe multivessel CAD identified and treated — after three standard-of-care tests returned negative
+            </div>
+            <div className="case-cite">Alkhawam M, et al. Utility of a novel point-of-care test in detecting coronary artery disease following negative nuclear testing: a case series. European Heart Journal — Case Reports. 2026;10(2):ytag016.</div>
+          </div>
+
+        </div>
       </Section>
 
       <Section>
