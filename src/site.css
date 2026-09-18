@@ -1302,9 +1302,9 @@ p { margin: 0; }
 }
 .case-head-title {
   font-family: var(--f-sans);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 .case-steps {
   display: grid;

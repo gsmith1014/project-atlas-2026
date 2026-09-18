@@ -1,84 +1,169 @@
 import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, navTo } from '../components.jsx';
+import { useReveal, CountUp } from '../hooks.jsx';
 
 const RESTART_SVG = (
-  <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor" style={{ flexShrink: 0 }} aria-hidden="true">
     <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
   </svg>
 );
 
 const SOC_PHASES = [
-  { n: '01', label: 'CAD Workup', time: '2–6 weeks per cycle', restart: 'Negative → restart for PH' },
-  { n: '02', label: 'PH Workup', time: '2–6 more weeks', restart: 'Negative → restart for HFpEF' },
-  { n: '03', label: 'HFpEF Workup', time: '2–6 more weeks', restart: null },
+  {
+    n: '01',
+    label: 'CAD Workup',
+    time: '6–8 weeks',
+    detail: 'Stress testing — exercise ECG, nuclear imaging, or CT coronary angiography. Multiple specialist visits across several weeks.',
+    restart: { to: 'PH workup', note: 'New referral cycle — new specialist — scheduling restarts from zero.' },
+  },
+  {
+    n: '02',
+    label: 'PH Workup',
+    time: '6–8 more weeks',
+    detail: 'Echocardiography, V/Q scan, and potentially right heart catheterization — requiring a separate specialist from the CAD workup.',
+    restart: { to: 'HFpEF workup', note: 'Third restart — often the last referral patients will attempt.' },
+  },
+  {
+    n: '03',
+    label: 'HFpEF Workup',
+    time: '6–8+ more weeks',
+    detail: 'Stress echocardiography, cardiac MRI, or invasive hemodynamic testing — frequently the most time-consuming cycle to complete.',
+    restart: null,
+  },
 ];
 
 function WorkflowComparison() {
+  const [headerRef, headerVisible] = useReveal(0.25);
+
   return (
     <div>
+      {/* Animated time header */}
+      <div
+        ref={headerRef}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 1,
+          background: 'var(--rule)',
+          border: '1px solid var(--rule)',
+          borderRadius: 6,
+          overflow: 'hidden',
+          marginBottom: 28,
+        }}
+      >
+        <div style={{ padding: '28px 32px', background: 'var(--card)' }}>
+          <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--coral)', marginBottom: 10 }}>Standard of care — best case</div>
+          <div style={{ fontFamily: 'var(--f-sans)', fontSize: 56, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--fg)', lineHeight: 1 }}>
+            {headerVisible ? <CountUp end={24} suffix="+" duration={1200} /> : '0+'}
+          </div>
+          <div style={{ fontSize: 15, color: 'var(--fg-muted)', marginTop: 8, lineHeight: 1.4 }}>weeks before a complete cardiovascular differential under sequential workup</div>
+        </div>
+        <div style={{ padding: '28px 32px', background: 'var(--ink)' }}>
+          <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--blue)', marginBottom: 10 }}>With CorVista</div>
+          <div style={{ fontFamily: 'var(--f-sans)', fontSize: 56, fontWeight: 700, letterSpacing: '-0.04em', color: '#F4F6F9', lineHeight: 1 }}>3.7</div>
+          <div style={{ fontSize: 15, color: '#98A2B3', marginTop: 8, lineHeight: 1.4 }}>minutes — same visit, same capture, physician-reviewed report</div>
+        </div>
+      </div>
+
       <div className="row row-2" style={{ gap: 24, alignItems: 'stretch' }}>
 
         {/* SOC Column */}
         <div className="compare-col before">
           <div className="meta" style={{ textTransform: 'uppercase', letterSpacing: '0.12em' }}>Standard of care</div>
-          <h4 style={{ marginTop: 12, fontSize: 22, letterSpacing: '-0.01em' }}>Sequential — months to diagnosis.</h4>
+          <h4 style={{ marginTop: 10, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1.3 }}>Three separate workup cycles — each requiring a full restart on a negative result.</h4>
 
-          {SOC_PHASES.map(phase => (
-            <div key={phase.n} className="compare-row" style={{ alignItems: 'start' }}>
-              <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.12em', paddingTop: 3 }}>{phase.n}</span>
-              <div>
-                <div style={{ fontWeight: 600, fontSize: 15 }}>{phase.label}</div>
-                <div style={{ fontSize: 12, color: 'var(--coral)', fontWeight: 600, marginTop: 3 }}>{phase.time}</div>
-                {phase.restart && (
-                  <div style={{ marginTop: 6, fontSize: 12, color: 'var(--fg-muted)', display: 'flex', alignItems: 'center', gap: 5 }}>
-                    {RESTART_SVG} {phase.restart}
-                  </div>
-                )}
+          {SOC_PHASES.map((phase, i) => (
+            <React.Fragment key={phase.n}>
+              <div className="compare-row" style={{ alignItems: 'start' }}>
+                <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.12em', paddingTop: 3 }}>{phase.n}</span>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: 17 }}>{phase.label}</div>
+                  <div style={{ fontSize: 13, color: 'var(--coral)', fontWeight: 700, marginTop: 4, fontFamily: 'var(--f-mono)', letterSpacing: '0.04em' }}>{phase.time} per cycle</div>
+                  <div style={{ fontSize: 14, color: 'var(--fg-muted)', marginTop: 6, lineHeight: 1.55 }}>{phase.detail}</div>
+                </div>
               </div>
-            </div>
+
+              {phase.restart && (
+                <div style={{
+                  marginLeft: 32,
+                  marginTop: -4,
+                  padding: '10px 14px',
+                  background: 'rgba(216,85,40,.05)',
+                  border: '1px solid rgba(216,85,40,.15)',
+                  borderLeft: '3px solid var(--coral)',
+                  borderRadius: 4,
+                }}>
+                  <div style={{ fontSize: 12, fontFamily: 'var(--f-mono)', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--coral)', marginBottom: 5, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    {RESTART_SVG} Workup restarts for {phase.restart.to}
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--fg-muted)', lineHeight: 1.5 }}>{phase.restart.note}</div>
+                </div>
+              )}
+            </React.Fragment>
           ))}
 
-          <div style={{ marginTop: 20, padding: '14px 16px', background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 6, borderLeft: '3px solid var(--coral)' }}>
-            <div style={{ fontFamily: 'var(--f-sans)', fontSize: 28, fontWeight: 700, color: 'var(--coral)', letterSpacing: '-0.02em' }}>50%</div>
-            <div style={{ fontSize: 13, color: 'var(--fg-muted)', marginTop: 4 }}>of patients lost to follow-up between referral cycles</div>
+          {/* Dropout block */}
+          <div style={{ marginTop: 24, padding: '20px', background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 6, borderLeft: '3px solid var(--coral)' }}>
+            <div style={{ display: 'flex', gap: 18, alignItems: 'flex-start' }}>
+              <div style={{ flexShrink: 0 }}>
+                <div style={{ fontFamily: 'var(--f-sans)', fontSize: 44, fontWeight: 700, color: 'var(--coral)', letterSpacing: '-0.04em', lineHeight: 1 }}>50%</div>
+                <div style={{ fontSize: 11, fontFamily: 'var(--f-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--coral)', marginTop: 3 }}>of patients</div>
+              </div>
+              <div style={{ paddingTop: 2 }}>
+                <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--fg)', lineHeight: 1.35 }}>Lost to follow-up between referral cycles</div>
+                <div style={{ fontSize: 13, color: 'var(--fg-muted)', marginTop: 6, lineHeight: 1.6 }}>
+                  Each restart gap is a period without diagnosis. Scheduling fatigue, insurance gaps, and the burden of repeated appointments all compound — while the underlying disease continues to progress untreated.
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div style={{ marginTop: 10, padding: '12px 14px', border: '1px solid var(--rule)', borderRadius: 6, fontSize: 13, fontWeight: 600, color: 'var(--coral)' }}>
-            Months of delays — often no diagnosis
+          <div style={{ marginTop: 12, padding: '14px 16px', border: '1px solid rgba(216,85,40,.25)', borderRadius: 6, fontSize: 14, fontWeight: 600, color: 'var(--coral)', lineHeight: 1.45 }}>
+            Months of delays — and every week of delay is a week of disease progression for the patient.
           </div>
         </div>
 
         {/* CorVista Column */}
         <div className="compare-col after">
           <div className="meta" style={{ textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--blue)' }}>With CorVista</div>
-          <h4 style={{ marginTop: 12, fontSize: 22, letterSpacing: '-0.01em', color: '#F4F6F9' }}>Comprehensive answers — same visit.</h4>
+          <h4 style={{ marginTop: 10, fontSize: 20, letterSpacing: '-0.01em', color: '#F4F6F9', lineHeight: 1.3 }}>One study quarterbacks the full differential — same visit, no restart.</h4>
 
           <div className="compare-row" style={{ alignItems: 'start' }}>
             <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--blue)', letterSpacing: '0.12em', paddingTop: 3 }}>01</span>
             <div>
-              <div style={{ fontWeight: 600, fontSize: 15, color: '#F4F6F9' }}>CorVista Study</div>
-              <div style={{ fontSize: 12, color: 'var(--blue)', fontWeight: 600, marginTop: 3 }}>Single non-invasive capture — 3.7 minutes</div>
+              <div style={{ fontWeight: 600, fontSize: 17, color: '#F4F6F9' }}>Single resting capture</div>
+              <div style={{ fontSize: 13, color: 'var(--blue)', fontWeight: 700, marginTop: 4, fontFamily: 'var(--f-mono)', letterSpacing: '0.04em' }}>3.7 minutes</div>
+              <div style={{ fontSize: 14, color: '#98A2B3', marginTop: 6, lineHeight: 1.55 }}>Non-invasive biosignal acquisition at rest — no exercise, no contrast, no radiation. Applied by a medical assistant in any clinical setting.</div>
             </div>
           </div>
 
           <div className="compare-row" style={{ display: 'block', paddingTop: 20 }}>
-            <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, color: '#98A2B3', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Simultaneous results</div>
+            <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, color: '#98A2B3', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Simultaneous assessment</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
               {[
                 { abbr: 'CAD', full: 'Coronary artery disease' },
                 { abbr: 'PH', full: 'Pulmonary hypertension' },
                 { abbr: 'HFpEF', full: 'Heart failure (preserved EF)' },
               ].map(t => (
-                <div key={t.abbr} style={{ background: 'rgba(91,175,232,.1)', border: '1px solid rgba(91,175,232,.2)', borderRadius: 6, padding: '10px 8px', textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'var(--f-sans)', fontSize: 13, fontWeight: 700, color: 'var(--blue)' }}>{t.abbr}</div>
-                  <div style={{ fontSize: 10, color: '#98A2B3', marginTop: 3, lineHeight: 1.3 }}>{t.full}</div>
+                <div key={t.abbr} style={{ background: 'rgba(91,175,232,.1)', border: '1px solid rgba(91,175,232,.2)', borderRadius: 6, padding: '14px 8px', textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'var(--f-sans)', fontSize: 14, fontWeight: 700, color: 'var(--blue)' }}>{t.abbr}</div>
+                  <div style={{ fontSize: 11, color: '#98A2B3', marginTop: 4, lineHeight: 1.3 }}>{t.full}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div style={{ marginTop: 20, padding: '12px 14px', background: 'rgba(43,196,138,.08)', border: '1px solid rgba(43,196,138,.25)', borderRadius: 6, color: 'var(--green-cv)', fontSize: 13, fontWeight: 600 }}>
-            Targeted next step — same visit
+          <div className="compare-row" style={{ alignItems: 'start' }}>
+            <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--blue)', letterSpacing: '0.12em', paddingTop: 3 }}>02</span>
+            <div>
+              <div style={{ fontWeight: 600, fontSize: 17, color: '#F4F6F9' }}>Physician-reviewed report</div>
+              <div style={{ fontSize: 14, color: '#98A2B3', marginTop: 6, lineHeight: 1.55 }}>Disease probability scores delivered to the portal in minutes. Clinician immediately directs next steps — the right path, on the first visit.</div>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 20, padding: '18px', background: 'rgba(43,196,138,.08)', border: '1px solid rgba(43,196,138,.25)', borderRadius: 6 }}>
+            <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--green-cv)', marginBottom: 8 }}>No lost patients. No wasted cycles.</div>
+            <div style={{ fontSize: 13, color: '#98A2B3', lineHeight: 1.6 }}>Every patient who presents leaves with a clinical direction — regardless of which condition is driving their symptoms. No restarts. No gaps between referrals where patients can fall out of care.</div>
           </div>
         </div>
 
@@ -141,26 +226,26 @@ export function CliniciansPage() {
                 <div className="case-head-title">{c.patient}</div>
               </div>
 
-              <div style={{ padding: '18px 24px', borderBottom: '1px solid var(--rule)' }}>
-                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--green-cv)', marginBottom: 6 }}>Outcome</div>
-                <div style={{ fontSize: 16, fontWeight: 600, letterSpacing: '-0.01em', lineHeight: 1.35 }}>{c.outcome}</div>
+              <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--rule)' }}>
+                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--green-cv)', marginBottom: 8 }}>Outcome</div>
+                <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{c.outcome}</div>
               </div>
 
               {[
                 { ...c.before, mono: 'var(--mid)', fg: 'var(--fg-muted)' },
                 { ...c.cv, mono: 'var(--blue-deep)', fg: 'var(--fg)' },
               ].map((row, j) => (
-                <div key={j} style={{ padding: '14px 24px', borderBottom: '1px solid var(--rule)', display: 'grid', gridTemplateColumns: '110px 1fr', gap: 16, alignItems: 'start' }}>
-                  <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em', color: row.mono, lineHeight: 1.4, paddingTop: 2 }}>{row.label}</div>
-                  <div style={{ fontSize: 14, color: row.fg, lineHeight: 1.55 }}>{row.text}</div>
+                <div key={j} style={{ padding: '16px 24px', borderBottom: '1px solid var(--rule)', display: 'grid', gridTemplateColumns: '120px 1fr', gap: 16, alignItems: 'start' }}>
+                  <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em', color: row.mono, lineHeight: 1.5, paddingTop: 2 }}>{row.label}</div>
+                  <div style={{ fontSize: 15, color: row.fg, lineHeight: 1.6 }}>{row.text}</div>
                 </div>
               ))}
 
-              <div style={{ padding: '14px 24px', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                <svg width="14" height="14" viewBox="0 0 20 20" fill="var(--green-cv)" style={{ marginTop: 2, flexShrink: 0 }} aria-hidden="true">
+              <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="var(--green-cv)" style={{ marginTop: 2, flexShrink: 0 }} aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span style={{ fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.5 }}>{c.dx}</span>
+                <span style={{ fontSize: 15, color: 'var(--fg-muted)', lineHeight: 1.55 }}>{c.dx}</span>
               </div>
 
               <div className="case-cite">{c.cite}</div>
