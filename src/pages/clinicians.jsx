@@ -21,11 +21,11 @@ const SOC_PHASES = [
     label: 'PH Workup',
     time: '6–8 more weeks',
     detail: 'Echocardiography, V/Q scan, and potentially right heart catheterization — requiring a separate specialist from the CAD workup.',
-    restart: { to: 'HFpEF workup', note: 'Third restart — often the last referral patients will attempt.' },
+    restart: { to: 'heart failure workup', note: 'Third restart — often the last referral patients will attempt.' },
   },
   {
     n: '03',
-    label: 'HFpEF Workup',
+    label: 'Heart Failure Workup',
     time: '6–8+ more weeks',
     detail: 'Stress echocardiography, cardiac MRI, or invasive hemodynamic testing — frequently the most time-consuming cycle to complete.',
     restart: null,
@@ -143,7 +143,7 @@ function WorkflowComparison() {
               {[
                 { abbr: 'CAD', full: 'Coronary artery disease' },
                 { abbr: 'PH', full: 'Pulmonary hypertension' },
-                { abbr: 'HFpEF', full: 'Heart failure (preserved EF)' },
+                { abbr: 'HF', full: 'Heart failure' },
               ].map(t => (
                 <div key={t.abbr} style={{ background: 'rgba(91,175,232,.1)', border: '1px solid rgba(91,175,232,.2)', borderRadius: 6, padding: '14px 8px', textAlign: 'center' }}>
                   <div style={{ fontFamily: 'var(--f-sans)', fontSize: 14, fontWeight: 700, color: 'var(--blue)' }}>{t.abbr}</div>
@@ -161,9 +161,17 @@ function WorkflowComparison() {
             </div>
           </div>
 
-          <div style={{ marginTop: 20, padding: '18px', background: 'rgba(43,196,138,.08)', border: '1px solid rgba(43,196,138,.25)', borderRadius: 6 }}>
-            <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--green-cv)', marginBottom: 8 }}>No lost patients. No wasted cycles.</div>
-            <div style={{ fontSize: 13, color: '#98A2B3', lineHeight: 1.6 }}>Every patient who presents leaves with a clinical direction — regardless of which condition is driving their symptoms. No restarts. No gaps between referrals where patients can fall out of care.</div>
+          <div style={{ marginTop: 20, padding: '20px', background: 'rgba(43,196,138,.08)', border: '1px solid rgba(43,196,138,.3)', borderRadius: 6, borderLeft: '3px solid var(--green-cv)' }}>
+            <div style={{ display: 'flex', gap: 18, alignItems: 'flex-start' }}>
+              <div style={{ flexShrink: 0 }}>
+                <div style={{ fontFamily: 'var(--f-sans)', fontSize: 44, fontWeight: 700, color: 'var(--green-cv)', letterSpacing: '-0.04em', lineHeight: 1 }}>0</div>
+                <div style={{ fontSize: 11, fontFamily: 'var(--f-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--green-cv)', marginTop: 3 }}>restarts</div>
+              </div>
+              <div style={{ paddingTop: 2 }}>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#F4F6F9', lineHeight: 1.35 }}>Every patient leaves with a clinical direction — same visit</div>
+                <div style={{ fontSize: 13, color: '#98A2B3', marginTop: 6, lineHeight: 1.6 }}>No new referrals. No gaps between cycles where patients fall out of care. One capture, all three answers, clinician directs next steps immediately.</div>
+              </div>
+            </div>
           </div>
         </div>
 

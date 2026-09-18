@@ -20,7 +20,7 @@ function useReveal(threshold = 0.15) {
 const MILESTONES = [
   { status: 'done', date: '2023', title: 'FDA Clearance — CAD', detail: 'CorVista System cleared for coronary artery disease indication.', code: null },
   { status: 'done', date: '2024', title: 'FDA Clearance — PH', detail: 'Pulmonary hypertension indication cleared. CPT unlisted code 93799 enabled case-by-case reimbursement.', code: null },
-  { status: 'done', date: 'Jul 2026', title: 'FDA Clearance — PCWP', detail: 'Pulmonary capillary wedge pressure / HFpEF indication cleared.', code: null },
+  { status: 'done', date: 'Jul 2026', title: 'FDA Clearance — PCWP', detail: 'Pulmonary capillary wedge pressure / heart failure indication cleared.', code: null },
   { status: 'done', date: 'May 2026', title: 'CPT Category III Code Accepted', detail: 'AMA Editorial Panel accepted CPT 1104T with ACC endorsement. The first trackable reimbursement path for CorVista.', code: 'CPT 1104T' },
   { status: 'active', date: '2026–2027', title: 'Novitas MAC Pricing + Medicare Revenue', detail: '3–4 months post Category III acceptance. Nominal Medicare coverage enables first reimbursed scaling.', code: null },
   { status: 'future', date: '1H 2027', title: 'First Commercial Payor Contracts', detail: 'Technology assessment and medical coverage review underway with commercial health plans.', code: null },

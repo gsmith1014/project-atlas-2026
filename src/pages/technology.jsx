@@ -130,7 +130,7 @@ export function TechnologyPage() {
             {[
               { slug: 'tech-cad', eyebrow: 'CAD', label: 'Coronary artery disease', desc: 'Functionally significant obstructive coronary disease in stable, symptomatic patients.', metric: 'Sensitivity 88% · Specificity 51% · NPV 99%' },
               { slug: 'tech-ph', eyebrow: 'PH', label: 'Pulmonary hypertension', desc: 'Elevated pulmonary artery pressure consistent with PH — at the front line of care.', metric: 'Sensitivity 82% · Specificity 92% · NPV >99%' },
-              { slug: 'tech-pcwp', eyebrow: 'PCWP', label: 'Pulmonary Capillary Wedge Pressure', desc: 'Increased wedge pressure, consistent with heart failure with preserved ejection fraction.', metric: 'Sensitivity 82% · Specificity 83% · NPV >99%' },
+              { slug: 'tech-pcwp', eyebrow: 'PCWP', label: 'Pulmonary Capillary Wedge Pressure', desc: 'Elevated left-sided filling pressures, consistent with heart failure — both preserved and reduced ejection fraction.', metric: 'Sensitivity 82% · Specificity 83% · NPV >99%' },
             ].map((m, i) => (
               <NavA key={i} to={m.slug} className={`disease-card${i === 0 ? ' first' : ''}`}>
                 <div className="chip chip-blue">{m.eyebrow}</div>
