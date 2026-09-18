@@ -210,50 +210,82 @@ export function CliniciansPage() {
         <div className="case-grid">
           {[
             {
+              n: '01',
               pub: 'JACC: Case Reports · 2025',
               patient: '75-year-old woman — atrial fibrillation, worsening dyspnea, fatigue, and palpitations',
-              outcome: '6 years of missed diagnosis resolved with one test',
-              before: { label: 'Standard workup', text: 'Three echocardiograms, all negative for PH. Six years of evaluation, equivocal stress test — workup pointing toward coronary disease.' },
-              cv: { label: 'CorVista PH test', text: 'Returned positive (LR+ 10.3), prompting right heart catheterization. mPAP 35 mmHg · PCWP 31 mmHg · No significant CAD confirmed.' },
-              dx: 'Group 2 PH / HFpEF — referred to PH specialist, started on SGLT2 inhibitor',
+              heroStat: '6', heroUnit: 'years',
+              heroDesc: 'of evaluation — three echocardiograms, all negative — without a diagnosis',
+              before: {
+                title: 'What standard care found',
+                text: 'Three echocardiograms over six years, all negative for pulmonary hypertension. An equivocal stress test had the workup pointing toward coronary disease — cardiac catheterization was being planned.',
+              },
+              cv: {
+                title: 'What CorVista found',
+                text: 'CorVista PH test returned positive — likelihood ratio +10.3. Right heart catheterization was added to the planned procedure.',
+                findings: ['mPAP 35 mmHg', 'PCWP 31 mmHg', 'No obstructive CAD'],
+              },
+              dx: 'Group 2 PH / HFpEF confirmed — referred to pulmonary hypertension specialist and started on SGLT2 inhibitor',
               cite: 'Aben R, Burton T, Fathieh F, et al. J Am Coll Cardiol Case Rep. 2025;30(26):104876.',
             },
             {
+              n: '02',
               pub: 'European Heart Journal — Case Reports · 2026',
-              patient: '63-year-old man — exertional chest pain, multiple risk factors, family history of CAD',
-              outcome: '3 negative standard-of-care tests — severe multivessel CAD still found',
-              before: { label: 'Standard workup', text: 'Pretest risk 35–44%. Normal echocardiogram, negative SPECT nuclear perfusion — no indication for catheterization.' },
-              cv: { label: 'CorVista CAD test', text: 'Score 0.20, positive — sent to catheterization. 80% LAD · 2× 80% LCX · Subtotal RCA occlusion. Four lesions stented.' },
-              dx: 'Severe multivessel CAD — balanced ischemia that three prior tests missed, four lesions stented',
+              patient: '63-year-old man — exertional chest pain, multiple cardiovascular risk factors, family history of CAD',
+              heroStat: '3', heroUnit: 'tests',
+              heroDesc: 'returned negative — severe multivessel disease was found on the fourth',
+              before: {
+                title: 'What standard care found',
+                text: 'Normal echocardiogram. Negative SPECT nuclear perfusion imaging. With a pretest CAD risk of 35–44%, the standard workup returned no indication for catheterization.',
+              },
+              cv: {
+                title: 'What CorVista found',
+                text: 'CorVista CAD score 0.20 — positive. Patient sent directly to invasive cardiac catheterization.',
+                findings: ['80% LAD stenosis', '2× 80% LCX stenosis', 'Subtotal RCA occlusion', '4 lesions stented'],
+              },
+              dx: 'Severe multivessel CAD confirmed and treated — balanced ischemia that three standard-of-care tests missed',
               cite: 'Alkhawam M, et al. European Heart Journal — Case Reports. 2026;10(2):ytag016.',
             },
-          ].map((c, i) => (
-            <div key={i} className="case-card">
+          ].map((c) => (
+            <div key={c.n} className="case-card">
+
+              {/* Dark header */}
               <div className="case-head">
-                <div className="case-head-eyebrow">Case study · Published {c.pub}</div>
+                <div className="case-head-eyebrow">Case {c.n} · Published {c.pub}</div>
                 <div className="case-head-title">{c.patient}</div>
               </div>
 
-              <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--rule)' }}>
-                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--green-cv)', marginBottom: 8 }}>Outcome</div>
-                <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.3 }}>{c.outcome}</div>
+              {/* Hero stat — the hook */}
+              <div className="case-hero">
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+                  <span className="case-hero-num">{c.heroStat}</span>
+                  <span className="case-hero-unit">{c.heroUnit}</span>
+                </div>
+                <div className="case-hero-desc">{c.heroDesc}</div>
               </div>
 
-              {[
-                { ...c.before, mono: 'var(--mid)', fg: 'var(--fg-muted)' },
-                { ...c.cv, mono: 'var(--blue-deep)', fg: 'var(--fg)' },
-              ].map((row, j) => (
-                <div key={j} style={{ padding: '16px 24px', borderBottom: '1px solid var(--rule)', display: 'grid', gridTemplateColumns: '120px 1fr', gap: 16, alignItems: 'start' }}>
-                  <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em', color: row.mono, lineHeight: 1.5, paddingTop: 2 }}>{row.label}</div>
-                  <div style={{ fontSize: 15, color: row.fg, lineHeight: 1.6 }}>{row.text}</div>
+              {/* Before / After narrative */}
+              <div className="case-body-grid">
+                <div className="case-before">
+                  <div className="case-zone-label">{c.before.title}</div>
+                  <p className="case-zone-body">{c.before.text}</p>
                 </div>
-              ))}
+                <div className="case-after">
+                  <div className="case-zone-label">{c.cv.title}</div>
+                  <p className="case-zone-body">{c.cv.text}</p>
+                  <div className="case-findings">
+                    {c.cv.findings.map((f, i) => (
+                      <div key={i} className="case-finding">{f}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-              <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                <svg width="15" height="15" viewBox="0 0 20 20" fill="var(--green-cv)" style={{ marginTop: 2, flexShrink: 0 }} aria-hidden="true">
+              {/* Outcome */}
+              <div className="case-outcome-row">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="var(--green-cv)" style={{ marginTop: 3, flexShrink: 0 }} aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span style={{ fontSize: 15, color: 'var(--fg-muted)', lineHeight: 1.55 }}>{c.dx}</span>
+                <span className="case-outcome-text">{c.dx}</span>
               </div>
 
               <div className="case-cite">{c.cite}</div>

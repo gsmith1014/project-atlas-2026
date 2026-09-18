@@ -1279,17 +1279,18 @@ p { margin: 0; }
 }
 
 /* ── Case study vignettes ────────────────────────────────────── */
-.case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-@media (max-width: 760px) { .case-grid { grid-template-columns: 1fr; } }
+.case-grid { display: flex; flex-direction: column; gap: 64px; }
 
 .case-card {
   border: 1px solid var(--rule);
   border-radius: 6px;
   overflow: hidden;
 }
+
+/* Header */
 .case-head {
   background: var(--ink, #212935);
-  padding: 20px 24px;
+  padding: 28px 40px;
   color: #F4F6F9;
 }
 .case-head-eyebrow {
@@ -1298,67 +1299,124 @@ p { margin: 0; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blue, #5DB4E8);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .case-head-title {
   font-family: var(--f-sans);
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.35;
 }
-.case-steps {
+
+/* Hero stat — the hook */
+.case-hero {
+  padding: 36px 40px 32px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper, #F4F6F9);
+}
+.case-hero-num {
+  font-family: var(--f-sans);
+  font-size: 80px;
+  font-weight: 700;
+  color: var(--coral, #E8694A);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.case-hero-unit {
+  font-family: var(--f-sans);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--mid, #6B7280);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.case-hero-desc {
+  margin-top: 12px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--fg-muted, #6B7280);
+  max-width: 60ch;
+}
+
+/* Before / After narrative body */
+.case-body-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
 }
-.case-step {
-  padding: 20px 20px;
+@media (max-width: 680px) { .case-body-grid { grid-template-columns: 1fr; } }
+
+.case-before {
+  padding: 32px 40px;
   border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+  background: var(--paper, #F4F6F9);
 }
-.case-step:nth-child(even) { border-right: none; }
-.case-step:nth-child(3), .case-step:nth-child(4) { border-bottom: none; }
-.case-step.cv-step {
+@media (max-width: 680px) { .case-before { border-right: none; border-bottom: 1px solid var(--rule); } }
+
+.case-after {
+  padding: 32px 40px;
   background: var(--blue-tint, #E6F2FB);
-  border-color: #A8D4EF;
+  border-left: 3px solid var(--blue, #5DB4E8);
 }
-.case-step-n {
+
+.case-zone-label {
   font-family: var(--f-mono);
   font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mid, #6B7280);
-  margin-bottom: 6px;
-}
-.case-step.cv-step .case-step-n { color: var(--blue-deep, #2E7DC1); }
-.case-step-title {
-  font-family: var(--f-sans);
-  font-size: 12px;
   font-weight: 700;
-  color: var(--fg, #212935);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
+  letter-spacing: 0.14em;
+  color: var(--mid, #6B7280);
+  margin-bottom: 14px;
 }
-.case-step.cv-step .case-step-title { color: var(--blue-deep, #2E7DC1); }
-.case-step-body {
-  font-size: 13px;
-  line-height: 1.55;
+.case-after .case-zone-label { color: var(--blue-deep, #2E7DC1); }
+
+.case-zone-body {
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--fg-muted, #6B7280);
+  margin: 0 0 20px;
 }
-.case-outcome {
-  padding: 14px 20px;
+.case-after .case-zone-body { color: var(--fg, #212935); }
+
+/* Key findings — mono pills */
+.case-findings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+.case-finding {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--blue-deep, #2E7DC1);
+  background: rgba(93, 180, 232, 0.12);
+  border: 1px solid rgba(93, 180, 232, 0.3);
+  border-radius: 4px;
+  padding: 5px 10px;
+  display: inline-block;
+  width: fit-content;
+}
+
+/* Outcome */
+.case-outcome-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 40px;
   background: #EBFAF3;
   border-top: 1px solid #9DE8CC;
-  font-size: 12px;
+}
+.case-outcome-text {
+  font-size: 15px;
   font-weight: 600;
   color: #1A8A60;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  line-height: 1.45;
 }
+
+/* Citation */
 .case-cite {
-  padding: 10px 20px;
+  padding: 12px 40px;
   background: var(--paper-2, #E5E9EE);
   font-family: var(--f-mono);
   font-size: 10px;
@@ -1366,11 +1424,18 @@ p { margin: 0; }
   color: var(--mid, #6B7280);
   line-height: 1.4;
 }
+
+/* Dark mode */
 [data-theme="dark"] .case-card { border-color: #1F2A3D; }
-[data-theme="dark"] .case-step { background: #131C2C; border-color: #1F2A3D; }
-[data-theme="dark"] .case-step.cv-step { background: #0A1F35; border-color: #1B3A56; }
+[data-theme="dark"] .case-hero { background: #131C2C; border-color: #1F2A3D; }
+[data-theme="dark"] .case-before { background: #131C2C; border-color: #1F2A3D; }
+[data-theme="dark"] .case-after { background: #0A1F35; border-color: #1B3A56; border-left-color: var(--blue, #5DB4E8); }
+[data-theme="dark"] .case-after .case-zone-body { color: #C8D0DC; }
+[data-theme="dark"] .case-zone-body { color: #98A2B3; }
+[data-theme="dark"] .case-finding { color: #5BAFE8; background: rgba(91,175,232,.1); border-color: rgba(91,175,232,.25); }
 [data-theme="dark"] .case-cite { background: #1A2535; }
-[data-theme="dark"] .case-outcome { background: #05200F; border-color: #166534; color: #2BC48A; }
+[data-theme="dark"] .case-outcome-row { background: #05200F; border-color: #166534; }
+[data-theme="dark"] .case-outcome-text { color: #2BC48A; }
 
 /* ── ECG comparison table ────────────────────────────────────── */
 .ecg-compare {
