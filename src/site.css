@@ -1355,7 +1355,7 @@ p { margin: 0; }
 
 .case-after {
   padding: 32px 40px;
-  background: var(--blue-tint, #E6F2FB);
+  background: var(--ink, #212935);
   border-left: 3px solid var(--blue, #5DB4E8);
 }
 
@@ -1368,7 +1368,7 @@ p { margin: 0; }
   color: var(--mid, #6B7280);
   margin-bottom: 14px;
 }
-.case-after .case-zone-label { color: var(--blue-deep, #2E7DC1); }
+.case-after .case-zone-label { color: var(--blue, #5DB4E8); }
 
 .case-zone-body {
   font-size: 15px;
@@ -1376,7 +1376,7 @@ p { margin: 0; }
   color: var(--fg-muted, #6B7280);
   margin: 0 0 20px;
 }
-.case-after .case-zone-body { color: var(--fg, #212935); }
+.case-after .case-zone-body { color: #C8D0DC; }
 
 /* Key findings — mono pills */
 .case-findings {
@@ -1397,21 +1397,28 @@ p { margin: 0; }
   display: inline-block;
   width: fit-content;
 }
+.case-after .case-finding {
+  color: #5BAFE8;
+  background: rgba(93, 180, 232, 0.18);
+  border-color: rgba(93, 180, 232, 0.4);
+  font-size: 13px;
+  padding: 7px 12px;
+}
 
-/* Outcome */
+/* Outcome — the resolution, given full visual weight */
 .case-outcome-row {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 20px 40px;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 40px;
   background: #EBFAF3;
-  border-top: 1px solid #9DE8CC;
+  border-top: 3px solid #2BC48A;
 }
 .case-outcome-text {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: #1A8A60;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 /* Citation */
@@ -1429,8 +1436,8 @@ p { margin: 0; }
 [data-theme="dark"] .case-card { border-color: #1F2A3D; }
 [data-theme="dark"] .case-hero { background: #131C2C; border-color: #1F2A3D; }
 [data-theme="dark"] .case-before { background: #131C2C; border-color: #1F2A3D; }
-[data-theme="dark"] .case-after { background: #0A1F35; border-color: #1B3A56; border-left-color: var(--blue, #5DB4E8); }
-[data-theme="dark"] .case-after .case-zone-body { color: #C8D0DC; }
+[data-theme="dark"] .case-after { background: #091522; border-left-color: var(--blue, #5DB4E8); }
+[data-theme="dark"] .case-after .case-zone-body { color: #A8B4C4; }
 [data-theme="dark"] .case-zone-body { color: #98A2B3; }
 [data-theme="dark"] .case-finding { color: #5BAFE8; background: rgba(91,175,232,.1); border-color: rgba(91,175,232,.25); }
 [data-theme="dark"] .case-cite { background: #1A2535; }
@@ -1496,6 +1503,14 @@ p { margin: 0; }
 [data-theme="dark"] .ecg-cell { border-color: #1F2A3D; }
 [data-theme="dark"] .ecg-compare { border-color: #1F2A3D; }
 .ecg-cell-dim { font-size: 14px; color: var(--fg-muted); }
+
+/* ECG comparison scroll reveal */
+.ecg-compare .ecg-row {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.ecg-compare.revealed .ecg-row { opacity: 1; transform: none; }
 
 /* ── Pipeline chart ──────────────────────────────────────────── */
 .pipeline { display: flex; flex-direction: column; gap: 20px; }

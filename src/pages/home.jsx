@@ -4,7 +4,7 @@ import { CountUp } from '../hooks.jsx';
 import heroImg from '/hero-clinician.jpg';
 import tracyImg from '/tracy-neal.jpg';
 
-function HeroEditorial({ tweaks }) {
+function HeroEditorial() {
   return (
     <div className="hero">
       <div className="container">
@@ -15,13 +15,13 @@ function HeroEditorial({ tweaks }) {
         <div className="hero-grid" style={{ gridTemplateColumns: '1.55fr 1fr', gap: 56 }}>
           <div>
             <h1 className="hero-title">
-              Find heart<br />
-              disease <span className="em">earlier.</span><br />
-              At the point<br />
-              of care.
+              Half of all<br />
+              heart attacks<br />
+              happen without<br />
+              <span className="em">warning.</span>
             </h1>
-            <p className="lead" style={{ marginTop: 36, maxWidth: '46ch' }}>
-              CorVista is the world's most comprehensive front-line cardiovascular test.
+            <p className="lead" style={{ marginTop: 36, maxWidth: '48ch' }}>
+              The front-line cardiovascular test hasn't changed in forty years. CorVista changes what the first conversation looks like — three conditions, one 3.7-minute scan, same visit.
             </p>
             <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
               <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
@@ -29,7 +29,7 @@ function HeroEditorial({ tweaks }) {
             </div>
           </div>
           <div>
-            <img src={heroImg} alt="Clinician with patient at point of care" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
+            <img src={heroImg} alt="Clinician using CorVista with patient at point of care" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
               <span>FIG. 01</span>
               <span>Point-of-care testing</span>
@@ -44,130 +44,8 @@ function HeroEditorial({ tweaks }) {
   );
 }
 
-function HeroSplit({ tweaks }) {
-  return (
-    <div className="hero-split">
-      <div className="hero-split-left">
-        <div className="hero-eyebrow">
-          <Eyebrow>FDA-cleared</Eyebrow>
-          <span className="tag">CorVista® System</span>
-        </div>
-        <div>
-          <h1 className="hero-title" style={{ fontSize: 'clamp(46px, 6.2vw, 96px)' }}>
-            A new <span className="em">front line</span><br />
-            for cardiovascular<br />
-            care.
-          </h1>
-          <p className="lead" style={{ marginTop: 28, maxWidth: '44ch' }}>
-            One non-invasive test. Three conditions: coronary artery disease, pulmonary hypertension, and reduced left-ventricular ejection fraction. Results in minutes.
-          </p>
-          <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
-            <Btn variant="ghost" onClick={() => navTo('evidence')}>Read the evidence</Btn>
-          </div>
-        </div>
-      </div>
-      <div className="hero-split-right" style={{ color: '#F4F6F9' }}>
-        <div>
-          <div className="eyebrow" style={{ color: '#98A2B3' }}>
-            <span className="dot"></span>Clinical impact
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginTop: 56 }}>
-            <Stat label="PH costs" value="−44" unit="%" desc="Reduction in pulmonary hypertension diagnostic & care costs." />
-            <Stat label="CAD pathway" value="−32" unit="%" desc="Reduction in CAD diagnostic pathway cost." />
-            <Stat label="Cath lab yield" value="+21" unit="%" desc="Improvement vs SPECT." />
-            <Stat label="Time to result" value="<8" unit="min" desc="From scan to physician-reviewed report." />
-          </div>
-        </div>
-        <div style={{ position: 'relative' }}>
-          <EcgLine color="#5BAFE8" height={64} />
-          <div style={{ marginTop: 14, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#98A2B3', letterSpacing: '0.14em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between' }}>
-            <span>Lead I · 25 mm/s</span>
-            <span>CorVista signal acquisition</span>
-          </div>
-        </div>
-        <div className="ring" style={{ width: 520, height: 520, right: -180, bottom: -180 }}></div>
-        <div className="ring" style={{ width: 320, height: 320, right: -80, bottom: -80 }}></div>
-      </div>
-    </div>
-  );
-}
-
-function HeroDataViz({ tweaks }) {
-  return (
-    <div className="hero" style={{ paddingBottom: 80 }}>
-      <div className="container">
-        <div className="hero-eyebrow">
-          <Eyebrow>The CorVista® System</Eyebrow>
-          <span className="tag">FDA-cleared · CAD · PH · PCWP</span>
-        </div>
-        <h1 className="hero-title" style={{ fontSize: 'clamp(56px, 9.2vw, 168px)', marginBottom: 56 }}>
-          The most comprehensive<br />
-          <span className="em">front-line</span> cardiovascular<br />
-          test ever built.
-        </h1>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 64, alignItems: 'end' }}>
-          <div>
-            <p className="lead" style={{ maxWidth: '56ch' }}>
-              CorVista finds disease that other front-line tests miss — quickly, safely, and without sending patients down expensive pathways for answers we can deliver in minutes.
-            </p>
-            <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-              <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
-              <Btn variant="link" onClick={() => navTo('evidence')}>50+ peer-reviewed publications</Btn>
-            </div>
-          </div>
-          <div style={{ borderLeft: '1px solid var(--rule)', paddingLeft: 32 }}>
-            <Stat label="Reduction in PH diagnostic costs" value="−44" unit="%" big />
-            <div className="meta" style={{ marginTop: 16 }}>
-              Source: CorVista Health analysis of total cost of care, 2025.
-            </div>
-          </div>
-        </div>
-        <div style={{ marginTop: 72 }}>
-          <EcgLine height={52} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HeroPatient({ tweaks }) {
-  return (
-    <div className="hero" style={{ padding: 0, position: 'relative' }}>
-      <div style={{ position: 'relative', minHeight: '76vh', background: 'var(--ink)', color: '#F4F6F9', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0 }}>
-          <div style={{ width: '100%', height: '100%', background: '#0d1e33' }} />
-        </div>
-        <div className="container" style={{ position: 'relative', zIndex: 2, paddingTop: 96, paddingBottom: 80, minHeight: '76vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div className="hero-eyebrow">
-            <Eyebrow><span style={{ color: '#98A2B3' }}>Why CorVista</span></Eyebrow>
-          </div>
-          <div>
-            <h1 className="hero-title" style={{ color: '#F4F6F9', fontSize: 'clamp(48px, 7.6vw, 132px)', maxWidth: '14ch' }}>
-              Half of all<br />
-              heart attacks happen<br />
-              <span className="em" style={{ color: '#5BAFE8' }}>without warning.</span>
-            </h1>
-            <p className="lead" style={{ color: '#C8D0DC', maxWidth: '50ch', marginTop: 28 }}>
-              CorVista is changing that — bringing comprehensive cardiovascular testing into every primary care office, in the first conversation about chest pain.
-            </p>
-            <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-              <Btn variant="primary" onClick={() => navTo('patients')}>For patients</Btn>
-              <Btn variant="ghost" onClick={() => navTo('technology')}>See the science</Btn>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Hero({ tweaks }) {
-  const v = tweaks.heroVariant;
-  if (v === 'split') return <HeroSplit tweaks={tweaks} />;
-  if (v === 'dataviz') return <HeroDataViz tweaks={tweaks} />;
-  if (v === 'patient') return <HeroPatient tweaks={tweaks} />;
-  return <HeroEditorial tweaks={tweaks} />;
+function Hero() {
+  return <HeroEditorial />;
 }
 
 export function HomePage({ tweaks }) {
@@ -205,11 +83,14 @@ export function HomePage({ tweaks }) {
 
   return (
     <div className="page-fade" data-screen-label="01 Home" data-page="home">
-      <Hero tweaks={tweaks} />
+      <Hero />
 
       <Marquee items={[
-        'FDA-cleared', 'Breakthrough Designated', '10,000+ Patients Studied', '20+ peer-reviewed publications',
-        'CAD · PH · PCWP', 'No Stress', 'No radiation', 'No contrast'
+        '99% NPV for CAD', '>99% NPV for PH', '>99% NPV for PCWP',
+        'FDA-cleared · 3 indications', 'Breakthrough Designated',
+        '10,000+ patients validated', '50+ peer-reviewed publications',
+        '3.7 minutes · first-visit answer', '−44% PH cost of care',
+        '+21% cath yield vs SPECT', '40+ active clinical sites',
       ]} />
 
       {/* Problem stats section */}

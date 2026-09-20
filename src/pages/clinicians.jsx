@@ -106,7 +106,9 @@ function WorkflowComparison() {
           <div style={{ marginTop: 24, padding: '20px', background: 'var(--card)', border: '1px solid var(--rule)', borderRadius: 6, borderLeft: '3px solid var(--coral)' }}>
             <div style={{ display: 'flex', gap: 18, alignItems: 'flex-start' }}>
               <div style={{ flexShrink: 0 }}>
-                <div style={{ fontFamily: 'var(--f-sans)', fontSize: 44, fontWeight: 700, color: 'var(--coral)', letterSpacing: '-0.04em', lineHeight: 1 }}>50%</div>
+                <div style={{ fontFamily: 'var(--f-sans)', fontSize: 44, fontWeight: 700, color: 'var(--coral)', letterSpacing: '-0.04em', lineHeight: 1 }}>
+                  <CountUp end={50} suffix="%" duration={1400} />
+                </div>
                 <div style={{ fontSize: 11, fontFamily: 'var(--f-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--coral)', marginTop: 3 }}>of patients</div>
               </div>
               <div style={{ paddingTop: 2 }}>
@@ -297,7 +299,11 @@ export function CliniciansPage() {
       <Section>
         <SectionHeader eyebrow="The workflow" title="Fits the way you already work." />
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.5fr', gap: 64 }}>
-          <ImgPh label="CorVista in clinic — workflow shot" ratio="3/4" />
+          <img
+            src="/hero-clinician.jpg"
+            alt="Clinician applying CorVista sensors at the point of care"
+            style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center top', display: 'block', borderRadius: 4 }}
+          />
           <div className="row" style={{ gap: 0 }}>
             {[
               { n: '01', t: 'Identify candidates', c: 'Symptomatic patients with chest discomfort, dyspnea, or unexplained fatigue.' },

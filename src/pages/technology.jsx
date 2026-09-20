@@ -53,6 +53,7 @@ function PipelineChart() {
 }
 
 export function TechnologyPage() {
+  const [tableRef, tableVisible] = useReveal(0.15);
   return (
     <div className="page-fade" data-screen-label="02 Technology" data-page="technology">
       <div className="subhero">
@@ -85,38 +86,44 @@ export function TechnologyPage() {
         </div>
       </Section>
 
-      <Section dark>
-        <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.2fr', gap: 80, alignItems: 'center' }}>
-          <div>
-            <Eyebrow><span style={{ color: '#98A2B3' }}>The science</span></Eyebrow>
-            <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(40px, 5vw, 72px)' }}>
-              Cardiac Phase Space Tomography.
-            </h2>
-            <p className="lead" style={{ color: '#C8D0DC', marginTop: 24 }}>
-              CPST is a mathematical reconstruction technique: rather than analyzing waveforms in time, it reconstructs the heart's behavior across multiple dimensions of state space — revealing structural and functional patterns that conventional ECG and front-line tests cannot resolve.
-            </p>
-            <ul className="bullets" style={{ color: '#F4F6F9', marginTop: 32 }}>
+      {/* CPST — full-bleed section, raw <section> to break out of container */}
+      <section style={{ background: 'var(--ink)', overflow: 'hidden' }}>
+        <div className="container" style={{ paddingTop: 80, paddingBottom: 64 }}>
+          <Eyebrow><span style={{ color: '#98A2B3' }}>The science</span></Eyebrow>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, marginTop: 28, alignItems: 'start' }}>
+            <div>
+              <h2 style={{ color: '#F4F6F9', fontSize: 'clamp(40px, 5vw, 72px)', marginTop: 0 }}>
+                Cardiac Phase Space Tomography.
+              </h2>
+              <p className="lead" style={{ color: '#C8D0DC', marginTop: 24 }}>
+                CPST is a mathematical reconstruction technique: rather than analyzing waveforms in time, it reconstructs the heart's behavior across multiple dimensions of state space — revealing structural and functional patterns that conventional ECG and front-line tests cannot resolve.
+              </p>
+            </div>
+            <ul className="bullets" style={{ color: '#F4F6F9', margin: 0, paddingTop: 20 }}>
               <li>Patented signal reconstruction across 12+ dimensions</li>
               <li>Trained against gold-standard truth labels (angiography, RHC, MRI)</li>
               <li>Continuously validated through real-world deployment</li>
             </ul>
           </div>
-          <div style={{ position: 'relative' }}>
-            <iframe
-              src="/phase-viz.html"
-              title="Phase-space visualization — CPST reconstruction"
-              style={{ width: '100%', aspectRatio: '1/1', border: 'none', display: 'block', borderRadius: 4 }}
-              loading="lazy"
-            />
-            <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5BAFE8', letterSpacing: '0.14em', textTransform: 'uppercase', background: '#0B1320', padding: '6px 10px', border: '1px solid #25324A' }}>
-              FIG. 02 — CPST RECONSTRUCTION
-            </div>
+        </div>
+        {/* Full-bleed visualization */}
+        <div style={{ position: 'relative', width: '100%', height: 'min(72vh, 680px)', overflow: 'hidden' }}>
+          <iframe
+            src="/phase-viz.html"
+            title="Phase-space visualization — CPST reconstruction"
+            style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+            loading="lazy"
+          />
+          <div style={{ position: 'absolute', bottom: 20, right: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5BAFE8', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(11,19,32,0.85)', padding: '8px 12px', border: '1px solid #25324A', borderRadius: 4 }}>
+            FIG. 02 — CPST RECONSTRUCTION
           </div>
         </div>
-        <div style={{ marginTop: 80, paddingTop: 40, borderTop: '1px solid #1F2A3D' }}>
-          <EcgLine color="#5BAFE8" height={80} segments={10} />
+        <div style={{ borderTop: '1px solid #1F2A3D' }}>
+          <div className="container" style={{ paddingTop: 40, paddingBottom: 64 }}>
+            <EcgLine color="#5BAFE8" height={80} segments={10} />
+          </div>
         </div>
-      </Section>
+      </section>
 
       <Section>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.4fr', gap: 80 }}>
@@ -264,7 +271,7 @@ export function TechnologyPage() {
               Both signals — electrical (OVG) and hemodynamic (PPG) — are captured simultaneously, revealing the interface where most cardiac disease actually lives.
             </p>
           </div>
-          <div className="ecg-compare">
+          <div ref={tableRef} className={`ecg-compare${tableVisible ? ' revealed' : ''}`}>
             <div className="ecg-compare-head">
               <div className="ecg-compare-head-cell">Metric</div>
               <div className="ecg-compare-head-cell">Standard ECG</div>
@@ -278,7 +285,7 @@ export function TechnologyPage() {
               { label: 'Hemodynamic data', ecg: 'None', cv: 'Full PPG channel' },
               { label: 'Respiration signal', ecg: 'None', cv: 'Captured' },
             ].map((row, i) => (
-              <div key={i} className="ecg-row">
+              <div key={i} className="ecg-row" style={{ transitionDelay: tableVisible ? `${i * 80}ms` : '0ms' }}>
                 <div className="ecg-cell">{row.label}</div>
                 <div className="ecg-cell ecg-cell-dim">{row.ecg}</div>
                 <div className="ecg-cell">{row.cv}</div>
