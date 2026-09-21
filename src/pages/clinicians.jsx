@@ -34,6 +34,7 @@ const SOC_PHASES = [
 
 function WorkflowComparison() {
   const [headerRef, headerVisible] = useReveal(0.25);
+  const [socRef, socVisible] = useReveal(0.1);
 
   return (
     <div>
@@ -68,12 +69,12 @@ function WorkflowComparison() {
       <div className="row row-2" style={{ gap: 24, alignItems: 'stretch' }}>
 
         {/* SOC Column */}
-        <div className="compare-col before">
+        <div ref={socRef} className={`compare-col before${socVisible ? ' soc-revealed' : ''}`}>
           <div className="meta" style={{ textTransform: 'uppercase', letterSpacing: '0.12em' }}>Standard of care</div>
           <h4 style={{ marginTop: 10, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1.3 }}>Three separate workup cycles — each requiring a full restart on a negative result.</h4>
 
           {SOC_PHASES.map((phase, i) => (
-            <React.Fragment key={phase.n}>
+            <div key={phase.n} className="soc-phase-group" style={{ transitionDelay: socVisible ? `${i * 160}ms` : '0ms' }}>
               <div className="compare-row" style={{ alignItems: 'start' }}>
                 <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.12em', paddingTop: 3 }}>{phase.n}</span>
                 <div>
@@ -99,7 +100,7 @@ function WorkflowComparison() {
                   <div style={{ fontSize: 13, color: 'var(--fg-muted)', lineHeight: 1.5 }}>{phase.restart.note}</div>
                 </div>
               )}
-            </React.Fragment>
+            </div>
           ))}
 
           {/* Dropout block */}

@@ -1504,6 +1504,14 @@ p { margin: 0; }
 [data-theme="dark"] .ecg-compare { border-color: #1F2A3D; }
 .ecg-cell-dim { font-size: 14px; color: var(--fg-muted); }
 
+/* SOC phase stagger reveal */
+.soc-phase-group {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.soc-revealed .soc-phase-group { opacity: 1; transform: none; }
+
 /* ECG comparison scroll reveal */
 .ecg-compare .ecg-row {
   opacity: 0;
