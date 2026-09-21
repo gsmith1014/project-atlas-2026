@@ -2,17 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Eyebrow } from '../components.jsx';
 import { useReveal } from '../hooks.jsx';
 
-// AHA/IEC 61215 standard ECG electrode colors
-const ELECTRODES = [
-  { id: 'ra', label: 'RA',  color: '#E0E0E0', cx: 68,  cy: 120 },
-  { id: 'la', label: 'LA',  color: '#606060', cx: 172, cy: 120 },
-  { id: 'rl', label: 'RL',  color: '#2BC48A', cx: 72,  cy: 294 },
-  { id: 'll', label: 'LL',  color: '#D85528', cx: 168, cy: 294 },
-  { id: 'v1', label: 'V1',  color: '#8B5E3C', cx: 108, cy: 182 },
-  { id: 'v6', label: 'V6',  color: '#F3B51A', cx: 153, cy: 205 },
-];
-const BACK_ELEC = { id: 'ppg', label: 'PPG', color: '#5BAFE8', cx: 120, cy: 192 };
-
 const ACTS = [
   {
     id: 'patient', n: '01',
@@ -50,99 +39,214 @@ const ACTS = [
   },
 ];
 
+// AHA standard lead colors — RA/LA/RL/LL are limb leads, V1/V6 are precordial
+// Note: anatomically, RA = patient's right = image left; LA = patient's left = image right
+const FRONT_LEADS = [
+  { id: 'ra', label: 'RA',  color: '#C8C8C8', cx: 68,  cy: 130 }, // patient's right shoulder
+  { id: 'la', label: 'LA',  color: '#A0A0A0', cx: 212, cy: 130 }, // patient's left shoulder
+  { id: 'rl', label: 'RL',  color: '#2BC48A', cx: 72,  cy: 358 }, // patient's right lower torso
+  { id: 'll', label: 'LL',  color: '#D85528', cx: 208, cy: 358 }, // patient's left lower torso
+  { id: 'v1', label: 'V1',  color: '#8B6545', cx: 122, cy: 192 }, // 4th ICS, right sternal border
+  { id: 'v6', label: 'V6',  color: '#F3B51A', cx: 200, cy: 215 }, // 5th ICS, mid-axillary line
+];
+const BACK_LEAD = { id: 'ppg', label: 'PPG', color: '#5BAFE8', cx: 140, cy: 198 };
+
+const HEART_CX = 134, HEART_CY = 197;
+
+function ElectrodePad({ cx, cy, color, label, visible, delay, reduced, side }) {
+  return (
+    <g style={{
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'none' : 'scale(0.4)',
+      transformOrigin: `${cx}px ${cy}px`,
+      transition: reduced ? 'none' : `opacity 0.5s ease ${delay}ms, transform 0.55s cubic-bezier(.34,1.45,.64,1) ${delay}ms`,
+    }}>
+      {/* Outer diffuse halo */}
+      <circle cx={cx} cy={cy} r="16" fill={color} opacity="0.05" />
+      {/* Sensor ring */}
+      <circle cx={cx} cy={cy} r="10" fill="none" stroke={color} strokeWidth="0.75" opacity="0.3" />
+      {/* Sensor body */}
+      <circle cx={cx} cy={cy} r="7" fill={color} opacity="0.15" />
+      {/* Contact */}
+      <circle cx={cx} cy={cy} r="4.5" fill={color} />
+      {/* Label */}
+      <text
+        x={cx + (side === 'left' ? -16 : 16)}
+        y={cy}
+        textAnchor={side === 'left' ? 'end' : 'start'}
+        dominantBaseline="middle"
+        fontFamily="'Geist Mono', monospace"
+        fontSize="7.5"
+        fill={color}
+        opacity="0.8"
+      >{label}</text>
+    </g>
+  );
+}
+
 function HumanFigure({ act, showBack, reduced }) {
   const showElec = act !== 'patient';
   const showLines = ['dataset', 'algorithm', 'result'].includes(act);
   const heartActive = act === 'algorithm' || act === 'result';
 
   return (
-    <svg viewBox="0 0 240 360" fill="none" xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true" style={{ width: '100%', height: '100%', maxHeight: 380 }}>
+    <svg
+      viewBox="0 0 280 430"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      style={{ width: '100%', height: '100%' }}
+    >
+      <defs>
+        <radialGradient id="torsoGrad" cx="48%" cy="35%" r="65%">
+          <stop offset="0%" stopColor="#142038" />
+          <stop offset="100%" stopColor="#0B1320" />
+        </radialGradient>
+        <radialGradient id="heartGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#D85528" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#D85528" stopOpacity="0" />
+        </radialGradient>
+      </defs>
 
-      {/* Head */}
-      <circle cx="120" cy="38" r="27" fill="#0B1320" stroke="#1F2A3D" strokeWidth="1.5" />
+      {/* ── HEAD ── */}
+      <circle cx="140" cy="46" r="36" fill="url(#torsoGrad)" stroke="#1E2E42" strokeWidth="1.5" />
+      {/* Jaw line detail */}
+      <path d="M 114 62 C 118 72, 128 78, 140 79 C 152 78, 162 72, 166 62"
+        stroke="#192840" strokeWidth="1" fill="none" />
 
-      {/* Neck */}
-      <line x1="110" y1="64" x2="110" y2="82" stroke="#1F2A3D" strokeWidth="1.5" strokeLinecap="round" />
-      <line x1="130" y1="64" x2="130" y2="82" stroke="#1F2A3D" strokeWidth="1.5" strokeLinecap="round" />
+      {/* ── NECK ── */}
+      <rect x="127" y="81" width="26" height="25" rx="2" fill="url(#torsoGrad)" stroke="#1E2E42" strokeWidth="1.2" />
 
-      {/* Body outline */}
+      {/* ── TORSO ── */}
       <path
-        d="M 110 82
-           C 92 83 56 92 46 112
-           C 40 124 48 140 58 146
-           L 63 200
-           C 65 252 67 278 69 316
-           L 171 316
-           C 173 278 175 252 177 200
-           L 182 146
-           C 192 140 200 124 194 112
-           C 184 92 148 83 130 82
-           Z"
-        fill="#0B1320" stroke="#1F2A3D" strokeWidth="1.5" strokeLinejoin="round"
+        d="
+          M 127 104
+          C 108 105, 60 116, 38 142
+          C 30 153, 30 170, 40 182
+          L 58 246
+          C 61 278, 68 304, 73 330
+          C 75 348, 73 364, 76 380
+          L 204 380
+          C 207 364, 205 348, 207 330
+          C 212 304, 219 278, 222 246
+          L 240 182
+          C 250 170, 250 153, 242 142
+          C 220 116, 172 105, 153 104
+          Z
+        "
+        fill="url(#torsoGrad)"
+        stroke="#1E2E42"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
       />
 
-      {/* Heart */}
-      <g style={{ opacity: heartActive ? 1 : 0.1, transition: reduced ? 'none' : 'opacity 0.8s ease' }}>
-        <circle cx="118" cy="184" r="18" fill={heartActive ? 'rgba(216,85,40,0.07)' : 'none'} />
+      {/* ── ANATOMICAL DETAILS ── */}
+      {/* Left clavicle */}
+      <path d="M 130 117 C 114 113, 78 119, 57 138"
+        stroke="#192840" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+      {/* Right clavicle */}
+      <path d="M 150 117 C 166 113, 202 119, 223 138"
+        stroke="#192840" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+      {/* Sternum */}
+      <line x1="140" y1="124" x2="140" y2="218"
+        stroke="#162236" strokeWidth="0.8" strokeDasharray="2.5 3.5" />
+      {/* Subtle rib arcs (3 pairs) */}
+      {[160, 185, 208].map((y, i) => (
+        <React.Fragment key={i}>
+          <path d={`M 140 ${y} C 124 ${y - 4}, 105 ${y + 8}, 90 ${y + 16}`}
+            stroke="#162236" strokeWidth="0.7" fill="none" opacity="0.6" />
+          <path d={`M 140 ${y} C 156 ${y - 4}, 175 ${y + 8}, 190 ${y + 16}`}
+            stroke="#162236" strokeWidth="0.7" fill="none" opacity="0.6" />
+        </React.Fragment>
+      ))}
+
+      {/* ── HEART ── */}
+      <g style={{
+        opacity: heartActive ? 1 : 0.07,
+        transition: reduced ? 'none' : 'opacity 0.9s ease',
+      }}>
+        {/* Glow */}
+        <circle cx={HEART_CX} cy={HEART_CY} r="26" fill="url(#heartGlow)"
+          style={{ opacity: heartActive ? 1 : 0, transition: reduced ? 'none' : 'opacity 0.9s ease' }} />
+        {/* Heart body */}
         <path
-          d="M 118 173 C 116 168 110 165 107 168 C 104 171 104 178 108 183 L 118 196 L 128 183 C 132 178 132 171 129 168 C 126 165 120 168 118 173 Z"
+          d={`
+            M ${HEART_CX} ${HEART_CY - 14}
+            C ${HEART_CX - 2} ${HEART_CY - 22},
+              ${HEART_CX - 12} ${HEART_CY - 25},
+              ${HEART_CX - 16} ${HEART_CY - 21}
+            C ${HEART_CX - 20} ${HEART_CY - 17},
+              ${HEART_CX - 20} ${HEART_CY - 8},
+              ${HEART_CX - 14} ${HEART_CY - 2}
+            L ${HEART_CX} ${HEART_CY + 14}
+            L ${HEART_CX + 14} ${HEART_CY - 2}
+            C ${HEART_CX + 20} ${HEART_CY - 8},
+              ${HEART_CX + 20} ${HEART_CY - 17},
+              ${HEART_CX + 16} ${HEART_CY - 21}
+            C ${HEART_CX + 12} ${HEART_CY - 25},
+              ${HEART_CX + 2} ${HEART_CY - 22},
+              ${HEART_CX} ${HEART_CY - 14} Z
+          `}
           fill="none"
-          stroke={heartActive ? '#D85528' : '#1F2A3D'}
+          stroke={heartActive ? '#D85528' : '#1A2C40'}
           strokeWidth="1.5"
-          style={{ transition: reduced ? 'none' : 'stroke 0.8s ease' }}
+          style={{ transition: reduced ? 'none' : 'stroke 0.9s ease' }}
+        />
+        {/* Aortic arch */}
+        <path
+          d={`M ${HEART_CX - 4} ${HEART_CY - 18} C ${HEART_CX - 2} ${HEART_CY - 30}, ${HEART_CX + 10} ${HEART_CY - 30}, ${HEART_CX + 10} ${HEART_CY - 24}`}
+          fill="none" stroke={heartActive ? '#D85528' : '#1A2C40'} strokeWidth="1"
+          opacity="0.55"
+          style={{ transition: reduced ? 'none' : 'stroke 0.9s ease' }}
         />
       </g>
 
-      {/* Connection lines: electrode → heart */}
-      {showLines && !showBack && ELECTRODES.map((e, i) => (
+      {/* ── SIGNAL LINES ── */}
+      {showLines && !showBack && FRONT_LEADS.map((e, i) => (
         <line
-          key={`l-${e.id}`}
-          x1={e.cx} y1={e.cy} x2={118} y2={183}
-          stroke={e.color} strokeWidth="0.5" opacity="0.18"
-          style={{ transition: reduced ? 'none' : `opacity 0.5s ease ${150 + i * 50}ms` }}
+          key={`ln-${e.id}`}
+          x1={e.cx} y1={e.cy} x2={HEART_CX} y2={HEART_CY}
+          stroke={e.color} strokeWidth="0.6" opacity="0.18"
+          style={{ transition: reduced ? 'none' : `opacity 0.5s ease ${i * 60 + 150}ms` }}
         />
       ))}
 
-      {/* Front electrodes */}
-      {!showBack && ELECTRODES.map((e, i) => (
-        <g key={e.id} style={{
-          opacity: showElec ? 1 : 0,
-          transform: showElec ? 'none' : 'scale(0)',
-          transformOrigin: `${e.cx}px ${e.cy}px`,
-          transition: reduced ? 'none' : `opacity 0.45s ease ${i * 80}ms, transform 0.45s ease ${i * 80}ms`,
-        }}>
-          <circle cx={e.cx} cy={e.cy} r="9" fill={e.color} opacity="0.1" />
-          <circle cx={e.cx} cy={e.cy} r="4.5" fill={e.color} />
-          <text
-            x={e.cx < 120 ? e.cx - 14 : e.cx + 14}
-            y={e.cy}
-            textAnchor={e.cx < 120 ? 'end' : 'start'}
-            dominantBaseline="middle"
-            fontFamily="'Geist Mono', monospace"
-            fontSize="7"
-            fill={e.color}
-            opacity="0.7"
-          >{e.label}</text>
-        </g>
+      {/* ── FRONT ELECTRODES ── */}
+      {!showBack && FRONT_LEADS.map((e, i) => (
+        <ElectrodePad
+          key={e.id}
+          cx={e.cx} cy={e.cy}
+          color={e.color}
+          label={e.label}
+          visible={showElec}
+          delay={i * 85}
+          reduced={reduced}
+          side={e.cx < 140 ? 'left' : 'right'}
+        />
       ))}
 
-      {/* Back electrode */}
+      {/* ── BACK ELECTRODE ── */}
       {showBack && (
-        <g style={{ opacity: showElec ? 1 : 0, transition: reduced ? 'none' : 'opacity 0.45s ease' }}>
-          <circle cx={BACK_ELEC.cx} cy={BACK_ELEC.cy} r="9" fill={BACK_ELEC.color} opacity="0.12" />
-          <circle cx={BACK_ELEC.cx} cy={BACK_ELEC.cy} r="4.5" fill={BACK_ELEC.color} />
-          <text x={BACK_ELEC.cx + 14} y={BACK_ELEC.cy}
-            dominantBaseline="middle"
-            fontFamily="'Geist Mono', monospace"
-            fontSize="7" fill={BACK_ELEC.color} opacity="0.7"
-          >{BACK_ELEC.label}</text>
-        </g>
+        <ElectrodePad
+          cx={BACK_LEAD.cx} cy={BACK_LEAD.cy}
+          color={BACK_LEAD.color}
+          label={BACK_LEAD.label}
+          visible={showElec}
+          delay={0}
+          reduced={reduced}
+          side="right"
+        />
       )}
 
-      {/* Figure label */}
-      <text x="120" y="350" textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize="7.5"
-        fill="#2A3A50" letterSpacing="0.12em" textTransform="uppercase">
+      {/* ── FIGURE ID ── */}
+      <text
+        x="140" y="422"
+        textAnchor="middle"
+        fontFamily="'Geist Mono', monospace"
+        fontSize="7.5"
+        fill="#1E2E42"
+        letterSpacing="0.1em"
+      >
         {showBack ? 'FIG. 02B — POSTERIOR' : 'FIG. 02A — ANTERIOR'}
       </text>
     </svg>
@@ -189,7 +293,6 @@ function AlgoCanvas({ active, reduced }) {
         ctx.lineWidth = 0.7;
         ctx.stroke();
 
-        // Data points on each ring
         const pts = 4 + r * 2;
         for (let p = 0; p < pts; p++) {
           const angle = (p / pts) * Math.PI * 2 + t * (0.3 + r * 0.1) * (r % 2 === 0 ? 1 : -1);
@@ -203,7 +306,6 @@ function AlgoCanvas({ active, reduced }) {
         }
       }
 
-      // Central pulse
       const pulse = (Math.sin(t * 3.2) + 1) / 2;
       ctx.beginPath();
       ctx.arc(cx, cy, 3 + pulse * 2.5, 0, Math.PI * 2);
@@ -225,10 +327,10 @@ function AlgoCanvas({ active, reduced }) {
 
 function DataComparison({ visible }) {
   const rows = [
-    { label: 'Heartbeats',   ecg: '~3',       cv: '270',      key: true },
-    { label: 'Sample rate',  ecg: '500 Hz',    cv: '8,000 Hz' },
-    { label: 'Features',     ecg: '~12',       cv: '3,300+',   key: true },
-    { label: 'Dimensions',   ecg: '2D',        cv: '12D+' },
+    { label: 'Heartbeats',  ecg: '~3',      cv: '270',      key: true },
+    { label: 'Sample rate', ecg: '500 Hz',   cv: '8,000 Hz' },
+    { label: 'Features',    ecg: '~12',      cv: '3,300+',   key: true },
+    { label: 'Dimensions',  ecg: '2D',       cv: '12D+' },
   ];
 
   return (
@@ -350,7 +452,7 @@ export function ScienceSection() {
       <div className="science-layout">
         {/* Left sticky panel */}
         <div className="science-panel">
-          {/* Progress indicator */}
+          {/* Progress */}
           <div style={{ display: 'flex', gap: 8, marginBottom: 44 }}>
             {ACTS.map(a => (
               <div key={a.id} style={{
@@ -362,12 +464,12 @@ export function ScienceSection() {
           </div>
 
           {/* Visualization stack */}
-          <div style={{ position: 'relative', width: '100%', maxWidth: 300, height: 340 }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: 320, height: 400 }}>
             {/* Layer 1: Human figure */}
             <div style={{
               position: 'absolute', inset: 0,
               opacity: isBodyAct ? 1 : 0,
-              transition: reduced ? 'none' : 'opacity 0.6s ease',
+              transition: reduced ? 'none' : 'opacity 0.7s ease',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <HumanFigure act={activeAct} showBack={showBack} reduced={reduced} />
@@ -377,7 +479,7 @@ export function ScienceSection() {
             <div style={{
               position: 'absolute', inset: 0,
               opacity: activeAct === 'algorithm' ? 1 : 0,
-              transition: reduced ? 'none' : 'opacity 0.6s ease',
+              transition: reduced ? 'none' : 'opacity 0.7s ease',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               pointerEvents: activeAct === 'algorithm' ? 'auto' : 'none',
             }}>
@@ -388,15 +490,15 @@ export function ScienceSection() {
             <div style={{
               position: 'absolute', inset: 0,
               opacity: activeAct === 'result' ? 1 : 0,
-              transition: reduced ? 'none' : 'opacity 0.6s ease',
-              display: 'flex', alignItems: 'flex-start', paddingTop: 24,
+              transition: reduced ? 'none' : 'opacity 0.7s ease',
+              display: 'flex', alignItems: 'flex-start', paddingTop: 20,
               pointerEvents: activeAct === 'result' ? 'auto' : 'none',
             }}>
               <ResultCard visible={activeAct === 'result'} />
             </div>
           </div>
 
-          {/* Front / Back toggle — capture act */}
+          {/* Front / Back toggle */}
           <div style={{
             marginTop: 24,
             opacity: activeAct === 'capture' ? 1 : 0,
@@ -449,9 +551,7 @@ export function ScienceSection() {
                 </div>
               )}
 
-              {act.comparison && (
-                <DataComparison visible={activeAct === 'dataset'} />
-              )}
+              {act.comparison && <DataComparison visible={activeAct === 'dataset'} />}
 
               {act.algo && (
                 <div style={{ marginTop: 28, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
