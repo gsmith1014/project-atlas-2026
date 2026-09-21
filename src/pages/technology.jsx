@@ -1,5 +1,6 @@
 import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo } from '../components.jsx';
+import { ScienceSection } from './tech-science.jsx';
 
 function useReveal(threshold = 0.15) {
   const ref = React.useRef(null);
@@ -86,44 +87,7 @@ export function TechnologyPage() {
         </div>
       </Section>
 
-      {/* CPST — full-bleed section, raw <section> to break out of container */}
-      <section style={{ background: 'var(--ink)', overflow: 'hidden' }}>
-        <div className="container" style={{ paddingTop: 80, paddingBottom: 64 }}>
-          <Eyebrow><span style={{ color: '#98A2B3' }}>The science</span></Eyebrow>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, marginTop: 28, alignItems: 'start' }}>
-            <div>
-              <h2 style={{ color: '#F4F6F9', fontSize: 'clamp(40px, 5vw, 72px)', marginTop: 0 }}>
-                Cardiac Phase Space Tomography.
-              </h2>
-              <p className="lead" style={{ color: '#C8D0DC', marginTop: 24 }}>
-                CPST is a mathematical reconstruction technique: rather than analyzing waveforms in time, it reconstructs the heart's behavior across multiple dimensions of state space — revealing structural and functional patterns that conventional ECG and front-line tests cannot resolve.
-              </p>
-            </div>
-            <ul className="bullets" style={{ color: '#F4F6F9', margin: 0, paddingTop: 20 }}>
-              <li>Patented signal reconstruction across 12+ dimensions</li>
-              <li>Trained against gold-standard truth labels (angiography, RHC, MRI)</li>
-              <li>Continuously validated through real-world deployment</li>
-            </ul>
-          </div>
-        </div>
-        {/* Full-bleed visualization */}
-        <div style={{ position: 'relative', width: '100%', height: 'min(72vh, 680px)', overflow: 'hidden' }}>
-          <iframe
-            src="/phase-viz.html"
-            title="Phase-space visualization — CPST reconstruction"
-            style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
-            loading="lazy"
-          />
-          <div style={{ position: 'absolute', bottom: 20, right: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5BAFE8', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(11,19,32,0.85)', padding: '8px 12px', border: '1px solid #25324A', borderRadius: 4 }}>
-            FIG. 02 — CPST RECONSTRUCTION
-          </div>
-        </div>
-        <div style={{ borderTop: '1px solid #1F2A3D' }}>
-          <div className="container" style={{ paddingTop: 40, paddingBottom: 64 }}>
-            <EcgLine color="#5BAFE8" height={80} segments={10} />
-          </div>
-        </div>
-      </section>
+      <ScienceSection />
 
       <Section>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.4fr', gap: 80 }}>

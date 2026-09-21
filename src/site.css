@@ -1602,3 +1602,51 @@ p { margin: 0; }
   text-transform: uppercase;
   margin-top: 4px;
 }
+
+/* ============================================================
+   Science scrollytell section
+   ============================================================ */
+.science-layout {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  align-items: start;
+}
+
+.science-panel {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px var(--gutter) 48px calc(var(--gutter) + 12px);
+  box-sizing: border-box;
+}
+
+.science-act {
+  padding: clamp(72px, 10vh, 120px) var(--gutter);
+  border-bottom: 1px solid #1F2A3D;
+}
+
+.science-act:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 900px) {
+  .science-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .science-panel {
+    position: static;
+    height: auto;
+    padding: 40px var(--gutter);
+    border-bottom: 1px solid #1F2A3D;
+    align-items: center;
+  }
+
+  .science-act {
+    padding: 52px var(--gutter);
+  }
+}
