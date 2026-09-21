@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Eyebrow } from '../components.jsx';
 import { useReveal } from '../hooks.jsx';
+import CorVistaPatient3D from './CorVistaPatient3D.jsx';
 
 const ACTS = [
   {
@@ -463,30 +464,14 @@ export function ScienceSection() {
             ))}
           </div>
 
-          {/* Visualization stack */}
-          <div style={{ position: 'relative', width: '100%', maxWidth: 320, height: 400 }}>
-            {/* Layer 1: Human figure */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              opacity: isBodyAct ? 1 : 0,
-              transition: reduced ? 'none' : 'opacity 0.7s ease',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <HumanFigure act={activeAct} showBack={showBack} reduced={reduced} />
-            </div>
-
-            {/* Layer 2: Algorithm canvas */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              opacity: activeAct === 'algorithm' ? 1 : 0,
-              transition: reduced ? 'none' : 'opacity 0.7s ease',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              pointerEvents: activeAct === 'algorithm' ? 'auto' : 'none',
-            }}>
-              <AlgoCanvas active={activeAct === 'algorithm'} reduced={reduced} />
-            </div>
-
-            {/* Layer 3: Result card */}
+          {/* 3D visualization */}
+          <div style={{ position: 'relative', width: '100%', maxWidth: 400 }}>
+            <CorVistaPatient3D
+              sceneState={activeAct}
+              view={showBack ? 'back' : 'front'}
+              reduced={reduced}
+            />
+            {/* Result card overlay (DOM, over the 3D canvas) */}
             <div style={{
               position: 'absolute', inset: 0,
               opacity: activeAct === 'result' ? 1 : 0,
