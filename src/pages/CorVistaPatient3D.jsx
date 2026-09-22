@@ -20,12 +20,11 @@ const LUT_N = 1000;
 const ECG_LUT = Float32Array.from({ length: LUT_N }, (_, i) => ecgAt(i / LUT_N));
 const ecg = t => ECG_LUT[Math.round(((t % 1 + 1) % 1) * (LUT_N - 1))];
 
-// ── Delay-embedded phase space trajectory (Takens' theorem) ──────────────────
-// Projects the 1D ECG into 3D state space: [x(t), x(t−τ), x(t−2τ)].
-// At τ=0.042 cycles the resulting attractor matches the characteristic
-// cardiac loop visible in clinical phase space tomography imagery.
-const TAU    = 0.042;
-const TRAJ_N = 2400;  // ~20 cardiac cycles at 120 pts/cycle
+// ── Delay-embedded phase space trajectory ─────────────────────────────────────
+// τ = 0.020 cycles: when x peaks at R (2.1), y is on the R rise (~0.86) and
+// z is in the Q dip (-0.11), giving the characteristic 3D cardiac loop shape.
+const TAU    = 0.020;
+const TRAJ_N = 2400;
 const TRAJ   = (() => {
   const pts = new Array(TRAJ_N);
   for (let i = 0; i < TRAJ_N; i++) {
@@ -36,8 +35,10 @@ const TRAJ   = (() => {
 })();
 
 // ── 3D → 2D projection ───────────────────────────────────────────────────────
-const AZ = -36 * Math.PI / 180;
-const EL =  27 * Math.PI / 180;
+// AZ=+30° tilts so X goes upper-right, Z goes lower-left — matching the
+// reference image orientation (Y vertical, two diagonals visible).
+const AZ = 30 * Math.PI / 180;
+const EL = 28 * Math.PI / 180;
 const [cAZ, sAZ, cEL, sEL] = [Math.cos(AZ), Math.sin(AZ), Math.cos(EL), Math.sin(EL)];
 
 function proj(x, y, z, cx, cy, sc) {
@@ -46,54 +47,79 @@ function proj(x, y, z, cx, cy, sc) {
   return [cx + x1 * sc, cy - (y * cEL - z1 * sEL) * sc];
 }
 
-// ── Scrolling ECG overlay (section 3: dataset) ────────────────────────────────
+// ── Real-time ECG trace (section 3: dataset) ──────────────────────────────────
+// Writes left → right like a cardiac monitor, then wraps and overwrites.
+// Buffer persists the full trace; a gap ahead of the cursor shows where
+// the pen is heading.
 function EcgOverlay({ visible, reduced }) {
-  const ref   = useRef(null);
-  const raf   = useRef(null);
-  const t0    = useRef(null);
-  const phase = useRef(0);
+  const ref    = useRef(null);
+  const raf    = useRef(null);
+  const t0     = useRef(null);
+  const writeX = useRef(0);
+  const ecgT   = useRef(0);
+  const bufRef = useRef(null);
 
   useEffect(() => {
-    if (!visible) return;
+    if (!visible) {
+      writeX.current = 0;
+      ecgT.current   = 0;
+      bufRef.current = null;
+      return;
+    }
+
     const canvas = ref.current;
     const ctx    = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
-    const CHANNELS      = 3;
-    const CH_H          = H / CHANNELS;
-    const SPEED         = 0.42;          // cardiac cycles per second
-    const PX_PER_CYCLE  = W * 0.54;
-    const PHASE_OFF     = [0, 0.34, 0.67];
+    const cy  = H * 0.50;
+    const amp = H * 0.24;
+
+    const SPEED = 88;   // px / second  →  ≈ 60 BPM at 88 px/cycle
+    const CPX   = 88;   // canvas pixels per cardiac cycle
+    const GAP   = 14;   // erase zone ahead of cursor (px)
+
+    if (!bufRef.current) bufRef.current = new Float32Array(W).fill(cy);
+    const buf = bufRef.current;
 
     const draw = (now) => {
-      if (t0.current !== null) phase.current += (now - t0.current) / 1000 * SPEED;
+      if (t0.current !== null) {
+        const dPx   = Math.min((now - t0.current) / 1000, 0.05) * SPEED;
+        const steps = Math.max(1, Math.round(dPx));
+        for (let s = 0; s < steps; s++) {
+          writeX.current = (writeX.current + 1) % W;
+          ecgT.current  += 1 / CPX;
+          buf[writeX.current] = cy - ecg(ecgT.current) * amp;
+        }
+      }
       t0.current = now;
+
       ctx.clearRect(0, 0, W, H);
 
-      for (let ch = 0; ch < CHANNELS; ch++) {
-        const cy  = CH_H * (ch + 0.5);
-        const amp = CH_H * 0.33;
+      // Persistent trace — skip the erase gap just ahead of the cursor
+      ctx.beginPath();
+      ctx.strokeStyle = '#5BAFE8';
+      ctx.lineWidth   = 2.0;
+      ctx.globalAlpha = 0.93;
+      ctx.lineJoin    = 'round';
 
-        // Baseline tick
-        ctx.beginPath();
-        ctx.strokeStyle = '#1A3A55';
-        ctx.lineWidth   = 0.5;
-        ctx.globalAlpha = 0.5;
-        ctx.moveTo(0, cy); ctx.lineTo(W, cy);
-        ctx.stroke();
-
-        // ECG trace — scrolls right → left
-        ctx.beginPath();
-        ctx.strokeStyle = '#5BAFE8';
-        ctx.lineWidth   = 1.7;
-        ctx.globalAlpha = 0.90;
-        ctx.lineJoin    = 'round';
-        for (let px = 0; px <= W; px++) {
-          const y = cy - ecg(phase.current - px / PX_PER_CYCLE + PHASE_OFF[ch]) * amp;
-          px === 0 ? ctx.moveTo(px, y) : ctx.lineTo(px, y);
-        }
-        ctx.stroke();
+      let drawing = false;
+      for (let px = 0; px < W; px++) {
+        const ahead = (px - writeX.current + W) % W;
+        if (ahead >= 1 && ahead <= GAP) { drawing = false; continue; }
+        if (!drawing) { ctx.moveTo(px + 0.5, buf[px]); drawing = true; }
+        else          { ctx.lineTo(px + 0.5, buf[px]); }
       }
+      ctx.stroke();
+
+      // Glowing cursor at write head
+      const wx = writeX.current, wy = buf[wx];
+      ctx.beginPath();
+      ctx.arc(wx, wy, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#5BAFE8'; ctx.globalAlpha = 0.18; ctx.fill();
+      ctx.beginPath();
+      ctx.arc(wx, wy, 2.8, 0, Math.PI * 2);
+      ctx.fillStyle = '#B8E8FF'; ctx.globalAlpha = 0.95; ctx.fill();
       ctx.globalAlpha = 1;
+
       if (!reduced) raf.current = requestAnimationFrame(draw);
     };
 
@@ -104,7 +130,7 @@ function EcgOverlay({ visible, reduced }) {
   return (
     <canvas ref={ref} width={400} height={533} style={{
       position: 'absolute', inset: 0, width: '100%', height: '100%',
-      opacity: visible ? 0.92 : 0,
+      opacity: visible ? 0.95 : 0,
       transition: reduced ? 'none' : 'opacity 0.9s ease',
       pointerEvents: 'none',
     }} />
@@ -120,7 +146,8 @@ function PhaseSpace3D({ visible, reduced }) {
     const canvas = ref.current;
     const ctx    = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
-    const cx = W * 0.53, cy = H * 0.47, sc = W * 0.15;
+    // Offset center slightly left so box is well framed
+    const cx = W * 0.48, cy = H * 0.46, sc = W * 0.145;
     const LO = -0.5, HI = 2.6;
 
     ctx.clearRect(0, 0, W, H);
@@ -137,58 +164,73 @@ function PhaseSpace3D({ visible, reduced }) {
     const drawScene = () => {
       ctx.fillStyle = '#091629'; ctx.globalAlpha = 1; ctx.fillRect(0,0,W,H);
 
-      const G = '#1E3554', STEPS = 5, step = (HI - LO) / STEPS;
+      const STEPS = 5;
+      const step  = (HI - LO) / STEPS;
+      const G1 = '#1C3552', G2 = '#172C46';
+
       for (let i = 0; i <= STEPS; i++) {
         const v = LO + i * step;
-        line3(v,LO,LO, v,HI,LO, G, 0.38);   // floor x-lines
-        line3(LO,v,LO, HI,v,LO, G, 0.38);   // floor y-lines
-        line3(LO,v,LO, LO,v,HI, G, 0.28);   // left wall
-        line3(LO,LO,v, LO,HI,v, G, 0.28);
-        line3(LO,HI,v, HI,HI,v, G, 0.25);   // back wall
-        line3(v,HI,LO, v,HI,HI, G, 0.25);
+        // Floor (y = LO)
+        line3(v,LO,LO, v,LO,HI, G1, 0.40);
+        line3(LO,LO,v, HI,LO,v, G1, 0.40);
+        // Left wall (z = HI — back)
+        line3(v,LO,HI, v,HI,HI, G2, 0.30);
+        line3(LO,v,HI, HI,v,HI, G2, 0.30);
+        // Right wall (x = HI)
+        line3(HI,LO,v, HI,HI,v, G2, 0.28);
+        line3(HI,v,LO, HI,v,HI, G2, 0.28);
       }
 
       // Axis edges
-      const AX = '#3A5A78';
-      line3(LO,LO,LO, HI,LO,LO, AX, 0.80, 1.2);
-      line3(LO,LO,LO, LO,HI,LO, AX, 0.80, 1.2);
-      line3(LO,LO,LO, LO,LO,HI, AX, 0.80, 1.2);
+      const AX = '#3A5A7A';
+      line3(LO,LO,LO, HI,LO,LO, AX, 0.85, 1.1);
+      line3(LO,LO,LO, LO,HI,LO, AX, 0.85, 1.1);
+      line3(LO,LO,LO, LO,LO,HI, AX, 0.85, 1.1);
 
-      // Tick labels on Y axis (left wall)
-      ctx.font = `${W*0.027}px system-ui,sans-serif`;
-      ctx.textAlign = 'right';
+      // Tick marks + values on Y axis (vertical)
+      ctx.font = `${W*0.026}px system-ui,sans-serif`;
+      ctx.textAlign = 'right'; ctx.fillStyle = '#4A6A84'; ctx.globalAlpha = 0.58;
       for (let i = 0; i <= STEPS; i++) {
         const v = LO + i * step;
-        const [px,py] = proj(LO - 0.08, v, LO, cx, cy, sc);
-        ctx.fillStyle = '#4A6A84'; ctx.globalAlpha = 0.55;
+        const [px,py] = proj(LO-0.08, v, LO, cx, cy, sc);
         ctx.fillText(v.toFixed(1), px, py + 4);
+      }
+      // Tick marks on X axis (floor front)
+      ctx.textAlign = 'center';
+      for (let i = 0; i <= STEPS; i++) {
+        const v = LO + i * step;
+        const [px,py] = proj(v, LO-0.12, LO, cx, cy, sc);
+        ctx.fillText(v.toFixed(1), px, py);
       }
 
       // Axis labels
-      ctx.font = `bold ${W*0.033}px system-ui,sans-serif`;
-      ctx.textAlign = 'center'; ctx.globalAlpha = 0.6; ctx.fillStyle = '#6A90A8';
-      const [lax,lay] = proj((LO+HI)/2, LO-0.6, LO, cx, cy, sc);
-      const [lbx,lby] = proj(LO-0.8, (LO+HI)/2, LO, cx, cy, sc);
-      const [lcx,lcy] = proj(LO-0.4, LO, (LO+HI)/2, cx, cy, sc);
-      ctx.fillText('mV', lax, lay);
-      ctx.fillText('mV', lbx, lby);
-      ctx.fillText('mV', lcx, lcy);
+      ctx.font = `bold ${W*0.032}px system-ui,sans-serif`;
+      ctx.fillStyle = '#6A90AA'; ctx.globalAlpha = 0.65;
+      const [yx,yy] = proj(LO-0.72, (LO+HI)/2, LO, cx, cy, sc);
+      const [xx,xy] = proj((LO+HI)/2, LO-0.5, LO, cx, cy, sc);
+      const [zx,zy] = proj(LO-0.35, LO, (LO+HI)/2, cx, cy, sc);
+      ctx.textAlign = 'center';
+      ctx.fillText('mV', yx, yy);
+      ctx.fillText('mV', xx, xy);
+      ctx.fillText('mV', zx, zy);
       ctx.globalAlpha = 1;
     };
 
-    // Progressive trajectory draw — builds the attractor cycle by cycle
+    // Progressive build: trajectory draws itself cycle by cycle
     let drawn = 0;
-    const PTS_PER_FRAME = reduced ? TRAJ_N : 32;
+    const SPF = reduced ? TRAJ_N : 48; // points per frame
 
     const frame = () => {
       drawScene();
 
       if (drawn > 1) {
+        // Fade older segments slightly — first pass fully opaque, subsequent passes lighter
         ctx.beginPath();
         ctx.strokeStyle = '#5BAFE8';
-        ctx.lineWidth   = 1.5;
+        ctx.lineWidth   = 1.6;
         ctx.lineJoin    = 'round';
-        ctx.globalAlpha = 0.90;
+        ctx.globalAlpha = 0.88;
+
         const [sx,sy] = proj(...TRAJ[0], cx, cy, sc);
         ctx.moveTo(sx, sy);
         for (let i = 1; i < drawn; i++) {
@@ -199,7 +241,7 @@ function PhaseSpace3D({ visible, reduced }) {
         ctx.globalAlpha = 1;
       }
 
-      drawn = Math.min(drawn + PTS_PER_FRAME, TRAJ_N);
+      drawn = Math.min(drawn + SPF, TRAJ_N);
       if (drawn < TRAJ_N) raf.current = requestAnimationFrame(frame);
     };
 
@@ -225,7 +267,7 @@ export default function CorVistaPatient3D({ sceneState = 'patient', view = 'fron
   const dimmed      = sceneState === 'dataset';
   const showFront   = bodyVisible && view !== 'back';
   const showBack    = bodyVisible && view === 'back';
-  const opacity     = (on) => on ? (dimmed ? 0.58 : 1) : 0;
+  const imgOpacity  = (on) => on ? (dimmed ? 0.55 : 1) : 0;
 
   return (
     <div
@@ -233,19 +275,18 @@ export default function CorVistaPatient3D({ sceneState = 'patient', view = 'fron
       aria-label="CorVista patient sensor placement and cardiac signal visualization"
       style={{ position: 'relative', width: '100%', aspectRatio: '3 / 4', overflow: 'hidden' }}
     >
-      {/* Patient x-ray illustrations */}
       <img src="/patient-front.webp" alt="" draggable="false" style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%',
         objectFit: 'cover', objectPosition: 'center top',
-        opacity: opacity(showFront), transition: T, userSelect: 'none',
+        opacity: imgOpacity(showFront), transition: T, userSelect: 'none',
       }} />
       <img src="/patient-back.webp" alt="" draggable="false" style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%',
         objectFit: 'cover', objectPosition: 'center top',
-        opacity: opacity(showBack), transition: T, userSelect: 'none',
+        opacity: imgOpacity(showBack), transition: T, userSelect: 'none',
       }} />
 
-      {/* Section 3: scrolling ECG overlay */}
+      {/* Section 3: real-time ECG writing overlay */}
       <EcgOverlay visible={sceneState === 'dataset'} reduced={reduced} />
 
       {/* Section 4: 3D cardiac phase space attractor */}
