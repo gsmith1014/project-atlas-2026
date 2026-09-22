@@ -91,9 +91,49 @@ function webGLAvailable() {
   } catch { return false; }
 }
 
+// ── X-ray body shader ─────────────────────────────────────────────────────────
+// Fresnel rim effect: edges glow bright blue, interior is nearly transparent,
+// creating the x-ray medical visualization look.
+function makeXrayMaterial(fresnelPower = 2.8) {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uInnerColor:   { value: new THREE.Color('#061828') },
+      uEdgeColor:    { value: new THREE.Color('#7EC8F0') },
+      uBaseOpacity:  { value: 0.18 },
+      uFresnelPower: { value: fresnelPower },
+    },
+    vertexShader: /* glsl */`
+      varying vec3 vNormal;
+      varying vec3 vViewDir;
+      void main() {
+        vNormal  = normalize(normalMatrix * normal);
+        vec4 mv  = modelViewMatrix * vec4(position, 1.0);
+        vViewDir = normalize(-mv.xyz);
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader: /* glsl */`
+      uniform vec3  uInnerColor;
+      uniform vec3  uEdgeColor;
+      uniform float uBaseOpacity;
+      uniform float uFresnelPower;
+      varying vec3 vNormal;
+      varying vec3 vViewDir;
+      void main() {
+        float f     = pow(1.0 - abs(dot(normalize(vNormal), normalize(vViewDir))), uFresnelPower);
+        vec3  color = mix(uInnerColor, uEdgeColor, f);
+        float alpha = mix(uBaseOpacity * 0.08, uBaseOpacity + f * 0.72, f);
+        gl_FragColor = vec4(color, clamp(alpha, 0.0, 1.0));
+      }
+    `,
+    transparent: true,
+    depthWrite:  false,
+    side:        THREE.DoubleSide,
+    blending:    THREE.AdditiveBlending,
+  });
+}
+
 // ── Patient body (real GLB) ───────────────────────────────────────────────────
-// Applies a translucent blue-gray shell material driven by site tokens.
-// Clones the scene so material mutations don't affect the cached original.
 function GltfBody({ opacity }) {
   const { scene } = useGLTF(PATIENT_GLB);
 
@@ -101,27 +141,17 @@ function GltfBody({ opacity }) {
     const clone = scene.clone(true);
     clone.traverse((obj) => {
       if (!obj.isMesh) return;
-      obj.castShadow = false;
+      obj.castShadow    = false;
       obj.receiveShadow = false;
-      obj.material = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color('#7BA8C4'),
-        transparent: true,
-        opacity,
-        roughness: 0.55,
-        metalness: 0,
-        transmission: 0.06,
-        thickness: 0.18,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-      });
+      obj.renderOrder   = 1;
+      obj.material      = makeXrayMaterial(2.8);
     });
     return clone;
   }, [scene]);
 
-  // Update opacity without remounting
   useEffect(() => {
     model.traverse((obj) => {
-      if (obj.isMesh) obj.material.opacity = opacity;
+      if (obj.isMesh) obj.material.uniforms.uBaseOpacity.value = opacity;
     });
   }, [model, opacity]);
 
@@ -164,6 +194,9 @@ function GltfHeart({ visible, reduced }) {
       obj.material.opacity = THREE.MathUtils.damp(
         obj.material.opacity, targetOpacity, 4, delta,
       );
+      if (visible) {
+        obj.material.emissiveIntensity = 0.55 + Math.sin(clock.elapsedTime * Math.PI * 1.25) * 0.15;
+      }
     });
 
     if (visible && !reduced) {
@@ -181,52 +214,65 @@ function GltfHeart({ visible, reduced }) {
 useGLTF.preload(PATIENT_GLB);
 useGLTF.preload(HEART_GLB);
 
-// ── 3D electrode puck ─────────────────────────────────────────────────────────
-// Surface-aligned cylinder. Local +Y is aligned to the outward surface normal.
+// ── 3D electrode sensor ───────────────────────────────────────────────────────
+// Dome-shaped sensor puck matching clinical ECG/PPG electrode appearance.
+// Local +Y aligned to outward surface normal via quaternion.
+const R = 0.044; // ~4.4cm radius — sized for clear visibility
+
 function Electrode3D({ electrode, visible, active, reduced, groupRef }) {
   const innerRef = useRef();
+  const glowRef  = useRef();
 
   const quaternion = useMemo(() => {
     const up = new THREE.Vector3(0, 1, 0);
-    const n = new THREE.Vector3(...electrode.normal).normalize();
+    const n  = new THREE.Vector3(...electrode.normal).normalize();
     return new THREE.Quaternion().setFromUnitVectors(up, n);
   }, [electrode.normal]);
 
-  useFrame(({ clock }) => {
-    if (!innerRef.current || !active || reduced) return;
-    const p = 1 + Math.sin(clock.elapsedTime * 3) * 0.035;
-    innerRef.current.scale.setScalar(p);
+  useFrame(({ clock }, delta) => {
+    if (!innerRef.current) return;
+    const targetScale = active && !reduced
+      ? 1 + Math.sin(clock.elapsedTime * 3.2) * 0.04
+      : 1;
+    innerRef.current.scale.setScalar(
+      THREE.MathUtils.damp(innerRef.current.scale.x, targetScale, 8, delta),
+    );
+    if (glowRef.current) {
+      glowRef.current.material.opacity = active
+        ? 0.35 + Math.sin(clock.elapsedTime * 3.2) * 0.15
+        : 0;
+    }
   });
 
+  const a = visible ? 1 : 0;
   return (
     <group ref={groupRef} position={electrode.position} quaternion={quaternion}>
       <group ref={innerRef}>
-        {/* Adhesive backing disc */}
-        <mesh>
-          <cylinderGeometry args={[0.022, 0.022, 0.005, 36]} />
-          <meshPhysicalMaterial
-            color="#CDD6DE" roughness={0.70} metalness={0}
-            transparent opacity={visible ? 0.90 : 0}
-          />
+        {/* Flat adhesive pad base */}
+        <mesh renderOrder={3}>
+          <cylinderGeometry args={[R, R, 0.003, 48]} />
+          <meshPhysicalMaterial color="#D4DCE4" roughness={0.65} metalness={0.05}
+            transparent opacity={a} depthWrite={false} />
         </mesh>
-        {/* Colored clinical connector hub */}
-        <mesh position={[0, 0.0045, 0]}>
-          <cylinderGeometry args={[0.013, 0.013, 0.007, 36]} />
-          <meshPhysicalMaterial
-            color={electrode.color} roughness={0.35} metalness={0.08}
-            transparent opacity={visible ? 1 : 0}
-          />
+        {/* Chrome mounting ring */}
+        <mesh position={[0, 0.004, 0]} renderOrder={3}>
+          <torusGeometry args={[R * 0.70, R * 0.10, 12, 48]} />
+          <meshPhysicalMaterial color="#B0C0D0" roughness={0.15} metalness={0.95}
+            transparent opacity={a} depthWrite={false} />
         </mesh>
-        {/* Active selection halo */}
-        {active && (
-          <mesh position={[0, 0.003, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[0.026, 0.030, 36]} />
-            <meshBasicMaterial
-              color={electrode.color} transparent opacity={visible ? 0.55 : 0}
-              depthWrite={false} side={THREE.DoubleSide}
-            />
-          </mesh>
-        )}
+        {/* Colored dome cap */}
+        <mesh position={[0, 0.003, 0]} renderOrder={4}>
+          <sphereGeometry args={[R * 0.66, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.52]} />
+          <meshPhysicalMaterial color={electrode.color} roughness={0.22} metalness={0.08}
+            clearcoat={0.6} clearcoatRoughness={0.15}
+            transparent opacity={a} depthWrite={false} />
+        </mesh>
+        {/* Active pulse glow ring */}
+        <mesh ref={glowRef} position={[0, 0.006, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={2}>
+          <ringGeometry args={[R * 1.08, R * 1.32, 48]} />
+          <meshBasicMaterial color={electrode.color} transparent opacity={0}
+            depthWrite={false} side={THREE.DoubleSide} />
+        </mesh>
       </group>
     </group>
   );
@@ -270,16 +316,16 @@ function ElectricalField({ active, color, reduced }) {
 }
 
 // ── Scene camera ──────────────────────────────────────────────────────────────
-// Frames from head (Y≈0.91) to upper pelvis (Y≈−0.20), portrait crop.
+// Frames head (Y≈0.91) to waist (Y≈0.0) — portrait crop matching reference.
 function SceneCamera() {
   const { camera, size } = useThree();
 
   useEffect(() => {
     const compact = size.width < 480;
-    // Portrait crop: look at Y=0.40 (mid-range of head-to-pelvis), stand back Z=3.0
-    camera.position.set(0, 0.40, compact ? 3.6 : 3.0);
-    camera.fov = compact ? 30 : 28;
-    camera.lookAt(0, 0.40, 0);
+    // Look at mid-chest (Y=0.48), pull back enough to see head-to-waist
+    camera.position.set(0, 0.46, compact ? 3.2 : 2.6);
+    camera.fov = compact ? 36 : 34;
+    camera.lookAt(0, 0.46, 0);
     camera.updateProjectionMatrix();
   }, [camera, size.width]);
 
@@ -296,11 +342,11 @@ function PatientAssembly({
 
   // Scroll-state → visual targets
   const STATE = {
-    patient:   { bodyOpacity: 0.14, showHeart: false, showField: false, elecVisible: false, elecActive: false },
-    capture:   { bodyOpacity: 0.22, showHeart: false, showField: false, elecVisible: true,  elecActive: true  },
-    dataset:   { bodyOpacity: 0.22, showHeart: true,  showField: false, elecVisible: true,  elecActive: false },
-    algorithm: { bodyOpacity: 0.10, showHeart: true,  showField: true,  elecVisible: true,  elecActive: false },
-    result:    { bodyOpacity: 0.15, showHeart: false,  showField: false, elecVisible: true,  elecActive: false },
+    patient:   { bodyOpacity: 0.18, showHeart: false, showField: false, elecVisible: false, elecActive: false },
+    capture:   { bodyOpacity: 0.26, showHeart: false, showField: false, elecVisible: true,  elecActive: true  },
+    dataset:   { bodyOpacity: 0.26, showHeart: true,  showField: false, elecVisible: true,  elecActive: false },
+    algorithm: { bodyOpacity: 0.14, showHeart: true,  showField: true,  elecVisible: true,  elecActive: false },
+    result:    { bodyOpacity: 0.20, showHeart: false,  showField: false, elecVisible: true,  elecActive: false },
   };
   const s = STATE[sceneState] ?? STATE.patient;
 
@@ -324,8 +370,16 @@ function PatientAssembly({
   return (
     <group ref={groupRef}>
       {/* Patient and heart share the same coordinate system — no offsets */}
-      <GltfBody opacity={calibMode ? 0.18 : s.bodyOpacity} />
+      <GltfBody opacity={calibMode ? 0.22 : s.bodyOpacity} />
       <GltfHeart visible={s.showHeart} reduced={reduced} />
+      {/* Warm point light at heart position — glows through translucent body */}
+      <pointLight
+        position={[0.019, 0.476, 0.12]}
+        intensity={s.showHeart ? 4.5 : 0}
+        color="#FF3010"
+        distance={0.8}
+        decay={2}
+      />
       <ElectricalField active={s.showField} color="#5BAFE8" reduced={reduced} />
 
       {[...frontElectrodes, ...backElectrodes].map(e => (
@@ -500,16 +554,23 @@ export default function CorVistaPatient3D({ sceneState = 'patient', view = 'fron
         aria-label="CorVista 3D patient sensor placement visualization"
       >
         <Canvas
-          camera={{ position: [0, 0.40, 3.0], fov: 28, near: 0.01, far: 50 }}
+          camera={{ position: [0, 0.46, 2.6], fov: 34, near: 0.01, far: 50 }}
           dpr={[1, Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2)]}
-          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-          style={{ width: '100%', height: '100%' }}
+          gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+          style={{ width: '100%', height: '100%', background: '#000' }}
         >
+          <color attach="background" args={['#000000']} />
           <SceneCamera />
-          <ambientLight intensity={0.55} />
-          <directionalLight position={[3, 4, 6]} intensity={2.0} />
-          <directionalLight position={[-4, 1, -2]} intensity={0.85} />
-          <pointLight position={[0, 2, 3]} intensity={0.35} color="#5BAFE8" />
+          {/* Low ambient keeps dark areas black like x-ray */}
+          <ambientLight intensity={0.08} color="#1A3A5C" />
+          {/* Top-front key: illuminates face and upper body */}
+          <directionalLight position={[0, 4, 5]} intensity={1.6} color="#C0E0FF" />
+          {/* Blue rim from upper-left */}
+          <directionalLight position={[-4, 2, -2]} intensity={1.4} color="#3A6FC0" />
+          {/* Blue rim from upper-right */}
+          <directionalLight position={[ 4, 2, -2]} intensity={1.1} color="#2A5AA0" />
+          {/* Subtle blue backlight */}
+          <directionalLight position={[0, -1, -4]} intensity={0.5} color="#1A3A7C" />
 
           <PatientAssembly
             sceneState={sceneState}
