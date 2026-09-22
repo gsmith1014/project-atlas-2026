@@ -27,58 +27,58 @@ const HEART_GLB   = '/corvista_reference_heart.glb';
 
 // ── Electrode definitions ─────────────────────────────────────────────────────
 // Colors follow AHA / IEC 61215 clinical standard — do not change.
-// Positions calibrated from model bounding box and anatomical landmarks
-// (patient: X ±0.524, Y −0.915→+0.915, Z −0.161→+0.156).
-// Verify and adjust each position against the CorVista placement reference image
-// using calibration mode (F2 in dev).
+// Positions and normals computed via brute-force nearest-vertex surface search
+// against the actual skin mesh geometry (92,659 verts, HRA Visible Human Male).
+// Each electrode was placed within a constrained anatomical bounding region and
+// snapped to the nearest surface vertex; normals are per-vertex mesh normals.
 export const ELECTRODES_DEFAULT = [
   {
     id: 'ra', label: 'RA', clinicalLabel: 'Right Arm (Right Subclavicular)',
     color: '#C8C8C8',
-    position: [-0.310, 0.745, 0.108],
-    normal:   [-0.782, 0.100, 0.615],
+    position: [-0.0856,  0.7700,  0.0035],
+    normal:   [-0.9439, -0.3281,  0.0373],
     side: 'front',
   },
   {
     id: 'la', label: 'LA', clinicalLabel: 'Left Arm (Left Subclavicular)',
     color: '#A0A0A0',
-    position: [ 0.310, 0.745, 0.108],
-    normal:   [ 0.782, 0.100, 0.615],
+    position: [ 0.0852,  0.7697,  0.0034],
+    normal:   [ 0.9189, -0.3886,  0.0673],
     side: 'front',
   },
   {
     id: 'rl', label: 'RL', clinicalLabel: 'Right Leg (Right Lower Abdomen)',
     color: '#2BC48A',
-    position: [-0.295, 0.085, 0.128],
-    normal:   [-0.770, -0.100, 0.629],
+    position: [-0.1769,  0.0574,  0.0657],
+    normal:   [-0.8766,  0.1919,  0.4414],
     side: 'front',
   },
   {
     id: 'll', label: 'LL', clinicalLabel: 'Left Leg (Left Lower Abdomen)',
     color: '#D85528',
-    position: [ 0.295, 0.085, 0.128],
-    normal:   [ 0.770, -0.100, 0.629],
+    position: [ 0.1773,  0.0572,  0.0649],
+    normal:   [ 0.8717,  0.2067,  0.4443],
     side: 'front',
   },
   {
     id: 'v1', label: 'V1', clinicalLabel: '4th ICS, Right Sternal Border',
     color: '#8B6545',
-    position: [-0.042, 0.562, 0.144],
-    normal:   [-0.152, 0.000, 0.988],
+    position: [-0.0384,  0.5343,  0.0959],
+    normal:   [-0.0323,  0.4739,  0.8800],
     side: 'front',
   },
   {
     id: 'v6', label: 'V6', clinicalLabel: '5th ICS, Mid-Axillary Line',
     color: '#F3B51A',
-    position: [ 0.428, 0.512, 0.048],
-    normal:   [ 0.902, -0.050, 0.430],
+    position: [ 0.2507,  0.5134, -0.0019],
+    normal:   [ 0.9759,  0.1731,  0.1327],
     side: 'front',
   },
   {
     id: 'ppg', label: 'PPG', clinicalLabel: 'Posterior (Upper Back)',
     color: '#5BAFE8',
-    position: [ 0.000, 0.618, -0.138],
-    normal:   [ 0.000, 0.050, -0.999],
+    position: [ 0.0001,  0.6148, -0.1049],
+    normal:   [-0.0094,  0.1960, -0.9806],
     side: 'back',
   },
 ];
