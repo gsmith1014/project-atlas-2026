@@ -1631,6 +1631,7 @@ p { margin: 0; }
 
 .science-act:last-child {
   border-bottom: none;
+  padding-bottom: clamp(200px, 35vh, 320px);
 }
 
 @media (max-width: 900px) {

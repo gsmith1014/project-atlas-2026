@@ -56,14 +56,14 @@ function CaptureOverlay({ visible, reduced }) {
     const ctx    = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
 
-    // Node over the heart/chest area of the patient image
-    const nodeCx = W * 0.50, nodeCy = H * 0.40;
+    // Node over the heart — sits in the lower-centre of the thoracic cavity
+    const nodeCx = W * 0.50, nodeCy = H * 0.49;
     const BEAT   = 0.82;
-    // Electrode positions on the chest
+    // Electrode positions (left chest, right chest, lower sternum/epigastric)
     const ELECS  = [
-      [W * 0.24, H * 0.32],  // left chest
-      [W * 0.76, H * 0.34],  // right chest
-      [W * 0.50, H * 0.58],  // lower sternum
+      [W * 0.23, H * 0.40],  // left chest
+      [W * 0.77, H * 0.42],  // right chest
+      [W * 0.50, H * 0.66],  // lower sternum
     ];
 
     const draw = (now) => {
