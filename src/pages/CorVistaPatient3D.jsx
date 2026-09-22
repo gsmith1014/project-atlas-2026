@@ -8,7 +8,7 @@
 import React, { useRef, useEffect } from 'react';
 
 // ── ECG signal model ──────────────────────────────────────────────────────────
-const g = (x, mu, s) => Math.exp(-0.5 * ((x - mu) / s) ** 2);
+const g = (x, mu, s) => Math.exp(-0.5 * Math.pow((x - mu) / s, 2));
 const ecgAt = c => (
    g(c, 0.20,  0.028) *  0.22    // P wave
  - g(c, 0.375, 0.013) *  0.18    // Q wave
@@ -16,49 +16,28 @@ const ecgAt = c => (
  - g(c, 0.475, 0.015) *  0.32    // S wave
  + g(c, 0.62,  0.048) *  0.52    // T wave
 );
-const LUT_N  = 1000;
+const LUT_N   = 1000;
 const ECG_LUT = Float32Array.from({ length: LUT_N }, (_, i) => ecgAt(i / LUT_N));
-const ecg = t => ECG_LUT[Math.round(((t % 1 + 1) % 1) * (LUT_N - 1))];
+const ecg     = t => ECG_LUT[Math.round(((t % 1 + 1) % 1) * (LUT_N - 1))];
 
-// ── Phase-space signal with per-beat jitter (builds the dense band) ───────────
-// Reproducible LCG so the attractor shape is stable across renders.
-function lcg(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
+// ── Single-cycle trajectory (5 repeats → one clean 3D loop, no jitter) ────────
+// Each repetition traces the same path, so in 3D they collapse to one crisp loop.
+const LOOP_SPB  = 240;          // samples per cardiac cycle (smooth)
+const FLAT_REPS = 5;            // ECG cycles shown in flat phase
+const FLAT_N    = FLAT_REPS * LOOP_SPB;  // 1200 total points
+const LOOP_TAU  = 0.020;        // delay fraction: spreads R-peak into 3D
+const ECG_PEAK  = 2.10;         // normalise by R-peak amplitude
 
-const PS_BEATS = 28;   // more beats → denser band
-const PS_SPB   = 180;  // samples per beat
-const PS_TAU   = 36;   // delay in samples (~0.20 of a beat period)
-const PS_N     = PS_BEATS * PS_SPB;
-
-const PS_DATA = (() => {
-  const rnd = lcg(7240191);
-  const raw = new Float32Array(PS_N + 2 * PS_TAU);
-  for (let b = 0; b < PS_BEATS; b++) {
-    const rAmp = 1.0 + (rnd() - 0.5) * 0.14;  // ±7% R-amplitude jitter → band thickness
-    const rate = 1.0 + (rnd() - 0.5) * 0.05;  // ±2.5% cycle-length variability
-    const sh   = (rnd() - 0.5) * 0.018;
-    for (let j = 0; j < PS_SPB; j++) {
-      const c = ((j / PS_SPB) * rate + sh + 1) % 1;
-      raw[PS_TAU + b * PS_SPB + j] = ecgAt(c) * rAmp;
-    }
-  }
-  const emb  = new Array(PS_N);
-  const flat = new Float32Array(PS_N);
-  let maxA = 0;
-  for (let i = 0; i < PS_N; i++) {
-    const idx = i + PS_TAU;
-    emb[i] = [raw[idx], raw[idx - PS_TAU], raw[idx - 2 * PS_TAU]];
-    if (Math.abs(raw[idx]) > maxA) maxA = Math.abs(raw[idx]);
-  }
-  for (let i = 0; i < PS_N; i++) flat[i] = raw[i + PS_TAU] / maxA;
-  return { emb, flat };
-})();
+const LOOP_TRAJ = Array.from({ length: FLAT_N }, (_, i) => {
+  const t = (i % LOOP_SPB) / LOOP_SPB;  // periodic — all reps trace the same path
+  return [ecg(t), ecg(t - LOOP_TAU), ecg(t - 2 * LOOP_TAU)];
+});
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-const clampF  = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-const eioC    = t => t < 0.5 ? 4*t*t*t : 1 - (-2*t+2)**3/2;  // easeInOutCubic
+const clampF = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const eioC   = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 // ── Real-time ECG trace (section 3: dataset) ──────────────────────────────────
-// Writes left → right like a cardiac monitor, then wraps and overwrites.
 function EcgOverlay({ visible, reduced }) {
   const ref    = useRef(null);
   const raf    = useRef(null);
@@ -118,11 +97,9 @@ function EcgOverlay({ visible, reduced }) {
       ctx.stroke();
 
       const wx = writeX.current, wy = buf[wx];
-      ctx.beginPath();
-      ctx.arc(wx, wy, 6, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(wx, wy, 6, 0, Math.PI * 2);
       ctx.fillStyle = '#5BAFE8'; ctx.globalAlpha = 0.18; ctx.fill();
-      ctx.beginPath();
-      ctx.arc(wx, wy, 2.8, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(wx, wy, 2.8, 0, Math.PI * 2);
       ctx.fillStyle = '#B8E8FF'; ctx.globalAlpha = 0.95; ctx.fill();
       ctx.globalAlpha = 1;
 
@@ -144,10 +121,10 @@ function EcgOverlay({ visible, reduced }) {
 }
 
 // ── 3D cardiac phase space (section 4: algorithm) ─────────────────────────────
-// Animation sequence:
-//   0 → T_BUILD s : flat ECG builds across canvas (left → right)
-//   T_BUILD → +T_FOLD s : signal folds up into 3D attractor
-//   then : slow turntable rotation
+// Three-phase animation:
+//   Phase 1 — pulsing heart node + animated dotted electrode lines
+//   Phase 2 — flat PQRST waveform writes across the canvas
+//   Phase 3 — ECG folds into clean single 3D loop (turntable rotation follows)
 function PhaseSpace3D({ visible, reduced }) {
   const ref    = useRef(null);
   const raf    = useRef(null);
@@ -166,23 +143,39 @@ function PhaseSpace3D({ visible, reduced }) {
     const ctx    = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
 
-    const cx = W * 0.50, cy = H * 0.46;
-    const SC = W * 0.158;  // spatial scale
-    const EL = 26 * Math.PI / 180;
-    const cEL = Math.cos(EL), sEL = Math.sin(EL);
+    // 3D projection centre (slightly above mid)
+    const cx = W * 0.50, cy = H * 0.44;
+    const SC = W * 0.158;
+    const EL_RAD = 26 * Math.PI / 180;
+    const cEL = Math.cos(EL_RAD), sEL = Math.sin(EL_RAD);
 
-    const xLeft  = W * 0.04;
-    const xRight = W * 0.96;
-    const flatAmp = H * 0.20;
+    // Flat ECG layout (slightly below centre so it feels grounded)
+    const xLeft  = W * 0.04, xRight = W * 0.96;
+    const flatCy = H * 0.52, flatAmp = H * 0.21;
 
-    // Phase durations (skip animations in reduced/thumbnail mode)
-    const T_BUILD = reduced ? 0   : 2.2;
-    const T_FOLD  = reduced ? 0.001 : 2.4;
-    const ROT_RATE = 0.20;  // radians/second
+    // Capture phase layout
+    const nodeCx = W * 0.50, nodeCy = H * 0.46;
+    // Electrode positions mirroring reference: upper-left, upper-right, lower-centre
+    const ELECS = [
+      [W * 0.15, H * 0.22],
+      [W * 0.85, H * 0.26],
+      [W * 0.50, H * 0.80],
+    ];
+    const BEAT = 0.82;  // seconds per heartbeat (~73 BPM)
 
-    // Box data range
-    const LO = -0.60, HI = 2.30;
+    // Phase timings (skip animations in reduced/thumbnail mode)
+    const T_CAP      = reduced ? 0      : 2.2;
+    const T_ECG      = reduced ? 0      : 1.8;
+    const T_FOLD     = reduced ? 0.001  : 2.2;
+    const ECG_START  = reduced ? 0      : T_CAP * 0.72;  // ECG starts before capture ends
+    const FOLD_START = ECG_START + T_ECG;
+    const ROT_START  = FOLD_START + T_FOLD;
+    const ROT_RATE   = 0.20;  // rad/s
 
+    // Box range matches ECG data
+    const LO = -0.6, HI = 2.3;
+
+    // ── 3D projection ────────────────────────────────────────────────────────
     const proj = (x, y, z, theta) => {
       const cT = Math.cos(theta), sT = Math.sin(theta);
       const x1 =  x * cT + z * sT;
@@ -190,33 +183,121 @@ function PhaseSpace3D({ visible, reduced }) {
       return [cx + x1 * SC, cy - (y * cEL - z1 * sEL) * SC];
     };
 
-    const drawGrid = (theta, alpha) => {
-      const STEPS = 4;
-      ctx.strokeStyle = '#5DB4E8';
+    // Flat-ECG helpers
+    const fpX = (i) => xLeft + (xRight - xLeft) * (i / FLAT_N);
+    const fpY = (i) => flatCy - (ecg((i % LOOP_SPB) / LOOP_SPB) / ECG_PEAK) * flatAmp;
+
+    // ── Phase 1: capture visualisation ───────────────────────────────────────
+    const drawCapture = (t, alpha) => {
+      if (alpha < 0.005) return;
       ctx.lineJoin = 'round';
-      ctx.lineWidth = 1;
+
+      const tb    = t % BEAT;
+      const thump = Math.exp(-Math.pow(tb / 0.12, 2)) + 0.5 * Math.exp(-Math.pow((tb - 0.16) / 0.07, 2));
+      const coreR = 22 + 7 * thump;
+
+      // Expanding rings from centre
+      const RING_LIFE = 2.0;
+      const nBeats = Math.floor(t / BEAT) + 1;
+      for (let k = 0; k < nBeats && k < 5; k++) {
+        const age = t - k * BEAT;
+        if (age <= 0 || age >= RING_LIFE) continue;
+        const pr = age / RING_LIFE;
+        ctx.beginPath();
+        ctx.arc(nodeCx, nodeCy, 44 + pr * W * 0.46, 0, Math.PI * 2);
+        ctx.strokeStyle = '#5BAFE8';
+        ctx.lineWidth   = 1.6;
+        ctx.globalAlpha = alpha * (1 - pr) * (1 - pr) * 0.55;
+        ctx.stroke();
+      }
+
+      // Animated dotted lines to electrodes
+      ctx.setLineDash([2, 7]);
+      ELECS.forEach(([ex, ey]) => {
+        ctx.lineDashOffset = -(t * 26) % 9;
+        ctx.beginPath();
+        ctx.moveTo(nodeCx, nodeCy);
+        ctx.lineTo(ex, ey);
+        ctx.strokeStyle = '#5BAFE8';
+        ctx.lineWidth   = 1.5;
+        ctx.globalAlpha = alpha * 0.40;
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+
+      // Electrode nodes
+      ELECS.forEach(([ex, ey], i) => {
+        const ea = (t - i * 0.12) % BEAT;
+        const ep = Math.exp(-Math.pow(ea / 0.14, 2));
+        // Pulse ring
+        ctx.beginPath();
+        ctx.arc(ex, ey, 14 + 10 * ep, 0, Math.PI * 2);
+        ctx.strokeStyle = '#5BAFE8';
+        ctx.lineWidth   = 1.5;
+        ctx.globalAlpha = alpha * (0.5 * (1 - ep) + 0.2);
+        ctx.stroke();
+        // Background
+        ctx.beginPath();
+        ctx.arc(ex, ey, 13, 0, Math.PI * 2);
+        ctx.fillStyle   = '#0E1F33';
+        ctx.globalAlpha = alpha;
+        ctx.fill();
+        // Ring
+        ctx.beginPath();
+        ctx.arc(ex, ey, 13, 0, Math.PI * 2);
+        ctx.strokeStyle = '#7CC3EF';
+        ctx.lineWidth   = 1.6;
+        ctx.globalAlpha = alpha * 0.80;
+        ctx.stroke();
+        // Centre dot
+        ctx.beginPath();
+        ctx.arc(ex, ey, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle   = '#5BAFE8';
+        ctx.globalAlpha = alpha;
+        ctx.fill();
+      });
+
+      // Radial glow + core dot
+      const gradR = coreR * 2.4;
+      const grad  = ctx.createRadialGradient(nodeCx, nodeCy, 0, nodeCx, nodeCy, gradR);
+      grad.addColorStop(0,    'rgba(234,246,255,1)');
+      grad.addColorStop(0.42, `rgba(93,180,232,${0.4 + 0.3 * thump})`);
+      grad.addColorStop(1,    'rgba(93,180,232,0)');
+      ctx.beginPath();
+      ctx.arc(nodeCx, nodeCy, gradR, 0, Math.PI * 2);
+      ctx.fillStyle   = grad;
+      ctx.globalAlpha = alpha * (0.5 + 0.3 * thump);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(nodeCx, nodeCy, coreR, 0, Math.PI * 2);
+      ctx.fillStyle   = '#EAF6FF';
+      ctx.shadowColor = '#5BAFE8';
+      ctx.shadowBlur  = 12;
+      ctx.globalAlpha = alpha;
+      ctx.fill();
+      ctx.shadowBlur  = 0;
+      ctx.globalAlpha = 1;
+    };
+
+    // ── Grid (fades in with fold) ─────────────────────────────────────────────
+    const drawGrid = (theta, alpha) => {
+      ctx.strokeStyle = '#5DB4E8';
+      ctx.lineWidth   = 1;
+      ctx.setLineDash([]);
+      ctx.lineJoin    = 'round';
 
       // Floor grid (y = LO)
+      const STEPS = 4;
+      ctx.beginPath();
       ctx.globalAlpha = alpha * 0.10;
-      ctx.beginPath();
       for (let i = 0; i <= STEPS; i++) {
         const u = LO + (HI - LO) * (i / STEPS);
-        let p = proj(u, LO, LO, theta); ctx.moveTo(p[0], p[1]);
-        p = proj(u, LO, HI, theta);     ctx.lineTo(p[0], p[1]);
-        p = proj(LO, LO, u, theta);     ctx.moveTo(p[0], p[1]);
-        p = proj(HI, LO, u, theta);     ctx.lineTo(p[0], p[1]);
-      }
-      ctx.stroke();
-
-      // Back wall (z = HI) — faint
-      ctx.globalAlpha = alpha * 0.065;
-      ctx.beginPath();
-      for (let i = 0; i <= STEPS; i++) {
-        const u = LO + (HI - LO) * (i / STEPS);
-        let p = proj(u, LO, HI, theta); ctx.moveTo(p[0], p[1]);
-        p = proj(u, HI, HI, theta);     ctx.lineTo(p[0], p[1]);
-        p = proj(LO, u, HI, theta);     ctx.moveTo(p[0], p[1]);
-        p = proj(HI, u, HI, theta);     ctx.lineTo(p[0], p[1]);
+        let p;
+        p = proj(u, LO, LO, theta); ctx.moveTo(p[0], p[1]);
+        p = proj(u, LO, HI, theta); ctx.lineTo(p[0], p[1]);
+        p = proj(LO, LO, u, theta); ctx.moveTo(p[0], p[1]);
+        p = proj(HI, LO, u, theta); ctx.lineTo(p[0], p[1]);
       }
       ctx.stroke();
 
@@ -224,27 +305,89 @@ function PhaseSpace3D({ visible, reduced }) {
       const C = [
         [LO,LO,LO],[HI,LO,LO],[HI,HI,LO],[LO,HI,LO],
         [LO,LO,HI],[HI,LO,HI],[HI,HI,HI],[LO,HI,HI],
-      ].map(([x,y,z]) => proj(x,y,z,theta));
+      ].map(([x, y, z]) => proj(x, y, z, theta));
       const E = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
-      ctx.globalAlpha = alpha * 0.18;
+      ctx.globalAlpha = alpha * 0.17;
       ctx.beginPath();
-      E.forEach(([a,b]) => { ctx.moveTo(C[a][0],C[a][1]); ctx.lineTo(C[b][0],C[b][1]); });
+      E.forEach(([a, b]) => { ctx.moveTo(C[a][0], C[a][1]); ctx.lineTo(C[b][0], C[b][1]); });
       ctx.stroke();
 
-      // Axis labels fade in after fold completes
+      // mV axis labels appear once fold is nearly done
       if (alpha > 0.55) {
-        const la = (alpha - 0.55) / 0.45 * 0.48;
+        const la = (alpha - 0.55) / 0.45 * 0.46;
         ctx.globalAlpha = la;
-        ctx.fillStyle = '#5A8099';
-        ctx.font = `500 ${Math.round(W * 0.024)}px ui-monospace, monospace`;
-        ctx.textAlign = 'center';
-        let p = proj(HI * 1.25, LO, LO, theta);        ctx.fillText('mV', p[0], p[1]);
-        p     = proj(LO,        LO, HI * 1.25, theta);  ctx.fillText('mV', p[0], p[1]);
-        p     = proj(LO * 0.9, HI * 1.22, LO, theta);   ctx.fillText('mV', p[0], p[1]);
+        ctx.fillStyle   = '#5A8099';
+        ctx.font        = `500 ${Math.round(W * 0.024)}px ui-monospace, monospace`;
+        ctx.textAlign   = 'center';
+        let p;
+        p = proj(HI * 1.26, LO,       LO,       theta); ctx.fillText('mV', p[0], p[1]);
+        p = proj(LO,        LO,        HI * 1.26, theta); ctx.fillText('mV', p[0], p[1]);
+        p = proj(LO * 0.88, HI * 1.20, LO,       theta); ctx.fillText('mV', p[0], p[1]);
       }
       ctx.globalAlpha = 1;
     };
 
+    // ── ECG + fold trajectory ─────────────────────────────────────────────────
+    const drawTrajectory = (count, foldM, theta, alpha, showHead) => {
+      const path = new Path2D();
+      for (let i = 0; i < count; i++) {
+        const [ex, ey, ez] = LOOP_TRAJ[i];
+        const [px3, py3]   = proj(ex, ey, ez, theta);
+        let px, py;
+        if (foldM >= 0.998) {
+          [px, py] = [px3, py3];
+        } else {
+          const fx = fpX(i), fy = fpY(i);
+          px = fx + (px3 - fx) * foldM;
+          py = fy + (py3 - fy) * foldM;
+        }
+        if (i === 0) path.moveTo(px, py);
+        else         path.lineTo(px, py);
+      }
+
+      ctx.lineJoin = 'round';
+      ctx.setLineDash([]);
+
+      // Glow underlay
+      ctx.strokeStyle = '#5DB4E8';
+      ctx.lineWidth   = 3.5;
+      ctx.globalAlpha = alpha * 0.12;
+      ctx.shadowColor = 'rgba(93,180,232,0.85)';
+      ctx.shadowBlur  = 16;
+      ctx.stroke(path);
+      ctx.shadowBlur  = 0;
+
+      // Main line — thicker while flat, thinner once in 3D
+      ctx.globalAlpha = alpha * (foldM < 0.5 ? 0.80 : 0.60);
+      ctx.lineWidth   = foldM < 0.5 ? 2.0 : 1.1;
+      ctx.stroke(path);
+
+      // Glowing head dot during build / fold
+      if (showHead && count > 0) {
+        const li = count - 1;
+        const [ex, ey, ez] = LOOP_TRAJ[li];
+        const [px3, py3]   = proj(ex, ey, ez, theta);
+        let hx, hy;
+        if (foldM >= 0.998) {
+          [hx, hy] = [px3, py3];
+        } else {
+          const fx = fpX(li), fy = fpY(li);
+          hx = fx + (px3 - fx) * foldM;
+          hy = fy + (py3 - fy) * foldM;
+        }
+        ctx.beginPath();
+        ctx.arc(hx, hy, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle   = '#EAF6FF';
+        ctx.globalAlpha = alpha;
+        ctx.shadowColor = '#5BAFE8';
+        ctx.shadowBlur  = 16;
+        ctx.fill();
+        ctx.shadowBlur  = 0;
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    // ── Main animation loop ───────────────────────────────────────────────────
     const draw = (now) => {
       if (lastTs.current !== null) {
         const dt = Math.min((now - lastTs.current) / 1000, 0.05);
@@ -253,63 +396,35 @@ function PhaseSpace3D({ visible, reduced }) {
       lastTs.current = now;
 
       const t = animT.current;
-      const buildProg = T_BUILD > 0 ? clampF(t / T_BUILD, 0, 1) : 1;
-      const count     = Math.max(2, Math.floor(buildProg * PS_N));
-      const foldM     = eioC(clampF((t - T_BUILD) / T_FOLD, 0, 1));
-      const theta     = 0.52 + Math.max(0, t - T_BUILD) * ROT_RATE;
 
       // Background
-      ctx.fillStyle = '#091629'; ctx.globalAlpha = 1;
-      ctx.fillRect(0, 0, W, H);
-
-      // Grid fades in as the fold progresses
-      if (foldM > 0.02) drawGrid(theta, foldM);
-
-      // Project all points: interpolate between flat 2D and 3D positions
-      const pts = new Array(count);
-      for (let i = 0; i < count; i++) {
-        const [ex, ey, ez] = PS_DATA.emb[i];
-        const [px3, py3]   = proj(ex, ey, ez, theta);
-        if (foldM >= 0.998) {
-          pts[i] = [px3, py3];
-        } else {
-          const fx = xLeft + (xRight - xLeft) * (i / PS_N);
-          const fy = cy - PS_DATA.flat[i] * flatAmp;
-          pts[i] = [fx + (px3 - fx) * foldM, fy + (py3 - fy) * foldM];
-        }
-      }
-
-      const path = new Path2D();
-      path.moveTo(pts[0][0], pts[0][1]);
-      for (let i = 1; i < count; i++) path.lineTo(pts[i][0], pts[i][1]);
-
-      ctx.lineJoin = 'round';
-
-      // Glow underlay
-      ctx.strokeStyle = '#5DB4E8';
-      ctx.lineWidth   = 3.8;
-      ctx.globalAlpha = 0.12;
-      ctx.shadowColor = 'rgba(93,180,232,0.85)';
-      ctx.shadowBlur  = 16;
-      ctx.stroke(path);
-      ctx.shadowBlur  = 0;
-
-      // Main line — thinner and denser once folded
-      ctx.globalAlpha = foldM < 0.5 ? 0.75 : 0.50;
-      ctx.lineWidth   = foldM < 0.5 ? 1.9  : 0.82;
-      ctx.stroke(path);
-
-      // Glowing head dot while still building or folding
-      if (buildProg < 1 || foldM < 0.92) {
-        const h = pts[count - 1];
-        ctx.globalAlpha = 1;
-        ctx.fillStyle   = '#EAF6FF';
-        ctx.shadowColor = '#5DB4E8'; ctx.shadowBlur = 18;
-        ctx.beginPath(); ctx.arc(h[0], h[1], 3.4, 0, Math.PI * 2); ctx.fill();
-        ctx.shadowBlur  = 0;
-      }
-
+      ctx.fillStyle   = '#091629';
       ctx.globalAlpha = 1;
+      ctx.fillRect(0, 0, W, H);
+      ctx.setLineDash([]);
+
+      // Derived animation values
+      const capAlpha  = clampF(t / 0.5, 0, 1) * (1 - clampF((t - T_CAP) / 0.6, 0, 1));
+      const ecgLocal  = t - ECG_START;
+      const ecgAlpha  = ecgLocal > 0 ? clampF(ecgLocal / 0.4, 0, 1) : 0;
+      const buildProg = clampF(T_ECG > 0 ? ecgLocal / T_ECG : 1, 0, 1);
+      const foldLocal = t - FOLD_START;
+      const foldM     = foldLocal > 0 ? eioC(clampF(foldLocal / T_FOLD, 0, 1)) : 0;
+      const theta     = 0.48 + Math.max(0, t - ROT_START) * ROT_RATE;
+
+      // How many points of the trajectory are visible
+      const count    = foldM > 0 ? FLAT_N : Math.max(2, Math.floor(buildProg * FLAT_N));
+      const showHead = (buildProg < 1 && foldM === 0) || (foldM > 0 && foldM < 0.88);
+
+      // Phase 1: capture
+      drawCapture(t, capAlpha);
+
+      // Phase 2+: ECG trace / fold / rotating 3D loop
+      if (ecgAlpha > 0.005) {
+        if (foldM > 0.02) drawGrid(theta, foldM);
+        drawTrajectory(count, foldM, theta, ecgAlpha, showHead);
+      }
+
       raf.current = requestAnimationFrame(draw);
     };
 
@@ -357,7 +472,7 @@ export default function CorVistaPatient3D({ sceneState = 'patient', view = 'fron
       {/* Section 3: real-time ECG writing overlay */}
       <EcgOverlay visible={sceneState === 'dataset'} reduced={reduced} />
 
-      {/* Section 4: 3D cardiac phase space — flat signal folds into attractor */}
+      {/* Section 4: capture → ECG → fold → 3D attractor */}
       <PhaseSpace3D visible={sceneState === 'algorithm'} reduced={reduced} />
     </div>
   );
