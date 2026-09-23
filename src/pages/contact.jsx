@@ -28,7 +28,7 @@ export function ContactPage() {
 
       <Section>
         <div className="row row-2" style={{ gridTemplateColumns: '1fr 1.4fr', gap: 64, alignItems: 'start' }}>
-          <div style={{ position: 'sticky', top: 100 }}>
+          <div className="contact-sticky" style={{ position: 'sticky', top: 100 }}>
             <Eyebrow>I'm reaching out to</Eyebrow>
             <div style={{ marginTop: 24, display: 'grid', gap: 4 }}>
               {intents.map(it => (
