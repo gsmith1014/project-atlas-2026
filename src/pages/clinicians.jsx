@@ -218,7 +218,7 @@ function DiagnosticDoomLoop() {
         <div style={{ padding: '28px 32px', background: '#091629' }}>
           <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', color: CV_BLUE, marginBottom: 10 }}>With CorVista</div>
           <div style={{ fontFamily: 'var(--f-sans)', fontSize: 56, fontWeight: 700, letterSpacing: '-0.04em', color: '#F4F6F9', lineHeight: 1 }}>3.7</div>
-          <div style={{ fontSize: 14, color: '#98A2B3', marginTop: 8, lineHeight: 1.5 }}>minutes — same visit — physician-reviewed report</div>
+          <div style={{ fontSize: 14, color: '#98A2B3', marginTop: 8, lineHeight: 1.5 }}>minute test — same visit — physician report</div>
         </div>
       </div>
 
@@ -256,13 +256,13 @@ function DiagnosticDoomLoop() {
             <div style={{ textAlign: 'center', marginTop: 10, opacity: flowVisible ? 1 : 0, transition: `opacity 0.4s ease ${d(430)}ms` }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>CorVista capture</div>
               <div style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 4, lineHeight: 1.4 }}>Non-invasive. MA-applied. At rest.</div>
-              <div style={{ marginTop: 8 }}><FlowPill label="15 minutes total visit" color={CV_TEAL} /></div>
+              <div style={{ marginTop: 8 }}><FlowPill label="15 minute total visit" color={CV_TEAL} /></div>
             </div>
 
             <VConnector color={CV_TEAL} delay={d(580)} height={28} visible={flowVisible} />
             <FlowNode icon="report" bg={CV_TEAL} delay={d(630)} visible={flowVisible} />
             <div style={{ textAlign: 'center', marginTop: 10, opacity: flowVisible ? 1 : 0, transition: `opacity 0.4s ease ${d(680)}ms` }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>Physician-reviewed report</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>Physician report</div>
               <div style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 4, lineHeight: 1.4 }}>CAD · PH · HF — all three assessed simultaneously</div>
               <div style={{ marginTop: 8 }}><FlowPill label="Minutes after capture" color={CV_TEAL} /></div>
             </div>
@@ -511,9 +511,9 @@ export function CliniciansPage() {
           <div className="row" style={{ gap: 0 }}>
             {[
               { n: '01', t: 'Identify candidates', c: 'Symptomatic patients with chest discomfort, dyspnea, or unexplained fatigue.' },
-              { n: '02', t: 'Order from your EHR', c: 'CorVista is a billable test like any other front-line cardiovascular study. CPT codes available on request.' },
-              { n: '03', t: 'Apply the sensor', c: 'A medical assistant places the non-invasive sensors. The acquisition takes 220 seconds at rest.' },
-              { n: '04', t: 'Review the report', c: 'A physician-reviewed report delivered to your portal — typically within minutes — with disease scores and recommended next steps.' },
+              { n: '02', t: 'Order from our Portal or right from your EHR', c: 'CorVista can be used directly from the native provider portal, or as a custom integration within your EHR.' },
+              { n: '03', t: 'Apply the sensor', c: 'A medical assistant places the non-invasive sensors. The acquisition takes 3.5 minutes at rest.' },
+              { n: '04', t: 'Review the report', c: 'A physician report delivered to your portal — typically within minutes — with disease scores and recommended next steps.' },
             ].map(s => (
               <div key={s.n} style={{ padding: '24px 0', borderTop: '1px solid var(--rule)', display: 'grid', gridTemplateColumns: '80px 1fr', gap: 32, alignItems: 'start' }}>
                 <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.14em' }}>{s.n}</div>
@@ -565,8 +565,8 @@ export function CliniciansPage() {
         <SectionHeader eyebrow="Implementation" title="A program your team can stand up in weeks." />
         <div className="row row-4">
           {[
-            { t: 'Reimbursement', c: 'Coverage paths under category codes today. CorVista guides billing setup and documentation.' },
-            { t: 'Training', c: '90-minute virtual onboarding for medical assistants. No technologist required.' },
+            { t: 'Reimbursement', c: 'Our team can help support billing setup and documentation. CPT III coding (effective January 2027).' },
+            { t: 'Training', c: 'Account manager supported onboarding for medical assistants and administrators.' },
             { t: 'Hardware', c: 'Capture device ships in 48 hours. The tablet and electrodes are provided. No capex.' },
             { t: 'Support', c: 'Dedicated clinical account manager.' },
           ].map(s => (
