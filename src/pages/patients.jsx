@@ -52,7 +52,7 @@ export function PatientsPage() {
             { n: '01', t: 'Before you arrive', c: 'Wear comfortable clothing. No fasting required, no medication changes.' },
             { n: '02', t: 'In the office', c: 'A medical assistant places small adhesive sensors on your chest and back, similar to an ECG.' },
             { n: '03', t: 'During the scan', c: 'You rest quietly for about four minutes. There\'s no radiation, no injection, no exercise.' },
-            { n: '04', t: 'After your visit', c: 'Your doctor receives a physician-reviewed report — usually within minutes — and will go over results with you.' },
+            { n: '04', t: 'After your visit', c: 'Your doctor receives a report — usually within minutes — and will go over results with you.' },
           ].map((s) => (
             <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 24 }}>
               <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.14em' }}>{s.n}</div>
