@@ -242,23 +242,19 @@ p { margin: 0; }
 }
 .brand {
   display: block;
-  align-items: center;
-  gap: 8px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  flex-shrink: 0;
 }
-.brand-mark {
-  width: 24px; height: 24px;
+/* Logo image: 1920×1080 PNG, logo content rows 437–640 (203px), cols 230–1778 (1548px).
+   Scale to render logo at 26px tall: factor = 26/203 ≈ 0.128.
+   Rendered image: 246×138px. Offset: -29px left, -56px top. Visible: 198×26px. */
+.brand-logo {
+  width: 198px;
+  height: 26px;
+  background-image: url('/corvista-logo.png');
+  background-size: 246px 138px;
+  background-position: -29px -56px;
+  background-repeat: no-repeat;
 }
-.brand-name {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.brand-name .blue { color: var(--blue); }
-.brand-logo { display: block; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .brand-logo { filter: brightness(0) invert(1); }
 }

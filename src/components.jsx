@@ -11,14 +11,7 @@ function BrandMark({ size = 26, color = "currentColor", accent = "#5BAFE8" }) {
 
 function Brand({ small = false }) {
   return (
-    <a href="#home" className="brand" aria-label="CorVista Health home" style={{ overflow: 'hidden', height: 26, width: 198, display: 'block', flexShrink: 0 }}>
-      <img
-        src="/corvista-logo.png"
-        alt="CorVista"
-        className="brand-logo"
-        style={{ height: 138, width: 'auto', marginTop: -56, marginLeft: -30, display: 'block' }}
-      />
-    </a>
+    <a href="#home" className="brand brand-logo" aria-label="CorVista Health home" />
   );
 }
 
