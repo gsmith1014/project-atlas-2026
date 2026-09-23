@@ -66,25 +66,6 @@ export function EvidencePage() {
         </div>
       </Section>
 
-      <Section dark>
-        <SectionHeader eyebrow={<span style={{ color: '#98A2B3' }}>Clinical trials</span>} title={<span style={{ color: '#F4F6F9' }}>Active studies and regulatory milestones.</span>} />
-        <div style={{ borderTop: '1px solid #1F2A3D', borderBottom: '1px solid #1F2A3D' }}>
-          {[
-            ['CV-PRIDE', 'Pivotal — CAD assessment', 'Completed', '2024'],
-            ['CV-PH-VALIDATE', 'PH detection in symptomatic patients', 'Enrolling', '2025'],
-            ['CV-HF-EARLY', 'Reduced LVEF screening in primary care', 'Initiated', '2026'],
-            ['FDA 510(k)', 'CAD indication clearance', 'Cleared', '2023'],
-            ['CE Mark', 'EU MDR certification', 'Active', '2024'],
-          ].map(([name, desc, status, year], i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 160px 100px', gap: 32, padding: '24px 0', borderBottom: i < 4 ? '1px solid #1F2A3D' : 0, alignItems: 'center', color: '#F4F6F9' }}>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{name}</div>
-              <div style={{ fontSize: 18 }}>{desc}</div>
-              <div className="chip" style={{ color: status === 'Cleared' || status === 'Completed' ? '#5BAFE8' : '#98A2B3', borderColor: status === 'Cleared' || status === 'Completed' ? '#5BAFE8' : '#1F2A3D' }}>{status}</div>
-              <div className="meta" style={{ color: '#98A2B3', textAlign: 'right' }}>{year}</div>
-            </div>
-          ))}
-        </div>
-      </Section>
     </div>
   );
 }

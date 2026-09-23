@@ -37,8 +37,6 @@ export function Header({ page }) {
     { slug: 'evidence', label: 'Clinical Evidence' },
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
-    { slug: 'investors', label: 'Investors' },
-    { slug: 'reimbursement', label: 'Reimbursement' },
     { slug: 'medical-affairs', label: 'Medical Affairs' },
   ];
   return (
@@ -98,7 +96,7 @@ export function Footer() {
             <h6>Company</h6>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('about'); }}>About</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('news'); }}>News & insights</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); navTo('investors'); }}>Investors</a>
+
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('contact'); }}>Contact</a>
           </div>
           <div>
