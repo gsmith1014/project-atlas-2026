@@ -100,18 +100,6 @@ export function PatientsPage() {
           ))}
         </div>
       </Section>
-
-      <Section dark>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 40 }}>
-          <h2 style={{ color: '#F4F6F9', maxWidth: '16ch', fontSize: 'clamp(40px, 5vw, 80px)' }}>
-            Ready to talk to your doctor about CorVista?
-          </h2>
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <a href="#" className="btn btn-primary">Find a clinician<span className="arrow">→</span></a>
-            <a href="#" className="btn btn-ghost">Download a one-pager<span className="arrow">→</span></a>
-          </div>
-        </div>
-      </Section>
     </div>
   );
 }
