@@ -34,7 +34,7 @@ const ACTS = [
   {
     id: 'result', n: '05',
     headline: 'Physician-ready in minutes.',
-    body: 'The cloud inference engine runs all three indication algorithms in parallel. A physician report with disease probability scores and recommended next steps reaches the clinician\'s portal before the patient leaves the room.',
+    body: 'The cloud-based engine runs all three indication algorithms in parallel. A physician report with disease probability scores and recommended next steps reaches the clinician\'s portal before the patient leaves the room.',
     detail: 'Three answers. One scan. Same visit.',
     result: true,
   },
