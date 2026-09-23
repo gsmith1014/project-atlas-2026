@@ -53,10 +53,10 @@ export function AboutPage() {
           <div><Eyebrow>Our mission</Eyebrow></div>
           <div>
             <h2 style={{ fontSize: 'clamp(34px, 4vw, 56px)' }}>
-              Bring comprehensive cardiovascular testing into the first office visit — for every patient, everywhere.
+              Bring comprehensive cardiopulmonary testing into the first office visit — for every patient, everywhere.
             </h2>
             <p className="lead" style={{ marginTop: 36 }}>
-              Founded as Analytics 4 Life and rebuilt as CorVista Health, our company exists to put a new generation of diagnostic intelligence in the hands of front-line clinicians — using machine-learned algorithms, novel signal processing, and a rigorous evidence base.
+              Founded as Analytics 4 Life, our company exists to put a new generation of diagnostic intelligence in the hands of front-line clinicians — using AI-based algorithms, novel signal processing, and a rigorous evidence base.
             </p>
           </div>
         </div>
