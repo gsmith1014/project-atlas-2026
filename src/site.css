@@ -524,6 +524,8 @@ p { margin: 0; }
 }
 .footer a { color: #C2C9D4; display: block; padding: 4px 0; font-size: 14px; }
 .footer a:hover { color: var(--blue); }
+.footer .btn-primary { color: var(--ink); }
+.footer .btn-primary:hover { color: #fff; }
 .footer-bottom {
   display: flex;
   justify-content: space-between;
