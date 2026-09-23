@@ -94,7 +94,7 @@ export default function App() {
   // Scroll to top after every route change, once the new page has rendered
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [route]);
+  }, [page, sub]);
 
   // Apply tweaks to CSS custom properties
   useEffect(() => {
