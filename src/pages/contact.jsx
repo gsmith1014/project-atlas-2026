@@ -58,12 +58,12 @@ export function ContactPage() {
               <Eyebrow>Headquarters</Eyebrow>
               <div style={{ marginTop: 18, fontSize: 17, lineHeight: 1.6, color: 'var(--fg)' }}>
                 CorVista Health, Inc.<br />
-                Toronto, Ontario, Canada<br />
-                <span className="meta">+1 (416) 555-0188</span>
+                Bethesda, MD, USA<br />
+                <span className="meta">+1 (833) 267-8478</span>
               </div>
               <div style={{ marginTop: 24 }}>
                 <div className="meta">General inquiries</div>
-                <div className="ilink" style={{ fontSize: 16, marginTop: 4, display: 'inline-block' }}>hello@corvista.com</div>
+                <div className="ilink" style={{ fontSize: 16, marginTop: 4, display: 'inline-block' }}>info@corvista.com</div>
               </div>
             </div>
           </div>
