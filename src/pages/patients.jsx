@@ -74,7 +74,7 @@ export function PatientsPage() {
               Heart disease is the leading cause of death. It doesn't have to be.
             </h2>
             <p className="lead" style={{ color: '#C8D0DC', marginTop: 24 }}>
-              Front-line cardiovascular tests have stayed largely unchanged for forty years. CorVista is bringing a new standard of testing into ordinary office visits — so disease is found earlier and people get the care they need sooner.
+              Front-line cardiovascular tests have stayed largely unchanged for forty years. CorVista is bringing a new standard of testing into front-line office visits — so disease is found earlier and people get the care they need sooner.
             </p>
           </div>
         </div>
