@@ -400,8 +400,8 @@ const CASES = [
     n: '02',
     pub: 'European Heart Journal — Case Reports · 2026',
     patient: '63-year-old man — exertional chest pain, multiple cardiovascular risk factors, family history of CAD',
-    heroStat: '3', heroUnit: 'tests',
-    heroDesc: 'returned negative — severe multivessel disease was found on the fourth',
+    heroStat: '2', heroUnit: 'tests',
+    heroDesc: 'returned negative — severe multivessel disease was found on the third',
     timeline: {
       events: [
         { label: 'Echo ✗',  sub: 'Test 1' },
@@ -453,9 +453,6 @@ export function CliniciansPage() {
         <div className="case-grid">
           {CASES.map((c) => (
             <div key={c.n} className="case-card">
-
-              {/* Visual miss timeline */}
-              <CaseMissTimeline events={c.timeline.events} cvEvent={c.timeline.cv} />
 
               {/* Dark header */}
               <div className="case-head">
