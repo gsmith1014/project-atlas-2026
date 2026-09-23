@@ -229,7 +229,6 @@ export function Footer() {
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
             <a href="#">Accessibility</a>
-            <a href="#">Indications for use</a>
           </div>
         </div>
       </div>
