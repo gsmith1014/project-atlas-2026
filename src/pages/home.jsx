@@ -9,7 +9,7 @@ function HeroEditorial() {
     <div className="hero">
       <div className="container">
         <div className="hero-eyebrow">
-          <Eyebrow>FDA-cleared cardiovascular diagnostic</Eyebrow>
+          <Eyebrow>FDA-cleared cardiopulmonary diagnostic</Eyebrow>
           <span className="tag">CorVista® System</span>
         </div>
         <div className="hero-grid" style={{ gridTemplateColumns: '1.55fr 1fr', gap: 56 }}>
@@ -21,7 +21,7 @@ function HeroEditorial() {
               <span className="em">warning.</span>
             </h1>
             <p className="lead" style={{ marginTop: 36, maxWidth: '48ch' }}>
-              The front-line cardiovascular test hasn't changed in forty years. CorVista changes what the first conversation looks like — three conditions, one 3.7-minute scan, same visit.
+              The front-line cardiovascular test hasn't changed in forty years. CorVista changes what the first conversation looks like — three conditions, one 3.5-minute test, same visit.
             </p>
             <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
               <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
@@ -88,8 +88,8 @@ export function HomePage({ tweaks }) {
       <Marquee items={[
         '99% NPV for CAD', '>99% NPV for PH', '>99% NPV for PCWP',
         'FDA-cleared · 3 indications', 'Breakthrough Designated',
-        '10,000+ patients validated', '50+ peer-reviewed publications',
-        '3.7 minutes · first-visit answer', '−44% PH cost of care',
+        '10,000+ patients validated', '20+ peer-reviewed publications',
+        '3.5 minutes · first-visit answer', '−44% PH cost of care',
         '+21% cath yield vs SPECT', '40+ active clinical sites',
       ]} />
 
@@ -133,21 +133,21 @@ export function HomePage({ tweaks }) {
           </div>
           <div>
             <h2 style={{ fontSize: 'clamp(36px, 4.8vw, 72px)' }}>
-              A non-invasive test that <span className="serif-i" style={{ color: 'var(--blue-deep)' }}>sees</span> what front-line cardiovascular diagnostics miss.
+              A non-invasive test that <span className="serif-i" style={{ color: 'var(--blue-deep)' }}>sees</span> what front-line cardiopulmonary diagnostics miss.
             </h2>
             <p className="lead" style={{ marginTop: 36, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
-              The CorVista® System combines non-invasive signal sensors, a cloud-based AI inference engine, and a physician-grade report. The result: a fast, comprehensive, accurate first answer about a patient's cardiovascular health — delivered where care begins.
+              The CorVista® System combines non-invasive signal sensors, a cloud-based AI analysis engine, and a physician-grade report. The result: a fast, comprehensive, accurate first answer about a patient's cardiopulmonary health — delivered where care begins.
             </p>
             <div className="row row-3" style={{ marginTop: 56 }}>
               <div>
                 <Eyebrow>01</Eyebrow>
                 <h5 style={{ marginTop: 12 }}>Acquire</h5>
-                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>A 220-second resting signal capture using a single-use sensors.</p>
+                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>A 3.5-minute resting signal capture using non-invasive sensors.</p>
               </div>
               <div>
                 <Eyebrow>02</Eyebrow>
                 <h5 style={{ marginTop: 12 }}>Analyze</h5>
-                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Phase-space tomography and machine-learned algorithms generate unique scores, predictive of disease.</p>
+                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Three dimensional data and AI-based algorithms generate unique scores, predictive of disease.</p>
               </div>
               <div>
                 <Eyebrow>03</Eyebrow>
@@ -250,7 +250,7 @@ export function HomePage({ tweaks }) {
 
       <div className="container">
         <div style={{ marginBottom: 32 }}>
-          <Eyebrow>In the news</Eyebrow>
+          <Eyebrow>As seen in</Eyebrow>
         </div>
       </div>
       <div className="press-grid">
