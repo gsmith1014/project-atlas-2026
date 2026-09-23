@@ -54,7 +54,7 @@ function PipelineChart() {
 }
 
 export function TechnologyPage() {
-  const [tableRef, tableVisible] = useReveal(0.15);
+
   return (
     <div className="page-fade" data-screen-label="02 Technology" data-page="technology">
       <div className="subhero">
@@ -221,41 +221,6 @@ export function TechnologyPage() {
               ))}
             </div>
           ))}
-        </div>
-      </Section>
-
-      <Section>
-        <SectionHeader eyebrow="Signal depth" title="More data. More dimensions. Fewer blind spots." />
-        <div className="row row-2" style={{ gap: 48, alignItems: 'start', marginTop: 0 }}>
-          <div>
-            <p style={{ fontSize: 17, lineHeight: 1.65, color: 'var(--fg-muted)', maxWidth: '48ch' }}>
-              A standard ECG captures approximately three heartbeats in two dimensions. CorVista analyzes 270 heartbeats across a three-dimensional phase-space reconstruction — extracting over 3,300 signal-derived features that single-signal tools cannot see.
-            </p>
-            <p style={{ fontSize: 17, lineHeight: 1.65, color: 'var(--fg-muted)', maxWidth: '48ch', marginTop: 16 }}>
-              Both signals — electrical (OVG) and hemodynamic (PPG) — are captured simultaneously, revealing the interface where most cardiac disease actually lives.
-            </p>
-          </div>
-          <div ref={tableRef} className={`ecg-compare${tableVisible ? ' revealed' : ''}`}>
-            <div className="ecg-compare-head">
-              <div className="ecg-compare-head-cell">Metric</div>
-              <div className="ecg-compare-head-cell">Standard ECG</div>
-              <div className="ecg-compare-head-cell">CorVista</div>
-            </div>
-            {[
-              { label: 'Heartbeats analyzed', ecg: '~3', cv: '270' },
-              { label: 'Sample frequency', ecg: '<500 Hz', cv: '8,000 Hz' },
-              { label: 'Features extracted', ecg: '~12', cv: '3,300+' },
-              { label: 'Signal dimension', ecg: '2D waveform', cv: '3D phase-space' },
-              { label: 'Hemodynamic data', ecg: 'None', cv: 'Full PPG channel' },
-              { label: 'Respiration signal', ecg: 'None', cv: 'Captured' },
-            ].map((row, i) => (
-              <div key={i} className="ecg-row" style={{ transitionDelay: tableVisible ? `${i * 80}ms` : '0ms' }}>
-                <div className="ecg-cell">{row.label}</div>
-                <div className="ecg-cell ecg-cell-dim">{row.ecg}</div>
-                <div className="ecg-cell">{row.cv}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </Section>
 
