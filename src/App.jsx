@@ -86,11 +86,15 @@ export default function App() {
       const slug = e.detail;
       window.location.hash = slug;
       setRoute(getRouteFromHash());
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     window.addEventListener('cv-navigate', onNav);
     return () => window.removeEventListener('cv-navigate', onNav);
   }, []);
+
+  // Scroll to top after every route change, once the new page has rendered
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route]);
 
   // Apply tweaks to CSS custom properties
   useEffect(() => {
