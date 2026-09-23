@@ -373,40 +373,40 @@ function ResultCard({ visible }) {
   ];
 
   return (
-    <div style={{ border: '1px solid #25324A', borderRadius: 6, background: '#0B1827', overflow: 'hidden', width: '100%', maxWidth: 300 }}>
-      <div style={{ padding: '14px 18px', borderBottom: '1px solid #1F2A3D', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 8, color: '#4A5568', letterSpacing: '0.14em', textTransform: 'uppercase' }}>CorVista Clinical Report</span>
-        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 8, color: '#25324A', letterSpacing: '0.1em' }}>Physician Reviewed</span>
+    <div style={{ border: '1px solid #25324A', borderRadius: 8, background: '#0B1827', overflow: 'hidden', width: '100%' }}>
+      <div style={{ padding: '16px 22px', borderBottom: '1px solid #1F2A3D', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5B6F88', letterSpacing: '0.14em', textTransform: 'uppercase' }}>CorVista Clinical Report</span>
+        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#2A3A50', letterSpacing: '0.1em' }}>Physician Reviewed</span>
       </div>
       {items.map((item, i) => (
         <div key={item.ind} style={{
-          padding: '14px 18px',
+          padding: '18px 22px',
           borderBottom: i < items.length - 1 ? '1px solid #1F2A3D' : 'none',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
           opacity: visible ? 1 : 0,
           transform: visible ? 'none' : 'translateY(5px)',
           transition: `opacity 0.5s ease ${i * 120}ms, transform 0.5s ease ${i * 120}ms`,
         }}>
           <div>
-            <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5BAFE8', letterSpacing: '0.1em' }}>{item.ind}</span>
-            <div style={{ marginTop: 4, fontSize: 11, color: '#4A5568', lineHeight: 1.4, maxWidth: '20ch' }}>{item.note}</div>
+            <span style={{ fontFamily: 'var(--f-mono)', fontSize: 14, color: '#5BAFE8', letterSpacing: '0.1em' }}>{item.ind}</span>
+            <div style={{ marginTop: 6, fontSize: 13, color: '#5B6F88', lineHeight: 1.5 }}>{item.note}</div>
           </div>
           <span style={{
-            padding: '5px 10px', borderRadius: 3,
+            padding: '7px 14px', borderRadius: 4,
             background: `${item.color}18`, border: `1px solid ${item.color}38`,
-            color: item.color, fontFamily: 'var(--f-mono)', fontSize: 10,
+            color: item.color, fontFamily: 'var(--f-mono)', fontSize: 13,
             letterSpacing: '0.06em', whiteSpace: 'nowrap',
           }}>{item.score}</span>
         </div>
       ))}
       <div style={{
-        padding: '12px 18px', borderTop: '1px solid #1F2A3D',
-        display: 'flex', justifyContent: 'space-between',
+        padding: '14px 22px', borderTop: '1px solid #1F2A3D',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.5s ease 380ms',
       }}>
-        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 8, color: '#2A3A50', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Result delivered</span>
-        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 13, color: '#F4F6F9' }}>4 min 22 sec</span>
+        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 10, color: '#2A3A50', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Result delivered</span>
+        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 16, color: '#F4F6F9' }}>4 min 22 sec</span>
       </div>
     </div>
   );
@@ -476,7 +476,7 @@ export function ScienceSection() {
               position: 'absolute', inset: 0,
               opacity: activeAct === 'result' ? 1 : 0,
               transition: reduced ? 'none' : 'opacity 0.7s ease',
-              display: 'flex', alignItems: 'flex-start', paddingTop: 20,
+              display: 'flex', alignItems: 'flex-start', paddingTop: 16,
               pointerEvents: activeAct === 'result' ? 'auto' : 'none',
             }}>
               <ResultCard visible={activeAct === 'result'} />
