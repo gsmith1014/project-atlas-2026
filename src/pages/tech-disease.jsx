@@ -13,7 +13,7 @@ const CV_DISEASES = {
     problemTitle: 'The front line is missing patients.',
     problemLead: 'Stable, symptomatic patients deserve a clear first answer. Today they rarely get one — and the gaps push disease downstream.',
     problems: [
-      { t: 'Many patients don't complete a specialist test', c: 'Up to 50% of patients are lost to follow-up when reffered for SPECT or CCTA — only to show up in emergency departments with accute events.' },
+      { t: "Many patients don't complete a specialist test", c: 'Up to 50% of patients are lost to follow-up when referred for SPECT or CCTA — only to show up in emergency departments with acute events.' },
       { t: 'Imaging adds cost, contrast, and radiation', c: 'SPECT exposes patients to ionizing radiation; CCTA requires contrast and a separate appointment. Both add days to the workup.' },
       { t: 'Normal first-line tests still miss high-grade disease', c: 'A previously normal stress test can sit in front of serve multi-vessel disease. False negatives are a critical clinical risk.' },
     ],
@@ -52,7 +52,7 @@ const CV_DISEASES = {
     perfNote: 'Elevated pulmonary artery pressure consistent with PH, assessed at the front line. High specificity and a >99% NPV make it a smarter first test for breathless patients.',
     workflow: [
       { n: '01', t: 'For breathless patients', c: 'When dyspnea is unexplained, a resting CorVista capture screens for PH without a specialist referral.' },
-      { n: '02', t: 'A clearer signal', c: 'A PH score helps decide who genuinely needs a right-heart cath — and who doesn’t.' },
+      { n: '02', t: 'A clearer signal', c: "A PH score helps decide who genuinely needs a right-heart cath — and who doesn't." },
       { n: '03', t: 'To the right specialist, faster', c: 'Patients who test positive reach a PH program months — or years — earlier than they would today.' },
     ],
     stats: [
