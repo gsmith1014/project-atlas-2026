@@ -218,7 +218,7 @@ function DiagnosticDoomLoop() {
         <div style={{ padding: '28px 32px', background: '#091629' }}>
           <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', color: CV_BLUE, marginBottom: 10 }}>With CorVista</div>
           <div style={{ fontFamily: 'var(--f-sans)', fontSize: 56, fontWeight: 700, letterSpacing: '-0.04em', color: '#F4F6F9', lineHeight: 1 }}>3.7</div>
-          <div style={{ fontSize: 14, color: '#98A2B3', marginTop: 8, lineHeight: 1.5 }}>minute test — same visit — physician report</div>
+          <div style={{ fontSize: 14, color: '#98A2B3', marginTop: 8, lineHeight: 1.5 }}>minute test — same visit — actionable physician report</div>
         </div>
       </div>
 
