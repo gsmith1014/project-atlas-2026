@@ -61,10 +61,10 @@ export function TechnologyPage() {
         <div className="container">
           <Eyebrow>Technology</Eyebrow>
           <h1 style={{ marginTop: 28 }}>
-            From signal to <span className="em">diagnosis</span>, in minutes.
+            From signal to <span className="em">answers</span>, in minutes.
           </h1>
           <p className="lead">
-            The CorVista System captures resting biosignals and runs them through AI algorithms trained on tens of thousands of patient cases — producing physician-grade insights without radiation, contrast, or stress.
+            The CorVista System captures resting biosignals and runs them through AI algorithms trained on more than ten thousand patient cases — producing physician-grade insights without radiation, contrast, or stress.
           </p>
         </div>
       </div>
@@ -73,9 +73,9 @@ export function TechnologyPage() {
         <SectionHeader eyebrow="How it works" title="A four-step pathway." />
         <div className="row row-4">
           {[
-            { n: '01', t: 'Non-invasive sensors', c: 'FDA-cleared electrical and blood flow sensors acquire 220 seconds of resting cardiovascular biosignals — no exercise, no contrast, no radiation.' },
-            { n: '02', t: 'Cardiac Phase Tomography', c: 'Signals are reconstructed into a 3D phase-space representation of the heart\'s electrical and mechanical activity.' },
-            { n: '03', t: 'AI analysis', c: 'Models trained on tens of thousands of paired cases (cath, echo, RHC, MRI) generate predictive disease scores.' },
+            { n: '01', t: 'Non-invasive sensors', c: 'FDA-cleared electrical and blood flow sensors acquire 3.5-minutes of resting cardiopulmonary biosignals — no exercise, no contrast, no radiation.' },
+            { n: '02', t: 'Multi-modal Processing', c: 'Signals are reconstructed into a 3D phase-space representation of the heart\'s electrical and mechanical activity.' },
+            { n: '03', t: 'AI analysis', c: 'Models trained on thousands of paired cases (cath, echo, RHC, MRI) generate predictive disease scores.' },
             { n: '04', t: 'Physician report', c: 'Cloud-based reporting delivers patient results in minutes.' },
           ].map(s => (
             <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 24 }}>
@@ -118,7 +118,7 @@ export function TechnologyPage() {
       <Section>
         <SectionHeader eyebrow="The workflow" title="Fewer tests. Earlier answers. Lower cost." />
         <p className="lead" style={{ maxWidth: '64ch', marginTop: -8 }}>
-          The conventional cardiovascular workup is a relay of referrals — each test scheduled, performed, and read on its own timeline. CorVista collapses that relay into a single resting capture that returns a physician-reviewed answer where care begins.
+          The conventional cardiopulmonary workup is a relay of referrals — each test scheduled, performed, and read on its own timeline. CorVista collapses that relay into a single resting capture that returns an answer where care begins.
         </p>
         <div className="row row-2" style={{ gap: 28, marginTop: 56, alignItems: 'stretch' }}>
           <div className="compare-col before">
@@ -140,7 +140,7 @@ export function TechnologyPage() {
             <div className="meta" style={{ letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5BAFE8' }}>With CorVista</div>
             <h4 style={{ marginTop: 14, fontSize: 26, color: '#F4F6F9' }}>One scan. Minutes.</h4>
             {[
-              ['A single resting capture', '220 seconds at rest — no exercise, no contrast, no radiation.'],
+              ['A single resting capture', '3.5-minutes at rest — no exercise, no contrast, no radiation.'],
               ['Decision at the point of care', 'The first answer arrives in the same visit the patient presents.'],
               ['Physician-ready report in minutes', 'Disease probability scores and recommended next steps in the portal.'],
               ['Right test, right patient', 'Rule out without referral, or send the right patients downstream.'],
