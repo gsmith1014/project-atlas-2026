@@ -74,6 +74,22 @@ const FlowIcons = {
       <line x1="23" y1="11" x2="17" y2="17"/>
     </svg>
   ),
+  corvista: (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Device body */}
+      <rect x="3" y="5" width="18" height="13" rx="2"/>
+      {/* Screen bezel */}
+      <rect x="5" y="7" width="14" height="8" rx="1" strokeWidth="1.5"/>
+      {/* Biosignal waveform on screen */}
+      <polyline points="6 11 7.5 11 9 8.5 10.5 13.5 12 9.5 13.5 11 16 11 18 11" strokeWidth="1.5"/>
+      {/* Sensor lead dots */}
+      <circle cx="8" cy="20" r="1.2" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="20" r="1.2" fill="currentColor" stroke="none"/>
+      {/* Lead lines from device */}
+      <line x1="8" y1="18" x2="8" y2="20"/>
+      <line x1="16" y1="18" x2="16" y2="20"/>
+    </svg>
+  ),
 };
 
 const CV_TEAL  = '#4ECDC4';
@@ -236,19 +252,7 @@ function DiagnosticDoomLoop() {
             </div>
             <VConnector color={CV_TEAL} delay={d(330)} height={20} visible={flowVisible} />
 
-            {/* CorVista capture node — uses device image */}
-            <div style={{
-              width: 52, height: 52, borderRadius: '50%',
-              background: CV_TEAL,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              flexShrink: 0, overflow: 'hidden',
-              boxShadow: `0 0 0 6px ${CV_TEAL}1A`,
-              opacity: flowVisible ? 1 : 0,
-              transform: flowVisible ? 'scale(1)' : 'scale(0.6)',
-              transition: `opacity 0.35s ease ${d(380)}ms, transform 0.35s ease ${d(380)}ms`,
-            }}>
-              <img src="/corvista-device.png" alt="CorVista device" style={{ width: 72, height: 72, objectFit: 'contain' }} />
-            </div>
+            <FlowNode icon="corvista" bg={CV_TEAL} delay={d(380)} visible={flowVisible} />
             <div style={{ textAlign: 'center', marginTop: 10, opacity: flowVisible ? 1 : 0, transition: `opacity 0.4s ease ${d(430)}ms` }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>CorVista capture</div>
               <div style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 4, lineHeight: 1.4 }}>Non-invasive. MA-applied. At rest.</div>
