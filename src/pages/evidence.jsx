@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { Eyebrow, Section, SectionHeader, Tabs, NavA, Stat } from '../components.jsx';
 
+export const STUDIES = [
+  { y: '2026', cat: 'cad', title: 'Utility of a Novel Point-of-Care Test in Detecting Coronary Artery Disease Following Negative Nuclear Testing: A Case Series', journal: 'European Heart Journal — Case Reports', n: 'n = 5 cases', meta: 'Case series', doi: 'https://doi.org/10.1093/ehjcr/ytag016' },
+  { y: '2026', cat: 'ph', title: 'Improving Trust in AI Diagnosis of Pulmonary Hypertension with Patient-Specific Insight', journal: 'Intelligence-Based Medicine', n: 'n = 252', meta: 'Explainability study · PHLEX/PHGEX', doi: 'https://doi.org/10.1016/j.ibmed.2026.100390' },
+  { y: '2025', cat: 'cad', title: 'Efficacy of a US-Developed Machine-Learned Coronary Artery Disease Algorithm in China', journal: 'Discover Medicine', n: 'n = 458', meta: 'International validation', doi: 'https://doi.org/10.1007/s44337-025-00255-3' },
+  { y: '2025', cat: 'ph', title: 'Facilitating Earlier Diagnosis of Pulmonary Hypertension Using a Novel Noninvasive Diagnostic', journal: 'JACC: Case Reports', n: 'n = 4 cases', meta: 'Case series', doi: 'https://doi.org/10.1016/j.jaccas.2025.104876' },
+  { y: '2025', cat: 'ph', title: 'Clinical Validation of a Machine-Learned, Point-of-Care System to IDENTIFY Pulmonary Hypertension', journal: 'ERJ Open Research', n: 'n = 462', meta: 'Prospective · 18 sites', doi: 'https://doi.org/10.1183/23120541.01287-2024' },
+  { y: '2025', cat: 'pcwp', title: 'Validation of a Noninvasive Machine-Learned Algorithm for PCWP Assessment in Symptomatic Patients (AHA 2025)', journal: 'Circulation Supplements', n: 'n = 255', meta: 'Conference abstract · AHA 2025', doi: 'https://doi.org/10.1161/circ.152.suppl_3.4365733' },
+  { y: '2024', cat: 'cad', title: 'Clinical Validation of a Machine-Learned, Point-of-Care System to IDENTIFY Functionally Significant Coronary Artery Disease', journal: 'Diagnostics', n: 'n = 1,816', meta: 'IDENTIFY trial · 18 sites', doi: 'https://doi.org/10.3390/diagnostics14100987' },
+  { y: '2024', cat: 'cad', title: 'Signal Acquisition, Score Interpretation, and Economics of a Non-Invasive Point-of-Care Test for Coronary Artery Disease', journal: 'Journal of Visualized Experiments', n: '', meta: 'Methods & economics', doi: 'https://doi.org/10.3791/66933' },
+];
+
 export function EvidencePage() {
   const [filter, setFilter] = useState('all');
-  const studies = [
-    { y: '2026', cat: 'cad', title: 'Utility of a Novel Point-of-Care Test in Detecting Coronary Artery Disease Following Negative Nuclear Testing: A Case Series', journal: 'European Heart Journal — Case Reports', n: 'n = 5 cases', meta: 'Case series', doi: 'https://doi.org/10.1093/ehjcr/ytag016' },
-    { y: '2026', cat: 'ph', title: 'Improving Trust in AI Diagnosis of Pulmonary Hypertension with Patient-Specific Insight', journal: 'Intelligence-Based Medicine', n: 'n = 252', meta: 'Explainability study · PHLEX/PHGEX', doi: 'https://doi.org/10.1016/j.ibmed.2026.100390' },
-    { y: '2025', cat: 'cad', title: 'Efficacy of a US-Developed Machine-Learned Coronary Artery Disease Algorithm in China', journal: 'Discover Medicine', n: 'n = 458', meta: 'International validation', doi: 'https://doi.org/10.1007/s44337-025-00255-3' },
-    { y: '2025', cat: 'ph', title: 'Facilitating Earlier Diagnosis of Pulmonary Hypertension Using a Novel Noninvasive Diagnostic', journal: 'JACC: Case Reports', n: 'n = 4 cases', meta: 'Case series', doi: 'https://doi.org/10.1016/j.jaccas.2025.104876' },
-    { y: '2025', cat: 'ph', title: 'Clinical Validation of a Machine-Learned, Point-of-Care System to IDENTIFY Pulmonary Hypertension', journal: 'ERJ Open Research', n: 'n = 462', meta: 'Prospective · 18 sites', doi: 'https://doi.org/10.1183/23120541.01287-2024' },
-    { y: '2025', cat: 'pcwp', title: 'Validation of a Noninvasive Machine-Learned Algorithm for PCWP Assessment in Symptomatic Patients (AHA 2025)', journal: 'Circulation Supplements', n: 'n = 255', meta: 'Conference abstract · AHA 2025', doi: 'https://doi.org/10.1161/circ.152.suppl_3.4365733' },
-    { y: '2024', cat: 'cad', title: 'Clinical Validation of a Machine-Learned, Point-of-Care System to IDENTIFY Functionally Significant Coronary Artery Disease', journal: 'Diagnostics', n: 'n = 1,816', meta: 'IDENTIFY trial · 18 sites', doi: 'https://doi.org/10.3390/diagnostics14100987' },
-    { y: '2024', cat: 'cad', title: 'Signal Acquisition, Score Interpretation, and Economics of a Non-Invasive Point-of-Care Test for Coronary Artery Disease', journal: 'Journal of Visualized Experiments', n: '', meta: 'Methods & economics', doi: 'https://doi.org/10.3791/66933' },
-  ];
-  const filtered = filter === 'all' ? studies : studies.filter(s => s.cat === filter);
+  const filtered = filter === 'all' ? STUDIES : STUDIES.filter(s => s.cat === filter);
 
   return (
     <div className="page-fade" data-screen-label="05 Evidence" data-page="evidence">
@@ -59,7 +60,7 @@ export function EvidencePage() {
                 <div className="meta" style={{ marginTop: 6 }}>{s.journal} · {s.meta}</div>
               </div>
               <div className="meta evidence-n">{s.n}</div>
-              <div><span className={`chip chip-blue`} style={s.cat === 'pcwp' ? { color: '#7C5CFC', borderColor: '#7C5CFC' } : s.cat === 'ph' ? { color: '#2E9E6B', borderColor: '#2E9E6B' } : {}}>{s.cat === 'pcwp' ? 'PCWP' : s.cat.toUpperCase()}</span></div>
+              <div><span className="chip chip-blue" style={s.cat === 'pcwp' ? { color: '#7C5CFC', borderColor: '#7C5CFC' } : s.cat === 'ph' ? { color: '#2E9E6B', borderColor: '#2E9E6B' } : {}}>{s.cat === 'pcwp' ? 'PCWP' : s.cat.toUpperCase()}</span></div>
               {s.doi ? <a href={s.doi} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink evidence-doi">DOI →</a> : <div />}
             </div>
           ))}

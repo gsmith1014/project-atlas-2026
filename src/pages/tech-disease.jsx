@@ -1,5 +1,6 @@
 import React from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo } from '../components.jsx';
+import { STUDIES } from './evidence.jsx';
 
 const CV_DISEASES = {
   cad: {
@@ -27,10 +28,6 @@ const CV_DISEASES = {
     stats: [
       { label: 'CAD diagnostic pathway cost', value: '−32', unit: '%', desc: 'Avoids unnecessary downstream imaging and admissions.' },
       { label: 'Cath lab yield vs SPECT', value: '+21', unit: '%', desc: 'More patients sent to cath have obstructive disease.' },
-    ],
-    studies: [
-      { title: 'Diagnostic Accuracy of Machine-Learned Algorithms Utilizing Cardiac Phase Tomography vs SPECT in the Assessment of CAD', journal: 'JACC: Cardiovascular Imaging', meta: 'Pivotal · PRIDE-CAD', n: 'n = 1,968' },
-      { title: 'Coronary Artery Disease Learning and Algorithm Development Study (CADLAD)', journal: 'Mayo Clinic Proceedings', meta: 'Development cohort', n: 'n = 2,209' },
     ],
   },
   ph: {
@@ -60,10 +57,6 @@ const CV_DISEASES = {
       { label: 'Average diagnostic delay today', value: '2.5', unit: 'yrs', desc: 'The gap CorVista is built to close.' },
       { label: 'Average hospitalizations avoided', value: '1-4', unit: '', desc: 'Identifying PAH earlier, before progression occurs.' },
     ],
-    studies: [
-      { title: 'Noninvasive Detection of Pulmonary Hypertension Using Resting Phase Signals and Advanced Machine Learning', journal: 'Pulmonary Circulation', meta: 'Multi-center · 9 sites', n: 'n = 524' },
-      { title: 'CV-PH-VALIDATE — PH detection in symptomatic patients', journal: 'Prospective clinical trial', meta: 'Enrolling · 2025', n: 'Multi-site' },
-    ],
   },
   pcwp: {
     slug: 'tech-pcwp',
@@ -91,10 +84,6 @@ const CV_DISEASES = {
       { label: 'HF patients undiagnosed', value: '~50', unit: '%', desc: 'The population a front-line signal can reach.' },
       { label: 'Echo wait time today', value: '4–8', unit: 'wks', desc: 'Replaced by an in-office read in minutes.' },
       { label: 'In-office decision', value: '<30', unit: 'min', desc: 'test to physician report.' },
-    ],
-    studies: [
-      { title: 'Assessing Reduced LVEF Using Resting Biosignals and Machine Learning', journal: 'JACC: Heart Failure', meta: 'First-in-human', n: 'n = 612' },
-      { title: 'CV-HF-EARLY — Reduced LVEF screening in primary care', journal: 'Prospective clinical trial', meta: 'Initiated · 2026', n: 'Multi-site' },
     ],
   },
 };
@@ -211,11 +200,16 @@ function DiseasePage({ d, activeKey }) {
           title={<span style={{ color: '#F4F6F9' }}>Validated in peer-reviewed studies.</span>}
         />
         <div style={{ borderTop: '1px solid #1F2A3D' }}>
-          {d.studies.map((s, i) => (
-            <div key={i} className="study-row" style={{ display: 'grid', gridTemplateColumns: '1fr 240px 140px', gap: 32, padding: '24px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'center', color: '#F4F6F9' }}>
-              <div style={{ fontSize: 18, lineHeight: 1.3, letterSpacing: '-0.01em', textWrap: 'pretty' }}>{s.title}</div>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#98A2B3' }}>{s.journal} · {s.meta}</div>
-              <div className="study-n" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', textAlign: 'right' }}>{s.n}</div>
+          {STUDIES.filter(s => s.cat === activeKey).map((s, i) => (
+            <div key={i} className="study-row" style={{ display: 'grid', gridTemplateColumns: '52px 1fr 180px', gap: 28, padding: '24px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'center', color: '#F4F6F9' }}>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8' }}>{s.y}</div>
+              <div>
+                <div style={{ fontSize: 17, lineHeight: 1.3, letterSpacing: '-0.01em', textWrap: 'pretty' }}>{s.title}</div>
+                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#98A2B3', marginTop: 6 }}>{s.journal} · {s.meta}{s.n ? ` · ${s.n}` : ''}</div>
+              </div>
+              {s.doi
+                ? <a href={s.doi} target="_blank" rel="noopener noreferrer" className="study-n" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', textAlign: 'right', textDecoration: 'none' }}>DOI →</a>
+                : <div className="study-n" />}
             </div>
           ))}
         </div>
