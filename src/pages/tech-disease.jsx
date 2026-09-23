@@ -9,7 +9,7 @@ const CV_DISEASES = {
     status: 'FDA-cleared',
     screenLabel: '02a CAD',
     title: <>Find obstructive coronary disease — from a <span className="em">resting</span> signal.</>,
-    lead: 'Up to 50% of CAD patients never go to their diagnostic refferal. CorVista assesses functionally significant CAD from 3.5 minutes of resting biosignals, right in the doctor's office.',
+    lead: "Up to 50% of CAD patients never go to their diagnostic referral. CorVista assesses functionally significant CAD from 3.5 minutes of resting biosignals, right in the doctor's office.",
     problemTitle: 'The front line is missing patients.',
     problemLead: 'Stable, symptomatic patients deserve a clear first answer. Today they rarely get one — and the gaps push disease downstream.',
     problems: [
