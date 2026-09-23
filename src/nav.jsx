@@ -88,34 +88,36 @@ export function Header({ page }) {
     { slug: 'medical-affairs', label: 'Medical Affairs' },
   ];
   return (
-    <header className="header">
-      <div className="header-inner">
-        <Brand />
-        <nav className="nav" aria-label="Primary">
-          <NavA to="home" className={page === 'home' ? 'active' : ''}>Home</NavA>
-          <TechMenu page={page} />
-          {items.filter(it => it.slug !== 'home').map(it => (
-            <NavA key={it.slug} to={it.slug} className={page === it.slug ? 'active' : ''}>{it.label}</NavA>
-          ))}
-        </nav>
-        <div className="nav-cta">
-          <NavA to="contact" className="btn btn-primary" style={{ padding: '10px 18px', fontSize: 14 }}>
-            Request a demo<span className="arrow">→</span>
-          </NavA>
+    <>
+      <header className="header">
+        <div className="header-inner">
+          <Brand />
+          <nav className="nav" aria-label="Primary">
+            <NavA to="home" className={page === 'home' ? 'active' : ''}>Home</NavA>
+            <TechMenu page={page} />
+            {items.filter(it => it.slug !== 'home').map(it => (
+              <NavA key={it.slug} to={it.slug} className={page === it.slug ? 'active' : ''}>{it.label}</NavA>
+            ))}
+          </nav>
+          <div className="nav-cta">
+            <NavA to="contact" className="btn btn-primary" style={{ padding: '10px 18px', fontSize: 14 }}>
+              Request a demo<span className="arrow">→</span>
+            </NavA>
+          </div>
+          <button
+            className={`hamburger${menuOpen ? ' is-open' : ''}`}
+            aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
         </div>
-        <button
-          className={`hamburger${menuOpen ? ' is-open' : ''}`}
-          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen(o => !o)}
-        >
-          <span className="hamburger-line" />
-          <span className="hamburger-line" />
-          <span className="hamburger-line" />
-        </button>
-      </div>
+      </header>
       {menuOpen && <MobileNav page={page} onClose={() => setMenuOpen(false)} />}
-    </header>
+    </>
   );
 }
 
