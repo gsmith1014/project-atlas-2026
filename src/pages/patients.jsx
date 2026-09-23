@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA } from '../components.jsx';
 import Player from '@vimeo/player';
-import stepArrival  from '/patient-step-arrival.jpg';
-import stepSensors  from '/patient-step-sensors.jpg';
-import stepScan     from '/patient-step-scan.jpg';
-import stepResults  from '/patient-step-results.jpg';
 import patientHero  from '/patient-hero.jpg';
-
-const STEP_IMGS = [stepResults, stepScan, stepSensors, stepArrival];
 
 function VimeoEmbed({ videoId, title }) {
   const iframeRef = useRef(null);
@@ -59,12 +53,11 @@ export function PatientsPage() {
             { n: '02', t: 'In the office', c: 'A medical assistant places small adhesive sensors on your chest and back, similar to an ECG.' },
             { n: '03', t: 'During the scan', c: 'You rest quietly for about four minutes. There\'s no radiation, no injection, no exercise.' },
             { n: '04', t: 'After your visit', c: 'Your doctor receives a physician-reviewed report — usually within minutes — and will go over results with you.' },
-          ].map((s, i) => (
-            <div key={s.n}>
-              <img src={STEP_IMGS[i]} alt={s.t} style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
-              <div style={{ marginTop: 18, fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.14em' }}>{s.n}</div>
-              <h5 style={{ marginTop: 8 }}>{s.t}</h5>
-              <p style={{ marginTop: 10, color: 'var(--fg-muted)', fontSize: 14 }}>{s.c}</p>
+          ].map((s) => (
+            <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 24 }}>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: 'var(--mid)', letterSpacing: '0.14em' }}>{s.n}</div>
+              <h4 style={{ marginTop: 14, letterSpacing: '-0.01em' }}>{s.t}</h4>
+              <p style={{ marginTop: 12, fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.5 }}>{s.c}</p>
             </div>
           ))}
         </div>
