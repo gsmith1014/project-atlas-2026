@@ -42,19 +42,21 @@ function MobileNav({ page, onClose }) {
     { slug: 'evidence', label: 'Clinical Evidence' },
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
-    { slug: 'medical-affairs', label: 'Medical Affairs' },
+    { slug: 'customer-hub', label: 'Customer Hub', external: true },
   ];
   return (
     <div className="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation">
       {navGroups.map(item => (
-        <a
-          key={item.slug}
-          href={`#${item.slug}`}
-          className={`m-nav-link${item.sub ? ' m-sub' : ''}${page === item.slug ? ' active' : ''}`}
-          onClick={e => { e.preventDefault(); go(item.slug); }}
-        >
-          {item.label}
-        </a>
+        item.external
+          ? <a key={item.slug} href="#" className="m-nav-link" onClick={e => e.preventDefault()}>{item.label}</a>
+          : <a
+              key={item.slug}
+              href={`#${item.slug}`}
+              className={`m-nav-link${item.sub ? ' m-sub' : ''}${page === item.slug ? ' active' : ''}`}
+              onClick={e => { e.preventDefault(); go(item.slug); }}
+            >
+              {item.label}
+            </a>
       ))}
       <div className="m-nav-cta">
         <a
@@ -85,7 +87,7 @@ export function Header({ page }) {
     { slug: 'evidence', label: 'Clinical Evidence' },
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
-    { slug: 'medical-affairs', label: 'Medical Affairs' },
+    { slug: 'customer-hub', label: 'Customer Hub', external: true },
   ];
   return (
     <>
@@ -95,9 +97,11 @@ export function Header({ page }) {
           <nav className="nav" aria-label="Primary">
             <NavA to="home" className={page === 'home' ? 'active' : ''}>Home</NavA>
             <TechMenu page={page} />
-            {items.filter(it => it.slug !== 'home').map(it => (
-              <NavA key={it.slug} to={it.slug} className={page === it.slug ? 'active' : ''}>{it.label}</NavA>
-            ))}
+            {items.filter(it => it.slug !== 'home').map(it =>
+              it.external
+                ? <a key={it.slug} href="#" onClick={e => e.preventDefault()} className="nav-external">{it.label}</a>
+                : <NavA key={it.slug} to={it.slug} className={page === it.slug ? 'active' : ''}>{it.label}</NavA>
+            )}
           </nav>
           <div className="nav-cta">
             <NavA to="contact" className="btn btn-primary" style={{ padding: '10px 18px', fontSize: 14 }}>
