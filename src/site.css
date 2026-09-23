@@ -656,7 +656,7 @@ p { margin: 0; }
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 56px;
-  align-items: end;
+  align-items: center;
 }
 @media (max-width: 1000px) { .hero-grid { grid-template-columns: 1fr; } }
 

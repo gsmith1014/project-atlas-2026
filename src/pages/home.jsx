@@ -12,16 +12,16 @@ function HeroEditorial() {
           <Eyebrow>FDA-cleared cardiopulmonary diagnostic</Eyebrow>
           <span className="tag">CorVista® System</span>
         </div>
-        <div className="hero-grid" style={{ gridTemplateColumns: '1.55fr 1fr', gap: 56 }}>
+        <div className="hero-grid" style={{ gridTemplateColumns: '1.3fr 1fr', gap: 64 }}>
           <div>
             <h1 className="hero-title">
-              Half of all<br />
-              heart attacks<br />
-              happen without<br />
-              <span className="em">warning.</span>
+              Chest pain.<br />
+              Breathlessness.<br />
+              Fatigue.<br />
+              <span className="em">Answered.</span>
             </h1>
             <p className="lead" style={{ marginTop: 36, maxWidth: '48ch' }}>
-              The front-line cardiovascular test hasn't changed in forty years. CorVista changes what the first conversation looks like — three conditions, one 3.5-minute test, same visit.
+              Three of the most common — and most ambiguous — presentations in primary care. Each could signal CAD, pulmonary hypertension, or heart failure. CorVista assesses all three from a single 3.5-minute resting capture. No radiation, no contrast, no referral needed.
             </p>
             <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
               <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
@@ -29,7 +29,7 @@ function HeroEditorial() {
             </div>
           </div>
           <div>
-            <img src={heroImg} alt="Clinician using CorVista with patient at point of care" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
+            <img src={heroImg} alt="Clinician using CorVista with patient at point of care" style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
               <span>FIG. 01</span>
               <span>Point-of-care testing</span>
