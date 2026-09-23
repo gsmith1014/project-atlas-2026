@@ -121,20 +121,75 @@ export function Header({ page }) {
   );
 }
 
+function EmailSignup() {
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (email) setSubmitted(true);
+  }
+
+  if (submitted) {
+    return <div style={{ fontSize: 13, color: '#5BAFE8', padding: '10px 0' }}>Thanks — you're on the list.</div>;
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="your@email.com"
+          required
+          style={{
+            flex: 1, minWidth: 0,
+            background: '#1A2334',
+            border: '1px solid #2A3952',
+            borderRadius: 4,
+            padding: '7px 10px',
+            fontSize: 13,
+            color: '#F4F6F9',
+            outline: 'none',
+            fontFamily: 'var(--f-sans)',
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            background: 'var(--blue)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 4,
+            padding: '7px 12px',
+            fontSize: 14,
+            cursor: 'pointer',
+            flexShrink: 0,
+          }}
+        >
+          →
+        </button>
+      </div>
+    </form>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-              <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
-                <path d="M5 8 L16 22 L27 8" fill="none" stroke="#5BAFE8" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" />
-                <path d="M10 8 L16 16 L22 8" fill="none" stroke="#5BAFE8" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" />
-              </svg>
-              <div style={{ fontFamily: 'var(--f-sans)', fontSize: 15, fontWeight: 800, color: '#F4F6F9', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                COR<span style={{ color: '#5BAFE8' }}>VISTA</span><sup style={{ fontSize: '0.5em', letterSpacing: 0 }}>®</sup>
-              </div>
+            <div style={{ marginBottom: 20 }}>
+              <div style={{
+                width: 198,
+                height: 26,
+                backgroundImage: 'url(/corvista-logo-white.png)',
+                backgroundSize: '246px 138px',
+                backgroundPosition: '-24px -50px',
+                backgroundRepeat: 'no-repeat',
+              }} role="img" aria-label="CorVista Health" />
             </div>
             <p style={{ color: '#98A2B3', maxWidth: 320, fontSize: 14, lineHeight: 1.5 }}>
               The world's most comprehensive front-line cardiovascular test. Built to find disease earlier — at the point of care.
@@ -160,19 +215,12 @@ export function Footer() {
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('contact'); }}>Contact</a>
           </div>
           <div>
-            <h6>Resources</h6>
-            <a href="#" onClick={(e) => { e.preventDefault(); navTo('medical-affairs'); }}>Medical Affairs</a>
-            <a href="#">Publications</a>
-            <a href="#">Press kit</a>
-            <a href="#">Careers</a>
-            <a href="#">Partnerships</a>
-          </div>
-          <div>
             <h6>Connect</h6>
-            <a href="#">LinkedIn</a>
-            <a href="#">X / Twitter</a>
-            <a href="#">YouTube</a>
-            <a href="#">Email updates</a>
+            <a href="https://www.linkedin.com/company/corvista-health" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <div style={{ paddingTop: 4 }}>
+              <div style={{ fontSize: 14, color: '#C2C9D4', paddingBottom: 2 }}>Email updates</div>
+              <EmailSignup />
+            </div>
           </div>
         </div>
         <div className="footer-bottom">
