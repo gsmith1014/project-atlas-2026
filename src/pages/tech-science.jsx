@@ -7,34 +7,34 @@ const ACTS = [
   {
     id: 'patient', n: '01',
     headline: 'The first conversation starts here.',
-    body: 'Every cardiovascular diagnostic journey begins the same way: a patient with symptoms, and a clinician who needs an answer. For the conditions that hide — CAD, pulmonary hypertension, heart failure — that first conversation has ended with a referral for forty years.',
-    detail: '50% of first heart attacks happen without prior symptoms. The front-line workup hasn\'t changed in four decades.',
+    body: 'Every cardiopulmonary diagnostic journey begins the same way: a patient with symptoms, and a clinician who needs an answer. For the conditions that hide — CAD, pulmonary hypertension, heart failure — that first conversation has historically ended with a referral.',
+    detail: '50% of first heart attacks happen without prior symptoms. The front-line workup hasn\'t changed in over four decades.',
   },
   {
     id: 'capture', n: '02',
     headline: 'Two signals. One resting moment.',
-    body: 'Six electrodes placed on the anterior surface capture the heart\'s electrical activity as the OVG signal. A seventh electrode, posterior, captures hemodynamic blood flow through PPG. Both streams begin simultaneously — at rest, with no exertion required.',
-    detail: '220 seconds. No exercise. No contrast. No radiation.',
+    body: 'Six electrodes placed on the anterior surface, and one on the posterior, capture the heart\'s electrical activity as the OVG signal. A finger sensor captures hemodynamic blood flow through PPG. Both streams begin simultaneously — at rest, with no exertion required.',
+    detail: '3.5 minutes. No exercise. No contrast. No radiation.',
     toggle: true,
   },
   {
     id: 'dataset', n: '03',
     headline: '270 heartbeats. 3,300 features.',
-    body: 'A standard ECG samples roughly three heartbeats at 500 Hz. CorVista samples both signals at 8,000 Hz for the full 220-second capture — analyzing 270 heartbeats across two physiological dimensions simultaneously.',
+    body: 'A standard ECG samples roughly three heartbeats at 500 Hz. CorVista samples both signals at 8,000 Hz for the full 3.5-minute capture — analyzing 270 heartbeats across multiple physiological dimensions simultaneously.',
     detail: 'A richer dataset than any front-line cardiovascular test available today.',
     comparison: true,
   },
   {
     id: 'algorithm', n: '04',
     headline: 'A new geometry of the heart.',
-    body: 'Cardiac Phase Space Tomography reconstructs the signal across twelve dimensions of state space. Machine-learning models — trained against cardiac catheterization, right-heart catheterization, and MRI as ground truth — detect patterns that time-domain waveforms cannot resolve.',
-    detail: '50+ peer-reviewed publications · 10,000+ patients · 40+ clinical sites',
+    body: 'Cardiac Phase Space Tomography reconstructs the signal across three dimensions of state space. AI algorithms — trained against cardiac catheterization and right-heart catheterization as ground truth — detect patterns that time-domain waveforms cannot resolve.',
+    detail: '20+ peer-reviewed publications · 10,000+ patients · 40+ clinical sites',
     algo: true,
   },
   {
     id: 'result', n: '05',
     headline: 'Physician-ready in minutes.',
-    body: 'The cloud inference engine runs all three indication algorithms in parallel. A physician-reviewed report with disease probability scores and recommended next steps reaches the clinician\'s portal before the patient leaves the room.',
+    body: 'The cloud inference engine runs all three indication algorithms in parallel. A physician report with disease probability scores and recommended next steps reaches the clinician\'s portal before the patient leaves the room.',
     detail: 'Three answers. One scan. Same visit.',
     result: true,
   },
@@ -331,7 +331,7 @@ function DataComparison({ visible }) {
     { label: 'Heartbeats',  ecg: '~3',      cv: '270',      key: true },
     { label: 'Sample rate', ecg: '500 Hz',   cv: '8,000 Hz' },
     { label: 'Features',    ecg: '~12',      cv: '3,300+',   key: true },
-    { label: 'Dimensions',  ecg: '2D',       cv: '12D+' },
+    { label: 'Dimensions',  ecg: '2D',       cv: '3D' },
   ];
 
   return (
@@ -376,7 +376,7 @@ function ResultCard({ visible }) {
     <div style={{ border: '1px solid #25324A', borderRadius: 8, background: '#0B1827', overflow: 'hidden', width: '100%' }}>
       <div style={{ padding: '16px 22px', borderBottom: '1px solid #1F2A3D', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#5B6F88', letterSpacing: '0.14em', textTransform: 'uppercase' }}>CorVista Clinical Report</span>
-        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#2A3A50', letterSpacing: '0.1em' }}>Physician Reviewed</span>
+        <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#2A3A50', letterSpacing: '0.1em' }}>Physician Ready</span>
       </div>
       {items.map((item, i) => (
         <div key={item.ind} style={{
@@ -506,7 +506,7 @@ export function ScienceSection() {
               })}
             </div>
             <div style={{ marginTop: 8, fontFamily: 'var(--f-mono)', fontSize: 9, color: '#4A5568', letterSpacing: '0.1em' }}>
-              {showBack ? 'Posterior — PPG hemodynamic' : 'Anterior — OVG electrical'}
+              {showBack ? 'Posterior — OVG electrical' : 'Anterior — OVG electrical'}
             </div>
           </div>
         </div>
@@ -526,12 +526,12 @@ export function ScienceSection() {
               {act.toggle && (
                 <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, border: '1px solid #1F2A3D', borderRadius: 4, overflow: 'hidden' }}>
                   <div style={{ padding: '16px 18px', background: '#081523' }}>
-                    <div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>OVG — Anterior</div>
-                    <div style={{ color: '#C8D0DC', fontSize: 14, lineHeight: 1.5 }}>Electrical cardiac activity · 6 surface electrodes</div>
+                    <div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>OVG — Anterior & Posterior</div>
+                    <div style={{ color: '#C8D0DC', fontSize: 14, lineHeight: 1.5 }}>Electrical cardiac activity · 7 surface electrodes</div>
                   </div>
                   <div style={{ padding: '16px 18px', background: '#081523', borderLeft: '1px solid #1F2A3D' }}>
-                    <div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>PPG — Posterior</div>
-                    <div style={{ color: '#C8D0DC', fontSize: 14, lineHeight: 1.5 }}>Hemodynamic blood flow · 1 posterior electrode</div>
+                    <div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>PPG — Finger</div>
+                    <div style={{ color: '#C8D0DC', fontSize: 14, lineHeight: 1.5 }}>Hemodynamic blood flow · 1 finger sensor</div>
                   </div>
                 </div>
               )}
@@ -548,7 +548,7 @@ export function ScienceSection() {
                     }}>{ind} ALGORITHM</div>
                   ))}
                   <div style={{ width: '100%', marginTop: 12, fontFamily: 'var(--f-mono)', fontSize: 10, color: '#3A4A5C', letterSpacing: '0.08em' }}>
-                    12+ DIMENSIONS · 50+ PUBLICATIONS · 10,000+ PATIENTS
+                    3+ DIMENSIONS · 20+ PUBLICATIONS · 10,000+ PATIENTS
                   </div>
                 </div>
               )}
