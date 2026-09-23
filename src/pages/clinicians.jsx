@@ -236,11 +236,23 @@ function DiagnosticDoomLoop() {
             </div>
             <VConnector color={CV_TEAL} delay={d(330)} height={20} visible={flowVisible} />
 
-            <FlowNode icon="sensor" bg={CV_TEAL} delay={d(380)} visible={flowVisible} />
+            {/* CorVista capture node — uses device image */}
+            <div style={{
+              width: 52, height: 52, borderRadius: '50%',
+              background: CV_TEAL,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
+              boxShadow: `0 0 0 6px ${CV_TEAL}1A`,
+              opacity: flowVisible ? 1 : 0,
+              transform: flowVisible ? 'scale(1)' : 'scale(0.6)',
+              transition: `opacity 0.35s ease ${d(380)}ms, transform 0.35s ease ${d(380)}ms`,
+            }}>
+              <img src="/corvista-device.png" alt="CorVista device" style={{ width: 34, height: 34, objectFit: 'contain' }} />
+            </div>
             <div style={{ textAlign: 'center', marginTop: 10, opacity: flowVisible ? 1 : 0, transition: `opacity 0.4s ease ${d(430)}ms` }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>CorVista capture</div>
               <div style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 4, lineHeight: 1.4 }}>Non-invasive. MA-applied. At rest.</div>
-              <div style={{ marginTop: 8 }}><FlowPill label="Same visit" color={CV_TEAL} /></div>
+              <div style={{ marginTop: 8 }}><FlowPill label="3.7 minutes" color={CV_TEAL} /></div>
             </div>
 
             <VConnector color={CV_TEAL} delay={d(580)} height={28} visible={flowVisible} />
@@ -248,7 +260,7 @@ function DiagnosticDoomLoop() {
             <div style={{ textAlign: 'center', marginTop: 10, opacity: flowVisible ? 1 : 0, transition: `opacity 0.4s ease ${d(680)}ms` }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>Physician-reviewed report</div>
               <div style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 4, lineHeight: 1.4 }}>CAD · PH · HF — all three assessed simultaneously</div>
-              <div style={{ marginTop: 8 }}><FlowPill label="3.7 minutes" color={CV_TEAL} /></div>
+              <div style={{ marginTop: 8 }}><FlowPill label="Minutes after capture" color={CV_TEAL} /></div>
             </div>
 
             <VConnector color={CV_GREEN} delay={d(880)} height={28} visible={flowVisible} />
@@ -259,7 +271,7 @@ function DiagnosticDoomLoop() {
             </div>
 
             <div style={{ marginTop: 24, padding: '18px 20px', background: `${CV_GREEN}09`, border: `1px solid ${CV_GREEN}26`, borderRadius: 8, textAlign: 'center', width: '100%', maxWidth: 260, opacity: flowVisible ? 1 : 0, transition: `opacity 0.5s ease ${d(1150)}ms` }}>
-              <div style={{ fontSize: 34, fontWeight: 700, color: CV_GREEN, letterSpacing: '-0.03em', lineHeight: 1 }}>3.7 <span style={{ fontSize: 18, fontWeight: 600 }}>min</span></div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: CV_GREEN, letterSpacing: '-0.02em', lineHeight: 1.2 }}>In a single visit</div>
               <div style={{ fontSize: 13, color: CV_GREEN, marginTop: 6, opacity: 0.85 }}>Complete differential. Every patient.</div>
             </div>
           </div>
