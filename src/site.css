@@ -241,7 +241,7 @@ p { margin: 0; }
   gap: 24px;
 }
 .brand {
-  display: flex;
+  display: block;
   align-items: center;
   gap: 8px;
   font-weight: 800;
@@ -258,6 +258,11 @@ p { margin: 0; }
   text-transform: uppercase;
 }
 .brand-name .blue { color: var(--blue); }
+.brand-logo { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand-logo { filter: brightness(0) invert(1); }
+}
+[data-theme="dark"] .brand-logo { filter: brightness(0) invert(1); }
 .nav {
   display: flex;
   gap: 4px;

@@ -11,11 +11,13 @@ function BrandMark({ size = 26, color = "currentColor", accent = "#5BAFE8" }) {
 
 function Brand({ small = false }) {
   return (
-    <a href="#home" className="brand" aria-label="CorVista Health home">
-      <BrandMark size={small ? 20 : 24} />
-      <span className="brand-name">
-        COR<span className="blue">VISTA</span><sup style={{ fontSize: '0.5em', verticalAlign: 'super', letterSpacing: 0 }}>®</sup>
-      </span>
+    <a href="#home" className="brand" aria-label="CorVista Health home" style={{ overflow: 'hidden', height: 26, width: 198, display: 'block', flexShrink: 0 }}>
+      <img
+        src="/corvista-logo.png"
+        alt="CorVista"
+        className="brand-logo"
+        style={{ height: 138, width: 'auto', marginTop: -56, marginLeft: -30, display: 'block' }}
+      />
     </a>
   );
 }
