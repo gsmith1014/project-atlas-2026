@@ -24,15 +24,15 @@ export function EvidencePage() {
             The science <span className="em">behind</span> every report.
           </h1>
           <p className="lead">
-            CorVista is supported by more than 50 peer-reviewed publications, abstracts, and posters — and continues to be validated through real-world deployment across leading cardiology programs.
+            CorVista is supported by more than 20 peer-reviewed publications, abstracts, and posters — and continues to be validated through real-world deployment across leading cardiology programs.
           </p>
         </div>
       </div>
 
       <Section>
         <div className="row row-4">
-          <Stat label="Peer-reviewed" value="50" unit="+" desc="Publications and conference abstracts." />
-          <Stat label="Patients studied" value="20K" unit="+" desc="Across CAD, PH, and PCWP cohorts." />
+          <Stat label="Peer-reviewed" value="20" unit="+" desc="Publications and conference abstracts." />
+          <Stat label="Patients studied" value="11K" unit="+" desc="Across CAD, PH, and PCWP cohorts." />
           <Stat label="Clinical sites" value="40" unit="+" desc="In the US, EU, Canada, and China." />
           <Stat label="Years of data" value="9" unit="" desc="Spanning CAD, PH, and heart failure." />
         </div>
