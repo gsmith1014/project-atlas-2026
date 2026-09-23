@@ -241,18 +241,18 @@ function DiagnosticDoomLoop() {
               width: 52, height: 52, borderRadius: '50%',
               background: CV_TEAL,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              flexShrink: 0,
+              flexShrink: 0, overflow: 'hidden',
               boxShadow: `0 0 0 6px ${CV_TEAL}1A`,
               opacity: flowVisible ? 1 : 0,
               transform: flowVisible ? 'scale(1)' : 'scale(0.6)',
               transition: `opacity 0.35s ease ${d(380)}ms, transform 0.35s ease ${d(380)}ms`,
             }}>
-              <img src="/corvista-device.png" alt="CorVista device" style={{ width: 34, height: 34, objectFit: 'contain' }} />
+              <img src="/corvista-device.png" alt="CorVista device" style={{ width: 72, height: 72, objectFit: 'contain' }} />
             </div>
             <div style={{ textAlign: 'center', marginTop: 10, opacity: flowVisible ? 1 : 0, transition: `opacity 0.4s ease ${d(430)}ms` }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--fg)' }}>CorVista capture</div>
               <div style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 4, lineHeight: 1.4 }}>Non-invasive. MA-applied. At rest.</div>
-              <div style={{ marginTop: 8 }}><FlowPill label="3.7 minutes" color={CV_TEAL} /></div>
+              <div style={{ marginTop: 8 }}><FlowPill label="15 minutes total visit" color={CV_TEAL} /></div>
             </div>
 
             <VConnector color={CV_TEAL} delay={d(580)} height={28} visible={flowVisible} />
