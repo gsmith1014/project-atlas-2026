@@ -74,7 +74,7 @@ export function NewsPage({ articleSlug }) {
             What's <span className="em">new</span> from CorVista.
           </h1>
           <p className="lead">
-            Press releases, peer-reviewed announcements, and stories from clinicians using CorVista in everyday practice.
+            The latest company announcements and stories from clinicians using CorVista in everyday practice.
           </p>
         </div>
       </div>
