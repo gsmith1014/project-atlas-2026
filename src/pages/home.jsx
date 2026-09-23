@@ -170,7 +170,7 @@ export function HomePage({ tweaks }) {
           <NavA to="evidence" className="btn btn-ghost">See the clinical evidence<span className="arrow">→</span></NavA>
         </div>
         <div style={{ borderTop: '1px solid #1F2A3D', borderBottom: '1px solid #1F2A3D' }}>
-          <div style={{ display: 'flex', gap: 0 }}>
+          <div className="condition-tabs" style={{ display: 'flex', gap: 0 }}>
             {Object.entries(conditions).map(([k, v]) => (
               <button
                 key={k}
@@ -192,7 +192,7 @@ export function HomePage({ tweaks }) {
             ))}
           </div>
         </div>
-        <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', marginTop: 56, gap: 56 }}>
+        <div className="row row-2 condition-content" style={{ gridTemplateColumns: '1fr 1fr', marginTop: 56, gap: 56 }}>
           <div>
             <p className="lead" style={{ color: '#C8D0DC', fontSize: 24, lineHeight: 1.4 }}>{c.blurb}</p>
             <NavA to="technology" style={{ marginTop: 32, display: 'inline-block' }} className="ilink">How the system works  →</NavA>

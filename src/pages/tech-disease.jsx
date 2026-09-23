@@ -212,10 +212,10 @@ function DiseasePage({ d, activeKey }) {
         />
         <div style={{ borderTop: '1px solid #1F2A3D' }}>
           {d.studies.map((s, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 240px 140px', gap: 32, padding: '24px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'center', color: '#F4F6F9' }}>
+            <div key={i} className="study-row" style={{ display: 'grid', gridTemplateColumns: '1fr 240px 140px', gap: 32, padding: '24px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'center', color: '#F4F6F9' }}>
               <div style={{ fontSize: 18, lineHeight: 1.3, letterSpacing: '-0.01em', textWrap: 'pretty' }}>{s.title}</div>
               <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#98A2B3' }}>{s.journal} · {s.meta}</div>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', textAlign: 'right' }}>{s.n}</div>
+              <div className="study-n" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', textAlign: 'right' }}>{s.n}</div>
             </div>
           ))}
         </div>

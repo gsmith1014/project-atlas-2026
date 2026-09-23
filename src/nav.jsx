@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Brand, NavA, navTo } from './components.jsx';
 
 function TechMenu({ page }) {
@@ -29,7 +29,55 @@ function TechMenu({ page }) {
   );
 }
 
+function MobileNav({ page, onClose }) {
+  function go(slug) { navTo(slug); onClose(); }
+  const navGroups = [
+    { slug: 'home', label: 'Home' },
+    { slug: 'technology', label: 'Technology' },
+    { slug: 'tech-cad', label: 'CAD — Coronary artery disease', sub: true },
+    { slug: 'tech-ph', label: 'PH — Pulmonary hypertension', sub: true },
+    { slug: 'tech-pcwp', label: 'PCWP — Heart failure', sub: true },
+    { slug: 'clinicians', label: 'For Clinicians' },
+    { slug: 'patients', label: 'For Patients' },
+    { slug: 'evidence', label: 'Clinical Evidence' },
+    { slug: 'about', label: 'About' },
+    { slug: 'news', label: 'News' },
+    { slug: 'medical-affairs', label: 'Medical Affairs' },
+  ];
+  return (
+    <div className="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation">
+      {navGroups.map(item => (
+        <a
+          key={item.slug}
+          href={`#${item.slug}`}
+          className={`m-nav-link${item.sub ? ' m-sub' : ''}${page === item.slug ? ' active' : ''}`}
+          onClick={e => { e.preventDefault(); go(item.slug); }}
+        >
+          {item.label}
+        </a>
+      ))}
+      <div className="m-nav-cta">
+        <a
+          href="#contact"
+          className="btn btn-primary"
+          onClick={e => { e.preventDefault(); go('contact'); }}
+        >
+          Request a demo<span className="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export function Header({ page }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => { setMenuOpen(false); }, [page]);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
   const items = [
     { slug: 'home', label: 'Home' },
     { slug: 'clinicians', label: 'For Clinicians' },
@@ -55,7 +103,18 @@ export function Header({ page }) {
             Request a demo<span className="arrow">→</span>
           </NavA>
         </div>
+        <button
+          className={`hamburger${menuOpen ? ' is-open' : ''}`}
+          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(o => !o)}
+        >
+          <span className="hamburger-line" />
+          <span className="hamburger-line" />
+          <span className="hamburger-line" />
+        </button>
       </div>
+      {menuOpen && <MobileNav page={page} onClose={() => setMenuOpen(false)} />}
     </header>
   );
 }
@@ -96,7 +155,6 @@ export function Footer() {
             <h6>Company</h6>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('about'); }}>About</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('news'); }}>News & insights</a>
-
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('contact'); }}>Contact</a>
           </div>
           <div>

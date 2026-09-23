@@ -242,7 +242,7 @@ function DiagnosticDoomLoop() {
         </div>
 
         {/* Two-column paths */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'start' }}>
+        <div className="doom-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'start' }}>
 
           {/* ═══════════ CorVista path (left) ═══════════ */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

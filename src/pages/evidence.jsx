@@ -52,15 +52,15 @@ export function EvidencePage() {
         />
         <div>
           {filtered.map((s, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '80px 1fr 240px 140px 80px', gap: 32, padding: '24px 0', borderTop: '1px solid var(--rule)', alignItems: 'center' }}>
+            <div key={i} className="evidence-row" style={{ display: 'grid', gridTemplateColumns: '80px 1fr 240px 140px 80px', gap: 32, padding: '24px 0', borderTop: '1px solid var(--rule)', alignItems: 'center' }}>
               <div className="meta">{s.y}</div>
               <div>
                 <div style={{ fontSize: 19, lineHeight: 1.25, letterSpacing: '-0.015em', fontWeight: 500, textWrap: 'pretty' }}>{s.title}</div>
                 <div className="meta" style={{ marginTop: 6 }}>{s.journal} · {s.meta}</div>
               </div>
-              <div className="meta">{s.n}</div>
+              <div className="meta evidence-n">{s.n}</div>
               <div><span className={`chip chip-blue`} style={s.cat === 'pcwp' ? { color: '#7C5CFC', borderColor: '#7C5CFC' } : s.cat === 'ph' ? { color: '#2E9E6B', borderColor: '#2E9E6B' } : {}}>{s.cat === 'pcwp' ? 'PCWP' : s.cat.toUpperCase()}</span></div>
-              {s.doi ? <a href={s.doi} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink">DOI →</a> : <div />}
+              {s.doi ? <a href={s.doi} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink evidence-doi">DOI →</a> : <div />}
             </div>
           ))}
         </div>
