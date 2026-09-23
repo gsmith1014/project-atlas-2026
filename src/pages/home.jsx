@@ -233,8 +233,8 @@ export function HomePage({ tweaks }) {
       </Section>
 
       <Section>
-        <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-          <img src={tracyImg} alt="Tracy Neal, MD" style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
+        <div className="row row-2" style={{ gridTemplateColumns: '0.75fr 1fr', gap: 80, alignItems: 'center' }}>
+          <img src={tracyImg} alt="Tracy Neal, MD" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', objectPosition: 'center 40%', display: 'block', borderRadius: 4 }} />
           <div>
             <Eyebrow>From the field</Eyebrow>
             <p className="quote" style={{ marginTop: 28 }}>
