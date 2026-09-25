@@ -1,166 +1,264 @@
-import React from 'react';
-import { Eyebrow, Section, SectionHeader, Stat, NavA, navTo } from '../components.jsx';
+import React, { useState } from 'react';
+import { Eyebrow, Section, SectionHeader, NavA } from '../components.jsx';
 
-function useReveal(threshold = 0.15) {
-  const ref = React.useRef(null);
-  const [visible, setVisible] = React.useState(false);
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-}
+const CPT_CODE = {
+  code: '1104T',
+  category: 'Category III',
+  effective: 'October 1, 2026',
+  description: 'Noninvasive multi-sensor biosignal acquisition and computer-aided analysis for cardiovascular physiologic evaluation, including automated algorithmic interpretation for coronary artery disease, pulmonary hypertension, and/or elevated pulmonary capillary wedge pressure',
+  note: 'Category III codes track emerging technologies. A Medicare reimbursement rate has not been published. Coverage is available on a case-by-case basis; contact the CorVista reimbursement team for practice-specific billing support.',
+};
 
-const MILESTONES = [
-  { status: 'done', date: '2023', title: 'FDA Clearance — CAD', detail: 'CorVista System cleared for coronary artery disease indication.', code: null },
-  { status: 'done', date: '2024', title: 'FDA Clearance — PH', detail: 'Pulmonary hypertension indication cleared. CPT unlisted code 93799 enabled case-by-case reimbursement.', code: null },
-  { status: 'done', date: 'Jul 2026', title: 'FDA Clearance — PCWP', detail: 'Pulmonary capillary wedge pressure / heart failure indication cleared.', code: null },
-  { status: 'done', date: 'May 2026', title: 'CPT Category III Code Accepted', detail: 'AMA Editorial Panel accepted CPT 1104T with ACC endorsement. The first trackable reimbursement path for CorVista.', code: 'CPT 1104T' },
-  { status: 'active', date: '2026–2027', title: 'Novitas MAC Pricing + Medicare Revenue', detail: '3–4 months post Category III acceptance. Nominal Medicare coverage enables first reimbursed scaling.', code: null },
-  { status: 'future', date: '1H 2027', title: 'First Commercial Payor Contracts', detail: 'Technology assessment and medical coverage review underway with commercial health plans.', code: null },
-  { status: 'future', date: '4Q 2028', title: 'CPT Category I Code Submission', detail: 'Durable Medicare and commercial coverage — the permanent standard. Industry median for this step is 5.7 years; CorVista is tracking 2+ years ahead.', code: null },
+const INDICATIONS = [
+  {
+    key: 'cad',
+    abbr: 'CAD',
+    label: 'Coronary Artery Disease',
+    sublabel: 'CAD Add-on',
+    codes: [
+      { code: 'I25.1',   desc: 'Atherosclerotic heart disease of native coronary artery' },
+      { code: 'I25.10',  desc: 'Atherosclerotic heart disease of native coronary artery without angina pectoris' },
+      { code: 'I25.11',  desc: 'Atherosclerotic heart disease of native coronary artery with angina pectoris' },
+      { code: 'I25.110', desc: 'Atherosclerotic heart disease of native coronary artery with unstable angina pectoris' },
+      { code: 'I25.111', desc: 'Atherosclerotic heart disease of native coronary artery with angina pectoris with documented spasm' },
+      { code: 'I25.112', desc: 'Atherosclerotic heart disease of native coronary artery with refractory angina pectoris' },
+      { code: 'I25.118', desc: 'Atherosclerotic heart disease of native coronary artery with other forms of angina pectoris' },
+      { code: 'I25.119', desc: 'Atherosclerotic heart disease of native coronary artery with unspecified angina pectoris' },
+      { code: 'I25.5',   desc: 'Ischemic cardiomyopathy' },
+      { code: 'I20.0',   desc: 'Unstable angina' },
+      { code: 'I20.1',   desc: 'Angina pectoris with documented spasm' },
+      { code: 'I20.81',  desc: 'Angina pectoris with coronary microvascular dysfunction' },
+      { code: 'I20.89',  desc: 'Other forms of angina pectoris' },
+      { code: 'I20.9',   desc: 'Angina pectoris, unspecified' },
+      { code: 'I24.89',  desc: 'Other forms of acute ischemic heart disease' },
+      { code: 'I24.9',   desc: 'Acute ischemic heart disease, unspecified' },
+    ],
+  },
+  {
+    key: 'ph',
+    abbr: 'PH',
+    label: 'Pulmonary Hypertension',
+    sublabel: 'PH Add-on',
+    codes: [
+      { code: 'I27.0',   desc: 'Primary pulmonary hypertension' },
+      { code: 'I27.2',   desc: 'Other secondary pulmonary hypertension' },
+      { code: 'I27.20',  desc: 'Pulmonary hypertension, unspecified' },
+      { code: 'I27.21',  desc: 'Secondary pulmonary arterial hypertension' },
+      { code: 'I27.22',  desc: 'Pulmonary hypertension due to left heart disease' },
+      { code: 'I27.23',  desc: 'Pulmonary hypertension due to lung diseases and hypoxia' },
+      { code: 'I27.24',  desc: 'Chronic thromboembolic pulmonary hypertension' },
+      { code: 'I27.29',  desc: 'Other secondary pulmonary hypertension' },
+    ],
+  },
+  {
+    key: 'pcwp',
+    abbr: 'PCWP',
+    label: 'Heart Failure',
+    sublabel: 'PCWP Add-on',
+    codes: [
+      { code: 'I50.1',   desc: 'Left ventricular failure, unspecified' },
+      { code: 'I50.20',  desc: 'Unspecified systolic (congestive) heart failure' },
+      { code: 'I50.21',  desc: 'Acute systolic (congestive) heart failure' },
+      { code: 'I50.22',  desc: 'Chronic systolic (congestive) heart failure' },
+      { code: 'I50.23',  desc: 'Acute on chronic systolic (congestive) heart failure' },
+      { code: 'I50.30',  desc: 'Unspecified diastolic (congestive) heart failure' },
+      { code: 'I50.31',  desc: 'Acute diastolic (congestive) heart failure' },
+      { code: 'I50.32',  desc: 'Chronic diastolic (congestive) heart failure' },
+      { code: 'I50.33',  desc: 'Acute on chronic diastolic (congestive) heart failure' },
+      { code: 'I50.810', desc: 'Right heart failure, unspecified' },
+      { code: 'I50.812', desc: 'Chronic right heart failure' },
+      { code: 'I50.813', desc: 'Acute on chronic right heart failure' },
+      { code: 'I50.814', desc: 'Right heart failure due to left heart failure' },
+      { code: 'I50.9',   desc: 'Heart failure, unspecified' },
+      { code: 'I11.0',   desc: 'Hypertensive heart disease with heart failure' },
+    ],
+  },
 ];
 
+const SHARED_CODES = [
+  { code: 'I49.01',  desc: 'Ventricular fibrillation' },
+  { code: 'I49.02',  desc: 'Ventricular flutter' },
+  { code: 'I50.1',   desc: 'Left ventricular failure, unspecified' },
+  { code: 'I51.89',  desc: 'Other ill-defined heart diseases' },
+  { code: 'R06.00',  desc: 'Dyspnea, unspecified' },
+  { code: 'R06.01',  desc: 'Orthopnea' },
+  { code: 'R06.02',  desc: 'Shortness of breath' },
+  { code: 'R06.09',  desc: 'Other forms of dyspnea' },
+  { code: 'R06.1',   desc: 'Stridor' },
+  { code: 'R06.2',   desc: 'Wheezing' },
+  { code: 'R06.4',   desc: 'Hyperventilation' },
+  { code: 'R07.2',   desc: 'Precordial pain' },
+  { code: 'R07.82',  desc: 'Intercostal pain' },
+  { code: 'R07.89',  desc: 'Other chest pain' },
+  { code: 'R07.9',   desc: 'Chest pain, unspecified' },
+  { code: 'R94.31',  desc: 'Abnormal electrocardiogram [ECG] [EKG]' },
+  { code: 'Z01.810', desc: 'Encounter for preprocedural cardiovascular examination' },
+];
+
+function CodeTable({ codes }) {
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+        <thead>
+          <tr style={{ borderBottom: '2px solid var(--rule)' }}>
+            <th style={{ textAlign: 'left', padding: '8px 20px 10px 0', fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-muted)', fontWeight: 500, width: 110, whiteSpace: 'nowrap' }}>ICD-10 Code</th>
+            <th style={{ textAlign: 'left', padding: '8px 0 10px', fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-muted)', fontWeight: 500 }}>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {codes.map((row, i) => (
+            <tr key={row.code + i} style={{ borderBottom: '1px solid var(--rule)' }}>
+              <td style={{ padding: '11px 20px 11px 0', fontFamily: 'var(--f-mono)', fontSize: 13, color: 'var(--blue)', fontWeight: 600, whiteSpace: 'nowrap', verticalAlign: 'top' }}>{row.code}</td>
+              <td style={{ padding: '11px 0', color: 'var(--fg)', lineHeight: 1.45, verticalAlign: 'top' }}>{row.desc}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export function ReimbursementPage() {
-  const [barRef, barVisible] = useReveal(0.2);
+  const [activeTab, setActiveTab] = useState('cad');
+  const [sharedOpen, setSharedOpen] = useState(false);
+  const active = INDICATIONS.find(i => i.key === activeTab);
 
   return (
     <div className="page-fade" data-screen-label="Reimbursement" data-page="reimbursement">
       <div className="subhero">
         <div className="container">
-          <Eyebrow>Reimbursement</Eyebrow>
+          <Eyebrow>Coding &amp; Coverage</Eyebrow>
           <h1 style={{ marginTop: 28 }}>
-            Coverage that keeps <span className="em">pace.</span>
+            Billing <span className="em">guidelines.</span>
           </h1>
-          <p className="lead">
-            CorVista is tracking more than two years ahead of the industry median for FDA clearance to Medicare coverage — structured to scale in step with reimbursement, not ahead of it.
+          <p className="lead" style={{ maxWidth: '60ch' }}>
+            The AMA granted CorVista a CPT Category III code in July 2026, effective October 1, 2026. Use this page to identify the correct procedure and diagnosis codes when submitting claims.
           </p>
-          <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <NavA to="contact" className="btn btn-primary">Speak with our reimbursement team<span className="arrow">→</span></NavA>
-          </div>
+          <p style={{ marginTop: 16, fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.6, maxWidth: '64ch' }}>
+            Diagnosis coding should reflect the patient's actual presenting symptom or established condition at the time of the order. Do not select a code more specific than what is clinically documented.
+          </p>
         </div>
       </div>
 
+      {/* CPT Code */}
       <Section>
-        <div className="row row-3" style={{ gap: 0, borderTop: '1px solid var(--rule)' }}>
-          <div style={{ padding: '32px 32px 32px 0', borderRight: '1px solid var(--rule)' }}>
-            <div className="stat-label">CPT code</div>
-            <div style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--blue)', marginTop: 8, lineHeight: 1 }}>
-              1104T
+        <SectionHeader eyebrow="CPT® Code" title="1104T" />
+        <div style={{ border: '1px solid var(--rule)', borderRadius: 6, overflow: 'hidden' }}>
+          <div style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: '1fr auto', gap: 24, alignItems: 'start' }}>
+            <div>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-muted)', marginBottom: 10 }}>CPT® Description</div>
+              <p style={{ fontSize: 15, color: 'var(--fg)', lineHeight: 1.6, margin: 0 }}>{CPT_CODE.description}</p>
             </div>
-            <p style={{ marginTop: 12, fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.5 }}>CPT Category III code accepted May 2026, ACC-endorsed. The active reimbursement pathway for CorVista today.</p>
-          </div>
-          <div style={{ padding: '32px', borderRight: '1px solid var(--rule)' }}>
-            <div className="stat-label">Pricing benchmark range</div>
-            <div style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(28px, 3.5vw, 46px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--blue)', marginTop: 8, lineHeight: 1 }}>
-              $150–$1,350
-            </div>
-            <p style={{ marginTop: 12, fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.5 }}>Per test. HeartFlow CPT comparator: $950. Advanced AI cardiac diagnostics: $877–$950. Benchmark reflects comparable cardiac AI procedures.</p>
-          </div>
-          <div style={{ padding: '32px 0 32px 32px' }}>
-            <div className="stat-label">Ahead of industry median</div>
-            <div style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(36px, 4.5vw, 60px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--blue)', marginTop: 8, lineHeight: 1 }}>
-              2+ <span style={{ fontSize: '0.5em', verticalAlign: 'middle', fontWeight: 700 }}>yrs</span>
-            </div>
-            <p style={{ marginTop: 12, fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.5 }}>Industry median: 5.7 years from FDA clearance to Medicare coverage (JAMA Health Forum, 2023). CorVista projected: 3.5 years.</p>
-          </div>
-        </div>
-      </Section>
-
-      <Section>
-        <div className="row row-2" style={{ gap: 80, alignItems: 'start' }}>
-          <div>
-            <SectionHeader eyebrow="Coverage timeline" title="Milestone by milestone." />
-            <div className="reimb-timeline">
-              {MILESTONES.map((m, i) => (
-                <div key={i} className="reimb-item">
-                  <div className={`reimb-dot ${m.status}`}>
-                    {m.status === 'done' ? (
-                      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                    ) : m.status === 'active' ? (
-                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--blue)' }} />
-                    ) : (
-                      <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--mid)' }} />
-                    )}
-                  </div>
-                  <div className="reimb-content">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                      <div className="reimb-content-title">{m.title}</div>
-                      {m.code && (
-                        <span style={{
-                          fontFamily: 'var(--f-mono)', fontSize: 10, padding: '2px 8px',
-                          border: '1px solid var(--blue)', color: 'var(--blue)',
-                          borderRadius: 999, letterSpacing: '0.1em'
-                        }}>{m.code}</span>
-                      )}
-                    </div>
-                    <div className="reimb-content-meta">{m.detail}</div>
-                    <div className="reimb-content-date">{m.date}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <SectionHeader eyebrow="Speed comparison" title="2+ years ahead of the industry." />
-            <p style={{ fontSize: 15, color: 'var(--fg-muted)', lineHeight: 1.65, marginBottom: 32 }}>
-              The JAMA Health Forum (2023) found the median time from FDA clearance to Medicare coverage for novel medical technologies is 5.7 years. CorVista is on track to reach durable Medicare coverage in approximately 3.5 years — enabling commercial scale timed to reimbursement, not ahead of it.
-            </p>
-            <div ref={barRef} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              {[
-                { label: 'Industry median', years: 5.7, total: 7, color: 'var(--mid)' },
-                { label: 'CorVista projected', years: 3.5, total: 7, color: 'var(--blue)' },
-              ].map((bar, i) => (
-                <div key={i}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                    <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--fg-muted)' }}>{bar.label}</span>
-                    <span style={{ fontFamily: 'var(--f-sans)', fontSize: 13, fontWeight: 700, color: bar.color }}>{bar.years} yrs</span>
-                  </div>
-                  <div style={{ background: 'var(--paper-2)', borderRadius: 3, height: 10, overflow: 'hidden' }}>
-                    <div style={{
-                      height: '100%', borderRadius: 3, background: bar.color,
-                      width: barVisible ? `${(bar.years / bar.total) * 100}%` : '0%',
-                      transition: `width 1.2s cubic-bezier(.16,1,.3,1) ${i * 200}ms`
-                    }} />
-                  </div>
-                </div>
-              ))}
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--mid-2)', letterSpacing: '0.04em', marginTop: 4 }}>
-                Source: Sexton ZA, et al. Time From FDA Authorization to Medicare Coverage for Novel Technologies. JAMA Health Forum. 2023.
+            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-muted)', marginBottom: 8 }}>Effective Date</div>
+              <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--fg)', whiteSpace: 'nowrap' }}>{CPT_CODE.effective}</div>
+              <div style={{ marginTop: 10 }}>
+                <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, padding: '3px 10px', border: '1px solid var(--blue)', color: 'var(--blue)', borderRadius: 999 }}>
+                  {CPT_CODE.category}
+                </span>
               </div>
             </div>
-
-            <div style={{ marginTop: 48, padding: 28, background: 'var(--blue-tint)', border: '1px solid #A8D4EF', borderRadius: 6 }}>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--blue-deep)', marginBottom: 12 }}>For clinicians — today</div>
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink)' }}>
-                CorVista is billable today under CPT 1104T (Category III). Our reimbursement team provides practice-specific billing guidance, documentation support, and prior authorization templates. Case-by-case reimbursement is available pending commercial coverage decisions.
-              </p>
-              <NavA to="contact" className="btn btn-ghost" style={{ marginTop: 16, display: 'inline-flex', fontSize: 14 }}>
-                Talk to our billing team<span className="arrow">→</span>
-              </NavA>
-            </div>
+          </div>
+          <div style={{ borderTop: '1px solid var(--rule)', padding: '14px 24px', background: 'var(--blue-tint)' }}>
+            <p style={{ fontSize: 13, color: 'var(--fg-muted)', lineHeight: 1.55, margin: 0 }}>
+              <strong style={{ color: 'var(--ink)' }}>Note: </strong>{CPT_CODE.note}
+            </p>
           </div>
         </div>
       </Section>
 
+      {/* ICD-10 by Indication */}
+      <Section>
+        <SectionHeader eyebrow="ICD-10-CM codes" title="Codes by indication." />
+        <p style={{ marginTop: -16, marginBottom: 32, fontSize: 15, color: 'var(--fg-muted)', lineHeight: 1.6, maxWidth: '72ch' }}>
+          Select the patient's primary indication to view commonly associated ICD-10 diagnosis codes drawn from the CorVista Clinical Dossier (Appendix A).
+        </p>
+
+        <div style={{ display: 'flex', gap: 0, borderBottom: '2px solid var(--rule)', marginBottom: 32, overflowX: 'auto' }}>
+          {INDICATIONS.map(ind => (
+            <button
+              key={ind.key}
+              onClick={() => setActiveTab(ind.key)}
+              style={{
+                background: 'none',
+                border: 'none',
+                borderBottom: activeTab === ind.key ? '2px solid var(--blue)' : '2px solid transparent',
+                marginBottom: -2,
+                padding: '10px 24px',
+                cursor: 'pointer',
+                fontFamily: 'var(--f-sans)',
+                fontSize: 14,
+                fontWeight: activeTab === ind.key ? 600 : 400,
+                color: activeTab === ind.key ? 'var(--blue)' : 'var(--fg-muted)',
+                whiteSpace: 'nowrap',
+                transition: 'color 0.15s, border-color 0.15s',
+              }}
+            >
+              <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, marginRight: 8, letterSpacing: '0.05em', opacity: 0.8 }}>{ind.abbr}</span>
+              {ind.label}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ marginBottom: 8 }}>
+          <span style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-muted)' }}>
+            ICD-10 codes commonly associated with a CorVista order — {active.sublabel}
+          </span>
+        </div>
+        <CodeTable codes={active.codes} />
+      </Section>
+
+      {/* Shared codes accordion */}
+      <Section>
+        <div
+          style={{ borderTop: '1px solid var(--rule)', borderBottom: sharedOpen ? 'none' : '1px solid var(--rule)' }}
+        >
+          <button
+            onClick={() => setSharedOpen(o => !o)}
+            style={{
+              width: '100%', background: 'none', border: 'none', cursor: 'pointer',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '20px 0', textAlign: 'left',
+            }}
+          >
+            <div>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-muted)', marginBottom: 4 }}>All indications</div>
+              <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--fg)', letterSpacing: '-0.01em' }}>ICD-10 codes applicable to any CorVista order</div>
+            </div>
+            <span style={{ fontFamily: 'var(--f-mono)', fontSize: 22, color: 'var(--blue)', flexShrink: 0, marginLeft: 24 }}>
+              {sharedOpen ? '−' : '+'}
+            </span>
+          </button>
+          {sharedOpen && (
+            <div style={{ paddingBottom: 32, borderBottom: '1px solid var(--rule)' }}>
+              <p style={{ fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.6, marginBottom: 24, maxWidth: '72ch' }}>
+                The following codes may support medical necessity for a CorVista order regardless of the specific indication add-on ordered.
+              </p>
+              <CodeTable codes={SHARED_CODES} />
+            </div>
+          )}
+        </div>
+
+        <p style={{ marginTop: 24, fontSize: 13, color: 'var(--fg-muted)', lineHeight: 1.55 }}>
+          Source: CorVista Clinical Dossier, Appendix A. This list is not exhaustive. Consult your compliance team for payer-specific documentation requirements.
+        </p>
+      </Section>
+
+      {/* CTA */}
       <Section dark>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 40 }}>
-          <div style={{ maxWidth: '30ch' }}>
-            <Eyebrow><span style={{ color: '#98A2B3' }}>Get started</span></Eyebrow>
-            <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(36px, 4.5vw, 64px)' }}>
-              Questions about <span className="serif-i" style={{ color: 'var(--blue)' }}>billing?</span>
+          <div style={{ maxWidth: '36ch' }}>
+            <Eyebrow><span style={{ color: '#98A2B3' }}>Billing support</span></Eyebrow>
+            <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(32px, 4vw, 56px)' }}>
+              Questions about <span className="serif-i" style={{ color: 'var(--blue)' }}>coding?</span>
             </h2>
+            <p style={{ color: '#C8D0DC', marginTop: 16, fontSize: 15, lineHeight: 1.6 }}>
+              Our reimbursement team provides practice-specific billing guidance, documentation support, and prior authorization templates.
+            </p>
           </div>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <NavA to="contact" className="btn btn-primary">Contact reimbursement team<span className="arrow">→</span></NavA>
-            <NavA to="evidence" className="btn btn-ghost">Clinical evidence<span className="arrow">→</span></NavA>
+            <NavA to="clinicians" className="btn btn-ghost">For clinicians<span className="arrow">→</span></NavA>
           </div>
         </div>
       </Section>

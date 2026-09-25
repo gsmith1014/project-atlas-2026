@@ -11,6 +11,7 @@ import { EvidencePage } from './pages/evidence.jsx';
 import { AboutPage } from './pages/about.jsx';
 import { NewsPage } from './pages/news.jsx';
 import { ContactPage } from './pages/contact.jsx';
+import { ReimbursementPage } from './pages/reimbursement.jsx';
 
 const TWEAK_DEFAULTS = {
   heroVariant: 'editorial',
@@ -51,6 +52,7 @@ function getPage(slug, sub, tweaks) {
     case 'about': return <AboutPage />;
     case 'news': return <NewsPage articleSlug={sub} />;
     case 'contact': return <ContactPage />;
+    case 'reimbursement': return <ReimbursementPage />;
     default: return <HomePage tweaks={tweaks} />;
   }
 }
