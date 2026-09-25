@@ -168,7 +168,7 @@ export function ReimbursementPage() {
       <Section>
         <SectionHeader eyebrow="ICD-10-CM codes" title="Codes by indication." />
         <p style={{ marginTop: -16, marginBottom: 32, fontSize: 15, color: 'var(--fg-muted)', lineHeight: 1.6, maxWidth: '72ch' }}>
-          Select the patient's primary indication to view commonly associated ICD-10 diagnosis codes drawn from the CorVista Clinical Dossier (Appendix A).
+          Select the patient's relevant indication to view commonly associated ICD-10 diagnosis codes drawn from the CorVista Clinical Dossier (Appendix A). The CorVista System evaluates all three conditions in a single test.
         </p>
 
         <div style={{ display: 'flex', gap: 0, borderBottom: '2px solid var(--rule)', marginBottom: 32, overflowX: 'auto' }}>
