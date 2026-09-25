@@ -131,11 +131,8 @@ export function ReimbursementPage() {
           <h1 style={{ marginTop: 28 }}>
             Billing <span className="em">guidelines.</span>
           </h1>
-          <p className="lead" style={{ maxWidth: '60ch' }}>
-            The AMA granted CorVista a CPT Category III code in July 2026, effective October 1, 2026. Use this page to identify the correct procedure and diagnosis codes when submitting claims.
-          </p>
-          <p style={{ marginTop: 16, fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.6, maxWidth: '64ch' }}>
-            Diagnosis coding should reflect the patient's actual presenting symptom or established condition at the time of the order. Do not select a code more specific than what is clinically documented.
+          <p className="lead">
+            For the CorVista System.
           </p>
         </div>
       </div>
