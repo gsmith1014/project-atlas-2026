@@ -5,7 +5,7 @@ const CPT_CODE = {
   code: '1104T',
   category: 'Category III',
   effective: 'October 1, 2026',
-  description: 'Noninvasive multi-sensor biosignal acquisition and computer-aided analysis for cardiovascular physiologic evaluation, including automated algorithmic interpretation for coronary artery disease, pulmonary hypertension, and/or elevated pulmonary capillary wedge pressure',
+  description: 'Noninvasive cardiopulmonary assessment, including quantitative parameters, respectively predictive of significant epicardial coronary artery disease, pulmonary hypertension, and/or elevated pulmonary capillary wedge pressure, derived by augmentative algorithmic analysis of orthogonal voltage gradient and photoplethysmography signals, with automated report',
   note: 'Category III codes track emerging technologies. A Medicare reimbursement rate has not been published. Coverage is available on a case-by-case basis; contact the CorVista reimbursement team for practice-specific billing support.',
 };
 
