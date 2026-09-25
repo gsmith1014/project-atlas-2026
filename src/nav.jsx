@@ -40,7 +40,6 @@ function MobileNav({ page, onClose }) {
     { slug: 'clinicians', label: 'For Clinicians' },
     { slug: 'patients', label: 'For Patients' },
     { slug: 'evidence', label: 'Clinical Evidence' },
-    { slug: 'reimbursement', label: 'Reimbursement' },
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
     { slug: 'customer-hub', label: 'Customer Hub', external: true },
@@ -86,7 +85,6 @@ export function Header({ page }) {
     { slug: 'clinicians', label: 'For Clinicians' },
     { slug: 'patients', label: 'For Patients' },
     { slug: 'evidence', label: 'Clinical Evidence' },
-    { slug: 'reimbursement', label: 'Reimbursement' },
     { slug: 'about', label: 'About' },
     { slug: 'news', label: 'News' },
     { slug: 'customer-hub', label: 'Customer Hub', external: true },
@@ -213,6 +211,7 @@ export function Footer() {
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('tech-ph'); }}>Pulmonary hypertension</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('tech-pcwp'); }}>Heart failure (PCWP)</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('evidence'); }}>Clinical evidence</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navTo('reimbursement'); }}>Reimbursement</a>
           </div>
           <div>
             <h6>Company</h6>
