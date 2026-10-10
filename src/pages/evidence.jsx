@@ -27,15 +27,15 @@ export const STUDIES = [
   { y: '2023', cat: 'ph', title: 'A Supervised Machine-Learned Algorithm to Identify Pulmonary Hypertension in Patients with New Onset Symptoms', journal: 'American Journal of Respiratory and Critical Care Medicine', n: '', meta: 'Conference abstract · ATS 2023', doi: 'https://academic.oup.com/ajrccm/article/207/Supplement_1/A2512/8546701' },
   { y: '2023', cat: 'cad', title: 'Machine Learning Algorithms: Selection of Appropriate Validation Populations for Cardiology Research—Be Careful!', journal: 'JACC: Advances', n: '', meta: 'Population analysis', doi: 'https://www.jacc.org/doi/10.1016/j.jacadv.2022.100166' },
   // 2022
-  { y: '2022', cat: 'pcwp', title: 'Identifying Novel Phenotypes of Elevated Left Ventricular End Diastolic Pressure', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · ACC 2022', doi: 'https://www.jacc.org/doi/10.1016/S0735-1097%2822%2902991-6' },
-  { y: '2022', cat: 'pcwp', title: 'Multicenter validation of a machine learning phase space electro-mechanical pulse wave analysis to predict elevated left ventricular end diastolic pressure at the point-of-care', journal: 'PLOS ONE', n: '', meta: 'Multicenter validation', doi: 'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277300' },
-  { y: '2022', cat: 'pcwp', title: 'Identifying Novel Phenotypes of Elevated Left Ventricular End Diastolic Pressure Using Machine Learning', journal: 'Frontiers in Cardiovascular Medicine', n: '', meta: 'Machine learning analysis', doi: 'https://www.frontiersin.org/journals/cardiovascular-medicine/articles/10.3389/fcvm.2022.980625/full' },
+  { y: '2022', cat: 'lvedp', title: 'Identifying Novel Phenotypes of Elevated Left Ventricular End Diastolic Pressure', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · ACC 2022', doi: 'https://www.jacc.org/doi/10.1016/S0735-1097%2822%2902991-6' },
+  { y: '2022', cat: 'lvedp', title: 'Multicenter validation of a machine learning phase space electro-mechanical pulse wave analysis to predict elevated left ventricular end diastolic pressure at the point-of-care', journal: 'PLOS ONE', n: '', meta: 'Multicenter validation', doi: 'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277300' },
+  { y: '2022', cat: 'lvedp', title: 'Identifying Novel Phenotypes of Elevated Left Ventricular End Diastolic Pressure Using Machine Learning', journal: 'Frontiers in Cardiovascular Medicine', n: '', meta: 'Machine learning analysis', doi: 'https://www.frontiersin.org/journals/cardiovascular-medicine/articles/10.3389/fcvm.2022.980625/full' },
   { y: '2022', cat: 'cad', title: 'Development and Validation of a Machine-Learned Algorithm to Identify Functionally Significant Coronary Artery Disease', journal: 'Frontiers in Cardiovascular Medicine', n: '', meta: 'Algorithm development & validation', doi: 'https://www.frontiersin.org/journals/cardiovascular-medicine/articles/10.3389/fcvm.2022.956147/full' },
   // 2021
   { y: '2021', cat: 'pcwp', title: 'Machine Learning — At the Heart of Failure Diagnosis', journal: 'Current Opinion in Cardiology', n: '', meta: 'Review', doi: 'https://doi.org/10.1097/hco.0000000000000833' },
   { y: '2021', cat: 'cad', title: 'Predicting Cardiac Disease from Interactions of Simultaneously-Acquired Hemodynamic and Cardiac Signals', journal: 'Computer Methods and Programs in Biomedicine', n: '', meta: 'Signal analysis study', doi: 'https://www.sciencedirect.com/science/article/pii/S0169260721000456' },
   // 2020
-  { y: '2020', cat: 'pcwp', title: 'First-in-Man Development of a Machine Learning Cardiac Phase Space Analytic Approach to Predict Elevated Left Ventricular Pressures', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · ACC 2020', doi: 'https://www.jacc.org/doi/full/10.1016/S0735-1097(20)34122-X' },
+  { y: '2020', cat: 'lvedp', title: 'First-in-Man Development of a Machine Learning Cardiac Phase Space Analytic Approach to Predict Elevated Left Ventricular Pressures', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · ACC 2020', doi: 'https://www.jacc.org/doi/full/10.1016/S0735-1097(20)34122-X' },
   // 2018
   { y: '2018', cat: 'cad', title: 'TCT-233: Machine-Learned Algorithms Utilizing Novel Tomography for Evaluating Coronary Artery Disease', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · TCT 2018', doi: 'https://www.jacc.org/doi/full/10.1016/j.jacc.2018.08.1358' },
   { y: '2018', cat: 'cad', title: 'TCT-232: Diagnostic Accuracy of Machine-Learned Algorithms Utilizing a Novel Form of cPST vs SPECT', journal: 'JACC Supplements', n: '', meta: 'Conference abstract · TCT 2018', doi: 'https://www.jacc.org/doi/full/10.1016/j.jacc.2018.08.1357' },
@@ -49,7 +49,9 @@ export const STUDIES = [
 
 export function EvidencePage() {
   const [filter, setFilter] = useState('all');
-  const filtered = filter === 'all' ? STUDIES : STUDIES.filter(s => s.cat === filter);
+  const filtered = filter === 'all' ? STUDIES
+    : filter === 'pcwp' ? STUDIES.filter(s => s.cat === 'pcwp' || s.cat === 'lvedp')
+    : STUDIES.filter(s => s.cat === filter);
 
   return (
     <div className="page-fade" data-screen-label="05 Evidence" data-page="evidence">
@@ -95,7 +97,7 @@ export function EvidencePage() {
                 <div className="meta" style={{ marginTop: 6 }}>{s.journal} · {s.meta}</div>
               </div>
               <div className="meta evidence-n">{s.n}</div>
-              <div><span className="chip chip-blue" style={s.cat === 'pcwp' ? { color: '#7C5CFC', borderColor: '#7C5CFC' } : s.cat === 'ph' ? { color: '#2E9E6B', borderColor: '#2E9E6B' } : {}}>{s.cat === 'pcwp' ? 'PCWP' : s.cat.toUpperCase()}</span></div>
+              <div><span className="chip chip-blue" style={s.cat === 'pcwp' || s.cat === 'lvedp' ? { color: '#7C5CFC', borderColor: '#7C5CFC' } : s.cat === 'ph' ? { color: '#2E9E6B', borderColor: '#2E9E6B' } : {}}>{s.cat === 'pcwp' ? 'PCWP' : s.cat === 'lvedp' ? 'LVEDP' : s.cat.toUpperCase()}</span></div>
               {s.doi ? <a href={s.doi} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink evidence-doi">DOI →</a> : <div />}
             </div>
           ))}
