@@ -445,7 +445,7 @@ export function ScienceSection() {
       <div className="container" style={{ paddingTop: 'var(--section-y)', paddingBottom: 72 }}>
         <Eyebrow><span style={{ color: '#98A2B3' }}>The science</span></Eyebrow>
         <h2 style={{ marginTop: 20, color: '#F4F6F9', fontSize: 'clamp(36px, 5vw, 72px)', maxWidth: '18ch', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-          From resting signal<br />to clinical answer<br />in 3.7 minutes.
+          From resting signal<br />to clinical answer<br />in 3.5 minutes.
         </h2>
       </div>
 
