@@ -416,9 +416,15 @@ export function ScienceSection() {
   const [activeAct, setActiveAct] = useState('patient');
   const [showBack, setShowBack] = useState(false);
   const actRefs = useRef([]);
-  const reduced = useRef(
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ).current;
+  const [pauseMotion, setPauseMotion] = useState(false);
+  const [systemReduced, setSystemReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setSystemReduced(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  const reduced = pauseMotion || systemReduced;
 
   useEffect(() => {
     const track = () => {
@@ -453,6 +459,7 @@ export function ScienceSection() {
       <div className="science-layout">
         {/* Left sticky panel */}
         <div className="science-panel">
+          <button type="button" className="motion-toggle" aria-pressed={pauseMotion} onClick={() => setPauseMotion(v => !v)}>Pause visualization motion</button>
           {/* Progress */}
           <div style={{ display: 'flex', gap: 8, marginBottom: 44 }}>
             {ACTS.map(a => (
@@ -484,7 +491,7 @@ export function ScienceSection() {
           </div>
 
           {/* Front / Back toggle */}
-          <div style={{
+          <div hidden={activeAct !== 'capture'} style={{
             marginTop: 24,
             opacity: activeAct === 'capture' ? 1 : 0,
             transition: reduced ? 'none' : 'opacity 0.35s ease',
@@ -494,7 +501,7 @@ export function ScienceSection() {
               {['Front', 'Back'].map(side => {
                 const sel = (side === 'Back') === showBack;
                 return (
-                  <button key={side} onClick={() => setShowBack(side === 'Back')} style={{
+                  <button key={side} aria-pressed={sel} onClick={() => setShowBack(side === 'Back')} style={{
                     padding: '8px 18px', border: 0, cursor: 'pointer',
                     background: sel ? '#5BAFE8' : 'transparent',
                     color: sel ? '#091629' : '#5BAFE8',

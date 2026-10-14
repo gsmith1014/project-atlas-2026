@@ -174,6 +174,7 @@ export function HomePage({ tweaks }) {
             {Object.entries(conditions).map(([k, v]) => (
               <button
                 key={k}
+                aria-pressed={active === k}
                 onClick={() => setActive(k)}
                 style={{
                   flex: 1, padding: '24px 28px',

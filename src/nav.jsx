@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Brand, NavA, navTo } from './components.jsx';
+import { EmailSignup } from './signup.jsx';
+
+// Develop Hub is reachable through the CorVista VPN.
+const CUSTOMER_HUB_URL = 'https://hub-research-pd.corvista.cc/';
 
 function TechMenu({ page }) {
+  const [open, setOpen] = useState(false);
+  const trigger = useRef(null);
+  useEffect(() => { setOpen(false); }, [page]);
   const links = [
     { slug: 'technology', label: 'Technology overview', sub: 'How the CorVista System works' },
     { slug: 'tech-cad', abbr: 'CAD', label: 'Coronary artery disease' },
@@ -9,18 +16,22 @@ function TechMenu({ page }) {
     { slug: 'tech-pcwp', abbr: 'PCWP', label: 'Heart failure' },
   ];
   return (
-    <div className="nav-item">
-      <NavA to="technology" className={(page || '').startsWith('tech') ? 'active has-caret' : 'has-caret'} aria-haspopup="true">
+    <div className="nav-item" onBlur={e => {
+      if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
+    }} onKeyDown={e => {
+      if (e.key === 'Escape' && open) { e.preventDefault(); setOpen(false); trigger.current.focus(); }
+    }}>
+      <button ref={trigger} type="button" className="nav-disclosure" aria-expanded={open} aria-controls="technology-links" onClick={() => setOpen(v => !v)}>
         Technology<span className="caret" aria-hidden="true"></span>
-      </NavA>
-      <div className="dropdown" role="menu" aria-label="Technology">
-        <NavA to="technology" role="menuitem">
+      </button>
+      <div id="technology-links" className="dropdown" hidden={!open} onClick={() => setOpen(false)}>
+        <NavA to="technology">
           Technology overview
           <span className="d-sub">How the CorVista System works</span>
         </NavA>
         <div className="d-sep"></div>
         {links.slice(1).map(l => (
-          <NavA key={l.slug} to={l.slug} role="menuitem" className={page === l.slug ? 'active' : ''}>
+          <NavA key={l.slug} to={l.slug} className={page === l.slug ? 'active' : ''}>
             <span className="d-abbr">{l.abbr}</span>{l.label}
           </NavA>
         ))}
@@ -30,6 +41,15 @@ function TechMenu({ page }) {
 }
 
 function MobileNav({ page, onClose }) {
+  const dialog = useRef(null);
+  useEffect(() => {
+    const element = dialog.current;
+    element.showModal();
+    const desktop = window.matchMedia('(min-width: 769px)');
+    const onResize = () => { if (desktop.matches) onClose(); };
+    desktop.addEventListener('change', onResize);
+    return () => { desktop.removeEventListener('change', onResize); element.close(); };
+  }, [onClose]);
   function go(slug) { navTo(slug); onClose(); }
   const navGroups = [
     { slug: 'home', label: 'Home' },
@@ -45,13 +65,15 @@ function MobileNav({ page, onClose }) {
     { slug: 'customer-hub', label: 'Customer Hub', external: true },
   ];
   return (
-    <div className="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation">
+    <dialog ref={dialog} id="mobile-navigation" className="mobile-nav" aria-label="Navigation" onCancel={onClose}>
+      <button type="button" className="btn btn-ghost mobile-close" onClick={onClose} autoFocus>Close navigation</button>
       {navGroups.map(item => (
         item.external
-          ? <a key={item.slug} href="#" className="m-nav-link" onClick={e => e.preventDefault()}>{item.label}</a>
+          ? <a key={item.slug} href={CUSTOMER_HUB_URL} className="m-nav-link" onClick={onClose}>{item.label}</a>
           : <a
               key={item.slug}
               href={`#${item.slug}`}
+              aria-current={page === item.slug ? 'page' : undefined}
               className={`m-nav-link${item.sub ? ' m-sub' : ''}${page === item.slug ? ' active' : ''}`}
               onClick={e => { e.preventDefault(); go(item.slug); }}
             >
@@ -67,12 +89,13 @@ function MobileNav({ page, onClose }) {
           Request a demo<span className="arrow">→</span>
         </a>
       </div>
-    </div>
+    </dialog>
   );
 }
 
 export function Header({ page }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => { setMenuOpen(false); }, [page]);
   useEffect(() => {
@@ -99,7 +122,7 @@ export function Header({ page }) {
             <TechMenu page={page} />
             {items.filter(it => it.slug !== 'home').map(it =>
               it.external
-                ? <a key={it.slug} href="#" onClick={e => e.preventDefault()} className="nav-external">{it.label}</a>
+                ? <a key={it.slug} href={CUSTOMER_HUB_URL} className="nav-external">{it.label}</a>
                 : <NavA key={it.slug} to={it.slug} className={page === it.slug ? 'active' : ''}>{it.label}</NavA>
             )}
           </nav>
@@ -112,6 +135,7 @@ export function Header({ page }) {
             className={`hamburger${menuOpen ? ' is-open' : ''}`}
             aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
             aria-expanded={menuOpen}
+            aria-controls={menuOpen ? 'mobile-navigation' : undefined}
             onClick={() => setMenuOpen(o => !o)}
           >
             <span className="hamburger-line" />
@@ -120,62 +144,8 @@ export function Header({ page }) {
           </button>
         </div>
       </header>
-      {menuOpen && <MobileNav page={page} onClose={() => setMenuOpen(false)} />}
+      {menuOpen && <MobileNav page={page} onClose={closeMenu} />}
     </>
-  );
-}
-
-function EmailSignup() {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  }
-
-  if (submitted) {
-    return <div style={{ fontSize: 13, color: '#5BAFE8', padding: '10px 0' }}>Thanks — you're on the list.</div>;
-  }
-
-  return (
-    <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="your@email.com"
-          required
-          style={{
-            flex: 1, minWidth: 0,
-            background: '#1A2334',
-            border: '1px solid #2A3952',
-            borderRadius: 4,
-            padding: '7px 10px',
-            fontSize: 13,
-            color: '#F4F6F9',
-            outline: 'none',
-            fontFamily: 'var(--f-sans)',
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            background: 'var(--blue)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 4,
-            padding: '7px 12px',
-            fontSize: 14,
-            cursor: 'pointer',
-            flexShrink: 0,
-          }}
-        >
-          →
-        </button>
-      </div>
-    </form>
   );
 }
 

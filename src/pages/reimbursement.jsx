@@ -175,6 +175,7 @@ export function ReimbursementPage() {
           {INDICATIONS.map(ind => (
             <button
               key={ind.key}
+              aria-pressed={activeTab === ind.key}
               onClick={() => setActiveTab(ind.key)}
               style={{
                 background: 'none',
@@ -186,7 +187,7 @@ export function ReimbursementPage() {
                 fontFamily: 'var(--f-sans)',
                 fontSize: 14,
                 fontWeight: activeTab === ind.key ? 600 : 400,
-                color: activeTab === ind.key ? 'var(--blue)' : 'var(--fg-muted)',
+                color: activeTab === ind.key ? 'var(--blue-deep)' : 'var(--fg-muted)',
                 whiteSpace: 'nowrap',
                 transition: 'color 0.15s, border-color 0.15s',
               }}
@@ -211,6 +212,8 @@ export function ReimbursementPage() {
           style={{ borderTop: '1px solid var(--rule)', borderBottom: sharedOpen ? 'none' : '1px solid var(--rule)' }}
         >
           <button
+            aria-expanded={sharedOpen}
+            aria-controls="shared-codes"
             onClick={() => setSharedOpen(o => !o)}
             style={{
               width: '100%', background: 'none', border: 'none', cursor: 'pointer',
@@ -226,14 +229,12 @@ export function ReimbursementPage() {
               {sharedOpen ? '−' : '+'}
             </span>
           </button>
-          {sharedOpen && (
-            <div style={{ paddingBottom: 32, borderBottom: '1px solid var(--rule)' }}>
+          <div id="shared-codes" hidden={!sharedOpen} style={{ paddingBottom: 32, borderBottom: '1px solid var(--rule)' }}>
               <p style={{ fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.6, marginBottom: 24, maxWidth: '72ch' }}>
                 The following codes may support medical necessity for a CorVista order regardless of the specific indication add-on ordered.
               </p>
               <CodeTable codes={SHARED_CODES} />
             </div>
-          )}
         </div>
 
         <p style={{ marginTop: 24, fontSize: 13, color: 'var(--fg-muted)', lineHeight: 1.55 }}>

@@ -34,6 +34,7 @@ export function ContactPage() {
               {intents.map(it => (
                 <button
                   key={it.id}
+                  aria-pressed={intent === it.id}
                   onClick={() => setIntent(it.id)}
                   style={{
                     textAlign: 'left',
@@ -68,12 +69,12 @@ export function ContactPage() {
             </div>
           </div>
 
-          <form
+          <form aria-describedby="contact-availability"
             onSubmit={(e) => { e.preventDefault(); setSent(true); }}
             style={{ display: 'grid', gap: 22 }}
           >
-            {!sent ? (
-              <>
+            <>
+                <p id="contact-availability">Online messages are not available yet. Please email <a href="mailto:info@corvista.com">info@corvista.com</a>.</p>
                 <h3 style={{ fontSize: 'clamp(28px, 3vw, 44px)', marginBottom: 8 }}>
                   {intents.find(i => i.id === intent).label}
                 </h3>
@@ -85,18 +86,18 @@ export function ContactPage() {
                   {intent === 'general' && "We read every note. We'll get back within two business days."}
                 </p>
                 <div className="row row-2" style={{ gap: 22 }}>
-                  <div className="field"><label>First name</label><input type="text" /></div>
-                  <div className="field"><label>Last name</label><input type="text" /></div>
+                  <div className="field"><label htmlFor="first-name">First name</label><input id="first-name" name="first-name" type="text" autoComplete="given-name" /></div>
+                  <div className="field"><label htmlFor="last-name">Last name</label><input id="last-name" name="last-name" type="text" autoComplete="family-name" /></div>
                 </div>
                 <div className="row row-2" style={{ gap: 22 }}>
-                  <div className="field"><label>Work email</label><input type="email" placeholder="you@hospital.org" /></div>
-                  <div className="field"><label>Organization</label><input type="text" /></div>
+                  <div className="field"><label htmlFor="work-email">Work email</label><input id="work-email" name="email" autoComplete="email" type="email" placeholder="you@hospital.org" /></div>
+                  <div className="field"><label htmlFor="organization">Organization</label><input id="organization" name="organization" type="text" autoComplete="organization" /></div>
                 </div>
                 {intent === 'demo' && (
                   <div className="row row-2" style={{ gap: 22 }}>
                     <div className="field">
-                      <label>Role</label>
-                      <select>
+                      <label htmlFor="contact-role">Role</label>
+                      <select id="contact-role" name="contact-role">
                         <option>Cardiologist</option>
                         <option>Primary care</option>
                         <option>Practice administrator</option>
@@ -105,8 +106,8 @@ export function ContactPage() {
                       </select>
                     </div>
                     <div className="field">
-                      <label>Practice volume</label>
-                      <select>
+                      <label htmlFor="practice-volume">Practice volume</label>
+                      <select id="practice-volume" name="practice-volume">
                         <option>1–5 providers</option>
                         <option>6–20 providers</option>
                         <option>21–100 providers</option>
@@ -116,8 +117,8 @@ export function ContactPage() {
                   </div>
                 )}
                 <div className="field">
-                  <label>Tell us more</label>
-                  <textarea rows="5" placeholder="What would you like to discuss?"></textarea>
+                  <label htmlFor="message">Tell us more</label>
+                  <textarea id="message" name="message" rows="5" placeholder="What would you like to discuss?"></textarea>
                 </div>
                 <label style={{ display: 'flex', gap: 12, alignItems: 'start', fontSize: 13, color: 'var(--fg-muted)', maxWidth: '64ch' }}>
                   <input type="checkbox" style={{ marginTop: 4 }} />
@@ -127,18 +128,7 @@ export function ContactPage() {
                   <button type="submit" className="btn btn-primary">Send message<span className="arrow">→</span></button>
                 </div>
               </>
-            ) : (
-              <div style={{ padding: 64, border: '1px solid var(--rule)', textAlign: 'center' }}>
-                <Eyebrow>Message sent</Eyebrow>
-                <h3 style={{ marginTop: 18, fontSize: 'clamp(28px, 3vw, 40px)' }}>Thank you — we'll be in touch.</h3>
-                <p className="lead" style={{ margin: '20px auto 0', maxWidth: 460 }}>
-                  We typically respond within two business days. A confirmation has been sent to your email.
-                </p>
-                <button onClick={() => setSent(false)} className="btn btn-ghost" style={{ marginTop: 32 }}>
-                  Send another<span className="arrow">→</span>
-                </button>
-              </div>
-            )}
+            <p role="status">{sent && 'Your message has not been sent. Please email info@corvista.com.'}</p>
           </form>
         </div>
       </Section>

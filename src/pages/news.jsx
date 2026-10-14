@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Eyebrow, Section, NavA, Tabs } from '../components.jsx';
 
+import { EmailSignup } from '../signup.jsx';
+
 const modules = import.meta.glob('../content/news/*.mdx', { eager: true });
 
 const ARTICLES = Object.entries(modules)
@@ -31,7 +33,7 @@ function ArticleView({ slug }) {
   if (!article) return (
     <div className="page-fade" data-page="news">
       <Section>
-        <p>Article not found.</p>
+        <h1>Article not found.</h1>
         <NavA to="news" className="btn btn-ghost" style={{ marginTop: 20, display: 'inline-flex' }}>← Back to News</NavA>
       </Section>
     </div>
@@ -110,7 +112,7 @@ export function NewsPage({ articleSlug }) {
       )}
 
       <Section>
-        <Tabs
+        <Tabs label="Filter news"
           value={filter}
           onChange={setFilter}
           items={[
@@ -119,6 +121,7 @@ export function NewsPage({ articleSlug }) {
             { id: 'Article', label: 'Articles' },
           ]}
         />
+        <p role="status" className="sr-only">{filtered.length} articles shown.</p>
         <div>
           {filtered.map((a) => (
             <ArticleLink key={a.slug} article={a} className="news-card hover-lift">
@@ -144,24 +147,7 @@ export function NewsPage({ articleSlug }) {
               Clinical updates, regulatory milestones, and conference presentations — once a month, no fluff.
             </p>
           </div>
-          <form style={{ display: 'flex', gap: 12 }} onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="you@hospital.org"
-              style={{
-                flex: 1,
-                padding: '16px 20px',
-                background: 'transparent',
-                border: '1px solid #1F2A3D',
-                color: '#F4F6F9',
-                fontFamily: 'var(--f-sans)',
-                fontSize: 16,
-                outline: 'none',
-                borderRadius: 0,
-              }}
-            />
-            <button type="submit" className="btn btn-primary">Subscribe<span className="arrow">→</span></button>
-          </form>
+          <EmailSignup />
         </div>
       </Section>
     </div>

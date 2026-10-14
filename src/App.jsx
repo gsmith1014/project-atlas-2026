@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Header, Footer } from './nav.jsx';
-import { SiteTweaks } from './site-tweaks.jsx';
-import { useTweaks } from './tweaks-panel.jsx';
 import { HomePage } from './pages/home.jsx';
 import { TechnologyPage } from './pages/technology.jsx';
 import { TechCadPage, TechPhPage, TechPcwpPage } from './pages/tech-disease.jsx';
@@ -67,11 +65,9 @@ function getRouteFromHash() {
 
 export default function App() {
   const [{ page, sub }, setRoute] = useState(getRouteFromHash);
-  const [tweaks, setTweakState] = useState(TWEAK_DEFAULTS);
-
-  const setTweak = useCallback((key, value) => {
-    setTweakState(prev => ({ ...prev, [key]: value }));
-  }, []);
+  const tweaks = TWEAK_DEFAULTS;
+  const mainRef = useRef(null);
+  const firstRender = useRef(true);
 
   // Hash-based routing
   useEffect(() => {
@@ -91,9 +87,13 @@ export default function App() {
     return () => window.removeEventListener('cv-navigate', onNav);
   }, []);
 
-  // Scroll to top after every route change, once the new page has rendered
+  // Focus the new page and scroll to top after route changes.
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!firstRender.current) {
+      mainRef.current?.focus({ preventScroll: true });
+      window.scrollTo(0, 0);
+    }
+    firstRender.current = false;
   }, [page, sub]);
 
   // Apply tweaks to CSS custom properties
@@ -130,12 +130,14 @@ export default function App() {
 
   return (
     <>
+      <a className="skip-link" href="#main-content" onClick={event => {
+        event.preventDefault(); mainRef.current?.focus(); mainRef.current?.scrollIntoView();
+      }}>Skip to main content</a>
       <Header page={page} />
-      <main key={page + (sub || '')}>
+      <main id="main-content" ref={mainRef} tabIndex={-1} key={page + (sub || '')}>
         {getPage(page, sub, tweaks)}
       </main>
       <Footer />
-      <SiteTweaks tweaks={tweaks} setTweak={setTweak} />
     </>
   );
 }

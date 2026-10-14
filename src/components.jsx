@@ -34,7 +34,7 @@ function EcgLine({ color = "var(--blue)", height = 60, segments = 6, strokeWidth
     d += ` L ${x0 + segW} ${baseline}`;
   }
   return (
-    <svg className="ecg-line" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" style={{height}}>
+    <svg aria-hidden="true" className="ecg-line" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" style={{height}}>
       <path d={d} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="square" strokeLinejoin="miter" vectorEffect="non-scaling-stroke" />
     </svg>
   );
@@ -97,29 +97,48 @@ function SectionHeader({ eyebrow, title, action }) {
 }
 
 function Marquee({ items }) {
-  const content = [...items, ...items];
+  const [paused, setPaused] = React.useState(false);
   return (
-    <div className="marquee">
-      <div className="marquee-track">
-        {content.map((it, i) => (
-          <React.Fragment key={i}>
-            <span>{it}</span>
-            <span className="dot">●</span>
-          </React.Fragment>
-        ))}
+    <div className={`marquee${paused ? ' is-paused' : ''}`}>
+      <div className="marquee-window">
+        <div className="marquee-track">
+          <ul className="marquee-list">
+            {items.map((item, index) => <li key={index}>{item}</li>)}
+          </ul>
+          <ul className="marquee-list" aria-hidden="true">
+            {items.map((item, index) => <li key={index}>{item}</li>)}
+          </ul>
+        </div>
       </div>
+      <button
+        className="marquee-control"
+        type="button"
+        aria-label={paused ? 'Resume scrolling' : 'Pause scrolling'}
+        title={paused ? 'Resume scrolling' : 'Pause scrolling'}
+        onClick={() => setPaused(value => !value)}
+      >
+        {paused ? (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="m8 5 11 7-11 7V5Z" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+            <path d="M8 5v14M16 5v14" />
+          </svg>
+        )}
+      </button>
     </div>
   );
 }
 
-function Tabs({ items, value, onChange }) {
+function Tabs({ items, value, onChange, label = "Filter results" }) {
   return (
-    <div role="tablist" className="tabs">
+    <div role="group" aria-label={label} className="tabs">
       {items.map(it => (
         <button
           key={it.id}
-          role="tab"
-          aria-selected={value === it.id}
+          type="button"
+          aria-pressed={value === it.id}
           className="tab"
           onClick={() => onChange(it.id)}
         >{it.label}</button>
@@ -134,7 +153,7 @@ export function navTo(slug) {
 
 export function NavA({ to, className = "", children, ...rest }) {
   return (
-    <a href={`#${to}`} className={className} onClick={(e) => { e.preventDefault(); navTo(to); }} {...rest}>{children}</a>
+    <a href={`#${to}`} className={className} aria-current={window.location.hash === `#${to}` || (!window.location.hash && to === 'home') ? 'page' : undefined} onClick={(e) => { e.preventDefault(); navTo(to); }} {...rest}>{children}</a>
   );
 }
 

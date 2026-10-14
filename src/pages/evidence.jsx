@@ -78,7 +78,7 @@ export function EvidencePage() {
 
       <Section>
         <SectionHeader eyebrow="Publications" title="Browse the evidence." />
-        <Tabs
+        <Tabs label="Filter studies"
           value={filter}
           onChange={setFilter}
           items={[
@@ -88,6 +88,7 @@ export function EvidencePage() {
             { id: 'pcwp', label: 'PCWP · Heart failure' },
           ]}
         />
+        <p role="status" className="sr-only">{filtered.length} studies shown.</p>
         <div>
           {filtered.map((s, i) => (
             <div key={i} className="evidence-row" style={{ display: 'grid', gridTemplateColumns: '80px 1fr 240px 140px 80px', gap: 32, padding: '24px 0', borderTop: '1px solid var(--rule)', alignItems: 'center' }}>
