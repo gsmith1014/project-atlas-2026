@@ -21,7 +21,7 @@ function HeroEditorial() {
               <span className="em">Answered.</span>
             </h1>
             <p className="lead" style={{ marginTop: 36, maxWidth: '48ch' }}>
-              Three of the most common — and most ambiguous — presentations in primary care. Each could signal CAD, pulmonary hypertension, or heart failure. CorVista assesses all three from a single 3.5-minute resting capture. No radiation, no contrast, no referral needed.
+              Three of the most common — and most ambiguous — presentations in front-line care. Each could signal CAD, pulmonary hypertension, or heart failure. CorVista assesses all three from a single 3.5-minute resting capture. No radiation, no contrast, no referral needed.
             </p>
             <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
               <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
