@@ -78,13 +78,13 @@ const CV_DISEASES = {
     perf: { sens: '82%', spec: '83%', npv: '>99%' },
     perfNote: 'Increased pulmonary capillary wedge pressure, consistent with heart failure with both preserved or reduced ejection fraction. Delivered at the front-line of care.',
     workflow: [
-      { n: '01', t: 'In primary care', c: 'A resting capture flags elevated filling pressures during a routine visit — before symptoms force an admission.' },
+      { n: '01', t: 'At point of care', c: 'A resting capture flags potential elevated filling pressures during a routine visit — before symptoms progress.' },
       { n: '02', t: 'A decision in-office', c: 'A PCWP score gives the clinician hemodynamic insight without waiting weeks for an echo.' },
       { n: '03', t: 'Earlier management', c: 'Patients begin guideline-directed therapy sooner, bending the curve away from decompensation and hospitalization.' },
     ],
     stats: [
       { label: 'HF patients undiagnosed', value: '~50', unit: '%', desc: 'The population a front-line signal can reach.' },
-      { label: 'Echo wait time today', value: '4–8', unit: 'wks', desc: 'Replaced by an in-office read in minutes.' },
+      { label: 'Echo wait time today', value: '4–8', unit: 'wks', desc: 'Initial assessment via an in-office test in minutes.' },
       { label: 'In-office decision', value: '<30', unit: 'min', desc: 'test to physician report.' },
     ],
     perfRef: 3,
