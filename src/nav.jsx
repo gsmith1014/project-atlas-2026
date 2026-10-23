@@ -198,6 +198,9 @@ export function Footer() {
             </div>
           </div>
         </div>
+        <div style={{ padding: '16px 0', borderTop: '1px solid #1F2A3D', fontSize: 12, color: '#7A8899', lineHeight: 1.6 }}>
+          The CorVista System® with CAD Add-on, PH Add-on, and PCWP Add-on have been cleared to market as 510(k) devices. CorVista® System is developed and manufactured by Analytics For Life, Inc., and licensed exclusively to CorVista Health.
+        </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} CorVista Health, Inc. — All rights reserved.</span>
           <div style={{ display: 'flex', gap: 32 }}>
