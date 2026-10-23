@@ -54,7 +54,7 @@ export function HomePage({ tweaks }) {
     cad: {
       label: 'Coronary artery disease',
       eyebrow: 'CAD',
-      blurb: 'Detect obstructive coronary disease without exercise stress, radiation, or contrast — using only resting signals and the CorVista algorithm.',
+      blurb: 'Assess the likelihood of obstructive coronary disease without exercise stress, radiation, or contrast — using only resting signals and the CorVista algorithm.',
       stats: [
         { label: <><span>Diagnostic cost</span><Cite n={4} /></>, value: '−32', unit: '%' },
         { label: <><span>Cath lab yield</span><Cite n={4} /></>, value: '+21', unit: '%' },
@@ -63,7 +63,7 @@ export function HomePage({ tweaks }) {
     ph: {
       label: 'Pulmonary hypertension',
       eyebrow: 'PH',
-      blurb: 'Identify pulmonary hypertension earlier in the diagnostic journey — before it progresses and care costs compound.',
+      blurb: 'Identify potential pulmonary hypertension earlier in the diagnostic journey — before it progresses and care costs compound.',
       stats: [
         { label: <><span>Total cost of care</span><Cite n={5} /></>, value: '−44', unit: '%' },
         { label: <><span>Average diagnostic delay today</span><Cite n={9} /></>, value: '2.5', unit: 'yrs' },
@@ -72,7 +72,7 @@ export function HomePage({ tweaks }) {
     lvef: {
       label: 'Heart Failure',
       eyebrow: 'PCWP',
-      blurb: 'Test for increased pulmonary capillary wedge pressure in primary care — finding heart failure long before symptoms force a hospitalization.',
+      blurb: 'Test the likelihood of elevated pulmonary capillary wedge pressure in primary care — finding heart failure long before symptoms force a hospitalization.',
       stats: [
         { label: 'HF patients undiagnosed', value: '~50', unit: '%' },
         { label: 'Echo wait time today', value: '4–8', unit: 'wks' },
@@ -152,7 +152,7 @@ export function HomePage({ tweaks }) {
               <div>
                 <Eyebrow>03</Eyebrow>
                 <h5 style={{ marginTop: 12 }}>Act</h5>
-                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Physician-reviewed report returns to the clinician's portal in minutes.</p>
+                <p style={{ marginTop: 8, color: 'var(--fg-muted)', fontSize: 14, lineHeight: 1.5 }}>Physician report returns to the clinician's portal in minutes.</p>
               </div>
             </div>
           </div>
