@@ -37,7 +37,7 @@ export function PatientsPage() {
                 The answer can change your life.
               </h1>
               <p className="lead">
-                If your doctor is looking into chest discomfort, shortness of breath, or unexplained fatigue, CorVista can help find — or rule out — heart disease quickly, comfortably, and without radiation or contrast.
+                If your doctor is looking into chest discomfort, shortness of breath, or unexplained fatigue, CorVista can help find — or rule out — three forms of potential heart disease quickly, comfortably, and without radiation or contrast.
               </p>
             </div>
             <img src={patientHero} alt="Patient at point of care" style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
