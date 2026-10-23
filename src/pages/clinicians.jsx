@@ -373,7 +373,7 @@ const CASES = [
   {
     n: '01',
     pub: 'JACC: Case Reports · 2025',
-    patient: '75-year-old woman — atrial fibrillation, worsening dyspnea, fatigue, and palpitations',
+    patient: '75-year-old woman — worsening dyspnea and fatigue',
     heroStat: '6', heroUnit: 'years',
     heroDesc: 'of evaluation — three echocardiograms, all negative — without a diagnosis',
     timeline: {
@@ -386,7 +386,7 @@ const CASES = [
     },
     before: {
       title: 'What standard care found',
-      text: 'Three echocardiograms over six years, all negative for pulmonary hypertension. An equivocal stress test had the workup pointing toward coronary disease — cardiac catheterization was being planned.',
+      text: 'Three echocardiograms over six years, all negative for pulmonary hypertension. An equivocal stress test had the workup pointing toward coronary disease — left heart catheterization was being planned.',
     },
     cv: {
       title: 'What CorVista found',
@@ -402,7 +402,7 @@ const CASES = [
     pub: 'European Heart Journal — Case Reports · 2026',
     patient: '63-year-old man — exertional chest pain, multiple cardiovascular risk factors, family history of CAD',
     heroStat: '2', heroUnit: 'tests',
-    heroDesc: 'returned negative — severe multivessel disease was found on the third',
+    heroDesc: 'returned negative — severe multivessel disease was found via CorVista',
     timeline: {
       events: [
         { label: 'Echo ✗',  sub: 'Test 1' },
@@ -413,11 +413,11 @@ const CASES = [
     },
     before: {
       title: 'What standard care found',
-      text: 'Normal echocardiogram. Negative SPECT nuclear perfusion imaging. With a pretest CAD risk of 35–44%, the standard workup returned no indication for catheterization.',
+      text: 'Normal echocardiogram. Negative SPECT nuclear perfusion imaging.',
     },
     cv: {
       title: 'What CorVista found',
-      text: 'CorVista CAD score 0.20 — positive. Patient sent directly to invasive cardiac catheterization.',
+      text: 'CorVista CAD score 0.20 — positive. In conjunction with symptoms and risk factors, patient was sent directly to invasive cardiac catheterization.',
       findings: ['80% LAD stenosis', '2× 80% LCX stenosis', 'Subtotal RCA occlusion', '4 lesions stented'],
     },
     dx: 'Severe multivessel CAD confirmed and treated — balanced ischemia that three standard-of-care tests missed',
@@ -436,7 +436,7 @@ export function CliniciansPage() {
             A better first <span className="em">answer</span> — without the wait.
           </h1>
           <p className="lead">
-            Get a physician-reviewed report back in minutes. Move confidently into next steps, or rule out disease without a downstream referral.
+            Get a physician report back in minutes. Move confidently into next steps, or rule out disease without a downstream referral.
           </p>
           <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
             <NavA to="contact" className="btn btn-primary">Request a demo<span className="arrow">→</span></NavA>
@@ -567,9 +567,9 @@ export function CliniciansPage() {
         <SectionHeader eyebrow="Implementation" title="A program your team can stand up in weeks." />
         <div className="row row-4">
           {[
-            { t: 'Reimbursement', c: 'Our team can help support billing setup and documentation. CPT III coding (effective January 2027).' },
+            { t: 'Reimbursement', c: 'Our team can help support billing setup and documentation. CPT III coding.' },
             { t: 'Training', c: 'Account manager supported onboarding for medical assistants and administrators.' },
-            { t: 'Hardware', c: 'Capture device ships in 48 hours. The tablet and electrodes are provided. No capex.' },
+            { t: 'Hardware', c: 'Capture device ships in 48 hours.' },
             { t: 'Support', c: 'Dedicated clinical account manager.' },
           ].map(s => (
             <div key={s.t} style={{ borderTop: '1px solid var(--ink)', paddingTop: 20 }}>
