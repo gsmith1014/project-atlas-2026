@@ -193,11 +193,6 @@ function RefList({ refs }) {
                 DOI →
               </a>
             )}
-            <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {r.claims.map((c, i) => (
-                <span key={i} style={{ fontSize: 12, color: 'var(--fg-muted)', background: 'var(--rule)', padding: '3px 10px', borderRadius: 100 }}>{c}</span>
-              ))}
-            </div>
           </div>
         </div>
       ))}
