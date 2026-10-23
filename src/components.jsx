@@ -151,6 +151,19 @@ export function navTo(slug) {
   window.dispatchEvent(new CustomEvent('cv-navigate', { detail: slug }));
 }
 
+export function Cite({ n }) {
+  return (
+    <sup style={{ fontSize: '0.6em', lineHeight: 1, marginLeft: 1 }}>
+      <a
+        href={`#references`}
+        onClick={e => { e.preventDefault(); navTo('references'); }}
+        style={{ color: 'var(--blue)', textDecoration: 'none', fontFamily: 'var(--f-mono)' }}
+        aria-label={`Reference ${n}`}
+      >[{n}]</a>
+    </sup>
+  );
+}
+
 export function NavA({ to, className = "", children, ...rest }) {
   return (
     <a href={`#${to}`} className={className} aria-current={window.location.hash === `#${to}` || (!window.location.hash && to === 'home') ? 'page' : undefined} onClick={(e) => { e.preventDefault(); navTo(to); }} {...rest}>{children}</a>

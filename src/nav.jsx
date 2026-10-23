@@ -188,6 +188,7 @@ export function Footer() {
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('about'); }}>About</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('news'); }}>News & insights</a>
             <a href="#" onClick={(e) => { e.preventDefault(); navTo('contact'); }}>Contact</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navTo('references'); }}>References</a>
           </div>
           <div>
             <h6>Connect</h6>

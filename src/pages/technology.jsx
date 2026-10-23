@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo } from '../components.jsx';
+import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo, Cite } from '../components.jsx';
 import { ScienceSection } from './tech-science.jsx';
 
 function useReveal(threshold = 0.15) {
@@ -99,9 +99,9 @@ export function TechnologyPage() {
           </div>
           <div className="row row-3" style={{ gap: 0 }}>
             {[
-              { slug: 'tech-cad', eyebrow: 'CAD', label: 'Coronary artery disease', desc: 'Functionally significant obstructive coronary disease in stable, symptomatic patients.', metric: 'Sensitivity 88% · Specificity 51% · NPV 99%' },
-              { slug: 'tech-ph', eyebrow: 'PH', label: 'Pulmonary hypertension', desc: 'Elevated pulmonary artery pressure consistent with PH — at the front line of care.', metric: 'Sensitivity 82% · Specificity 92% · NPV >99%' },
-              { slug: 'tech-pcwp', eyebrow: 'PCWP', label: 'Pulmonary Capillary Wedge Pressure', desc: 'Elevated left-sided filling pressures, consistent with heart failure — both preserved and reduced ejection fraction.', metric: 'Sensitivity 82% · Specificity 83% · NPV >99%' },
+              { slug: 'tech-cad', eyebrow: 'CAD', label: 'Coronary artery disease', desc: 'Functionally significant obstructive coronary disease in stable, symptomatic patients.', metric: <span>Sensitivity 88% · Specificity 51% · NPV 99%<Cite n={1} /></span> },
+              { slug: 'tech-ph', eyebrow: 'PH', label: 'Pulmonary hypertension', desc: 'Elevated pulmonary artery pressure consistent with PH — at the front line of care.', metric: <span>Sensitivity 82% · Specificity 92% · NPV &gt;99%<Cite n={2} /></span> },
+              { slug: 'tech-pcwp', eyebrow: 'PCWP', label: 'Pulmonary Capillary Wedge Pressure', desc: 'Elevated left-sided filling pressures, consistent with heart failure — both preserved and reduced ejection fraction.', metric: <span>Sensitivity 82% · Specificity 83% · NPV &gt;99%<Cite n={3} /></span> },
             ].map((m, i) => (
               <NavA key={i} to={m.slug} className={`disease-card${i === 0 ? ' first' : ''}`}>
                 <div className="chip chip-blue">{m.eyebrow}</div>
@@ -171,8 +171,8 @@ export function TechnologyPage() {
             </ul>
           </div>
           <div className="row row-2" style={{ gap: 32 }}>
-            <Stat label="PH total cost of care" value="−44" unit="%" desc="Reduction across the full care episode." />
-            <Stat label="CAD diagnostic pathway" value="−32" unit="%" desc="Avoids downstream imaging and low-yield cath." />
+            <Stat label={<>PH total cost of care<Cite n={5} /></>} value="−44" unit="%" desc="Reduction across the full care episode." />
+            <Stat label={<>CAD diagnostic pathway<Cite n={4} /></>} value="−32" unit="%" desc="Avoids downstream imaging and low-yield cath." />
           </div>
         </div>
       </Section>
@@ -209,15 +209,16 @@ export function TechnologyPage() {
 
             {/* Data rows */}
             {[
-              { label: 'Sensitivity', values: ['88%', '82%', '82%'] },
-              { label: 'Specificity', values: ['51%', '92%', '83%'] },
-              { label: 'NPV',         values: ['99%', '>99%', '>99%'] },
+              { label: 'Sensitivity', values: ['88%', '82%', '82%'], refs: [1, 2, 3] },
+              { label: 'Specificity', values: ['51%', '92%', '83%'], refs: [1, 2, 3] },
+              { label: 'NPV',         values: ['99%', '>99%', '>99%'], refs: [1, 2, 3] },
             ].map((row) => (
               <div key={row.label} className="perf-table-row" style={{ display: 'grid', gridTemplateColumns: '148px repeat(3, 1fr)', padding: '22px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
                 <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.1em', textTransform: 'uppercase', paddingRight: 16 }}>{row.label}</div>
                 {row.values.map((v, i) => (
                   <div key={i} style={{ paddingLeft: 20 }}>
                     <span style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(32px, 3.2vw, 46px)', fontWeight: 500, letterSpacing: '-0.025em', color: 'var(--blue)', lineHeight: 1 }}>{v}</span>
+                    <Cite n={row.refs[i]} />
                   </div>
                 ))}
               </div>

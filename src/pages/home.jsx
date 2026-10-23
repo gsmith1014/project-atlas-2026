@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EcgLine, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo } from '../components.jsx';
+import { EcgLine, Btn, Stat, Eyebrow, Section, SectionHeader, Marquee, NavA, navTo, Cite } from '../components.jsx';
 import { CountUp } from '../hooks.jsx';
 import heroImg from '/hero-clinician.jpg';
 import tracyImg from '/tracy-neal.jpg';
@@ -56,8 +56,8 @@ export function HomePage({ tweaks }) {
       eyebrow: 'CAD',
       blurb: 'Detect obstructive coronary disease without exercise stress, radiation, or contrast — using only resting signals and the CorVista algorithm.',
       stats: [
-        { label: 'Diagnostic cost', value: '−32', unit: '%' },
-        { label: 'Cath lab yield', value: '+21', unit: '%' },
+        { label: <><span>Diagnostic cost</span><Cite n={4} /></>, value: '−32', unit: '%' },
+        { label: <><span>Cath lab yield</span><Cite n={4} /></>, value: '+21', unit: '%' },
       ]
     },
     ph: {
@@ -65,8 +65,8 @@ export function HomePage({ tweaks }) {
       eyebrow: 'PH',
       blurb: 'Identify pulmonary hypertension earlier in the diagnostic journey — before it progresses and care costs compound.',
       stats: [
-        { label: 'Total cost of care', value: '−44', unit: '%' },
-        { label: 'Average diagnostic delay today', value: '2.5', unit: 'yrs' },
+        { label: <><span>Total cost of care</span><Cite n={5} /></>, value: '−44', unit: '%' },
+        { label: <><span>Average diagnostic delay today</span><Cite n={9} /></>, value: '2.5', unit: 'yrs' },
       ]
     },
     lvef: {
@@ -108,10 +108,10 @@ export function HomePage({ tweaks }) {
         </div>
         <div className="prob-grid">
           {[
-            { num: 1, suffix: '', prefix: '#', label: 'Heart disease is the leading cause of death in the U.S.', source: 'CDC Heart Disease Facts' },
-            { num: 22, suffix: 'M', prefix: '', label: 'Americans live in counties with no practicing cardiologist.', source: 'Khan et al., Cardiology deserts in the U.S.' },
-            { num: 32.7, decimals: 1, suffix: '', prefix: '', unit: 'days', label: 'Average wait to see a cardiologist after referral.', source: 'AMN Healthcare, 2025 Physician Appointment Survey' },
-            { num: 2.26, decimals: 2, suffix: '', prefix: '', unit: 'yrs', label: 'Median delay from unexplained dyspnea to PAH diagnosis.', source: 'JACC Advances, PAH diagnostic delay literature' },
+            { num: 1, suffix: '', prefix: '#', label: 'Heart disease is the leading cause of death in the U.S.', source: 'CDC Heart Disease Facts', ref: 6 },
+            { num: 22, suffix: 'M', prefix: '', label: 'Americans live in counties with no practicing cardiologist.', source: 'Khan et al., Cardiology deserts in the U.S.', ref: 7 },
+            { num: 32.7, decimals: 1, suffix: '', prefix: '', unit: 'days', label: 'Average wait to see a cardiologist after referral.', source: 'AMN Healthcare, 2025 Physician Appointment Survey', ref: 8 },
+            { num: 2.26, decimals: 2, suffix: '', prefix: '', unit: 'yrs', label: 'Median delay from unexplained dyspnea to PAH diagnosis.', source: 'JACC Advances, PAH diagnostic delay literature', ref: 9 },
           ].map((s, i) => (
             <div key={i} className="prob-tile">
               <div className="prob-num">
@@ -120,7 +120,7 @@ export function HomePage({ tweaks }) {
                 {s.suffix && <span style={{ fontSize: '0.55em', verticalAlign: 'super', fontWeight: 700 }}>{s.suffix}</span>}
               </div>
               <div className="prob-label">{s.label}</div>
-              <div className="prob-source">{s.source}</div>
+              <div className="prob-source">{s.source}{s.ref && <Cite n={s.ref} />}</div>
             </div>
           ))}
         </div>

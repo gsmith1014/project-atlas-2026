@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, navTo } from '../components.jsx';
+import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, navTo, Cite } from '../components.jsx';
 import { useReveal, CountUp } from '../hooks.jsx';
 
 const RESTART_SVG = (
@@ -395,6 +395,7 @@ const CASES = [
     },
     dx: 'Group 2 PH / HFpEF confirmed — referred to pulmonary hypertension specialist and started on SGLT2 inhibitor',
     cite: 'Aben R, Burton T, Fathieh F, et al. J Am Coll Cardiol Case Rep. 2025;30(26):104876.',
+    ref: 10,
   },
   {
     n: '02',
@@ -421,6 +422,7 @@ const CASES = [
     },
     dx: 'Severe multivessel CAD confirmed and treated — balanced ischemia that three standard-of-care tests missed',
     cite: 'Alkhawam M, et al. European Heart Journal — Case Reports. 2026;10(2):ytag016.',
+    ref: 11,
   },
 ];
 
@@ -494,7 +496,7 @@ export function CliniciansPage() {
                 <span className="case-outcome-text">{c.dx}</span>
               </div>
 
-              <div className="case-cite">{c.cite}</div>
+              <div className="case-cite">{c.cite}{c.ref && <Cite n={c.ref} />}</div>
             </div>
           ))}
         </div>
@@ -530,9 +532,9 @@ export function CliniciansPage() {
       <Section dark>
         <SectionHeader eyebrow={<span style={{ color: '#98A2B3' }}>What it changes</span>} title={<span style={{ color: '#F4F6F9' }}>Better triage. Fewer false negatives.</span>} />
         <div className="row row-3">
-          <Stat label="Cath lab yield vs SPECT" value="+21" unit="%" desc="More patients sent to cath have obstructive disease." />
-          <Stat label="CAD pathway cost" value="−32" unit="%" desc="Avoids unnecessary downstream testing and admissions." />
-          <Stat label="PH total cost of care" value="−44" unit="%" desc="Identifies pulmonary hypertension earlier in the workup." />
+          <Stat label={<>Cath lab yield vs SPECT<Cite n={4} /></>} value="+21" unit="%" desc="More patients sent to cath have obstructive disease." />
+          <Stat label={<>CAD pathway cost<Cite n={4} /></>} value="−32" unit="%" desc="Avoids unnecessary downstream testing and admissions." />
+          <Stat label={<>PH total cost of care<Cite n={5} /></>} value="−44" unit="%" desc="Identifies pulmonary hypertension earlier in the workup." />
         </div>
       </Section>
 

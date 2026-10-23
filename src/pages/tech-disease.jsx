@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo } from '../components.jsx';
+import { Eyebrow, Section, SectionHeader, ImgPh, Btn, Stat, NavA, EcgLine, navTo, Cite } from '../components.jsx';
 import { STUDIES } from './evidence.jsx';
 
 const CV_DISEASES = {
@@ -26,9 +26,10 @@ const CV_DISEASES = {
       { n: '03', t: 'Informing the right next step', c: 'Rule out without a downstream referral, or send the right patients to the cath lab with sharper indication.' },
     ],
     stats: [
-      { label: 'CAD diagnostic pathway cost', value: '−32', unit: '%', desc: 'Avoids unnecessary downstream imaging and admissions.' },
-      { label: 'Cath lab yield vs SPECT', value: '+21', unit: '%', desc: 'More patients sent to cath have obstructive disease.' },
+      { label: 'CAD diagnostic pathway cost', value: '−32', unit: '%', desc: 'Avoids unnecessary downstream imaging and admissions.', ref: 4 },
+      { label: 'Cath lab yield vs SPECT', value: '+21', unit: '%', desc: 'More patients sent to cath have obstructive disease.', ref: 4 },
     ],
+    perfRef: 1,
   },
   ph: {
     slug: 'tech-ph',
@@ -53,10 +54,11 @@ const CV_DISEASES = {
       { n: '03', t: 'To the right specialist, faster', c: 'Patients who test positive reach a PH program months — or years — earlier than they would today.' },
     ],
     stats: [
-      { label: 'PH total cost of care', value: '−44', unit: '%', desc: 'Identifies PH earlier, before care costs compound.' },
-      { label: 'Average diagnostic delay today', value: '2.5', unit: 'yrs', desc: 'The gap CorVista is built to close.' },
+      { label: 'PH total cost of care', value: '−44', unit: '%', desc: 'Identifies PH earlier, before care costs compound.', ref: 5 },
+      { label: 'Average diagnostic delay today', value: '2.5', unit: 'yrs', desc: 'The gap CorVista is built to close.', ref: 9 },
       { label: 'Average hospitalizations avoided', value: '1-4', unit: '', desc: 'Identifying PAH earlier, before progression occurs.' },
     ],
+    perfRef: 2,
   },
   pcwp: {
     slug: 'tech-pcwp',
@@ -85,6 +87,7 @@ const CV_DISEASES = {
       { label: 'Echo wait time today', value: '4–8', unit: 'wks', desc: 'Replaced by an in-office read in minutes.' },
       { label: 'In-office decision', value: '<30', unit: 'min', desc: 'test to physician report.' },
     ],
+    perfRef: 3,
   },
 };
 
@@ -163,7 +166,9 @@ function DiseasePage({ d, activeKey }) {
             ].map((m, i) => (
               <div key={i} style={{ padding: '8px 24px', borderLeft: i > 0 ? '1px solid #1F2A3D' : 0 }}>
                 <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{m.k}</div>
-                <div style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 500, color: '#F4F6F9', letterSpacing: '-0.02em', marginTop: 12, lineHeight: 1 }}>{m.v}</div>
+                <div style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 500, color: '#F4F6F9', letterSpacing: '-0.02em', marginTop: 12, lineHeight: 1 }}>
+                  {m.v}{i === 0 && d.perfRef && <Cite n={d.perfRef} />}
+                </div>
               </div>
             ))}
           </div>
@@ -188,7 +193,7 @@ function DiseasePage({ d, activeKey }) {
           <div style={{ marginBottom: 40 }}><Eyebrow>The impact</Eyebrow></div>
           <div className="row row-3">
             {d.stats.map((s, i) => (
-              <Stat key={i} label={s.label} value={s.value} unit={s.unit} desc={s.desc} />
+              <Stat key={i} label={s.ref ? <>{s.label}<Cite n={s.ref} /></> : s.label} value={s.value} unit={s.unit} desc={s.desc} />
             ))}
           </div>
         </div>
