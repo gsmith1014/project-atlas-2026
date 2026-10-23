@@ -167,7 +167,7 @@ export function TechnologyPage() {
             <ul className="bullets" style={{ marginTop: 32 }}>
               <li>Higher cath lab yield means fewer non-obstructive procedures</li>
               <li>Front-line rule-out avoids downstream imaging and admissions</li>
-              <li>Earlier PH and HF detection prevents costly late-stage care</li>
+              <li>Earlier PH and HF detection helps prevent costly late-stage care</li>
             </ul>
           </div>
           <div className="row row-2" style={{ gap: 32 }}>
