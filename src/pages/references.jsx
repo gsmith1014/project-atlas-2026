@@ -54,11 +54,11 @@ export const REFS = [
   {
     n: 5,
     authors: 'CorVista Health.',
-    title: 'Pulmonary Hypertension (PH) Economic Burden and CorVista Solution.',
+    title: 'The Economic Toll of Diagnosing Pulmonary Hypertension.',
     journal: 'Internal economic analysis.',
     year: '2025',
     detail: '',
-    note: 'Diagnostic cost range $9,085–$17,819; CorVista pathway $6,555–$10,034; modeled cost reduction 27–44%',
+    note: 'Standard PH diagnostic pathway cost $9,085–$17,819 (MDSave cost data; standard care pathway); CorVista pathway $6,555–$10,034; modeled cost reduction 27–44%',
     doi: '',
     claims: ['PH total cost of care −44%'],
   },
@@ -133,6 +133,30 @@ export const REFS = [
     note: 'n = 5 cases',
     doi: 'https://doi.org/10.1093/ehjcr/ytag016',
     claims: ['Clinical case series — CAD detected via CorVista following negative SPECT'],
+  },
+  // [12] PH economic burden — delayed diagnosis (CHEST 2023)
+  {
+    n: 12,
+    authors: 'Burger CD, et al.',
+    title: 'The Economic Burden of Delayed Diagnosis in Patients with Pulmonary Arterial Hypertension.',
+    journal: 'CHEST.',
+    year: '2023',
+    detail: '',
+    note: 'Peer-reviewed basis for PH diagnostic delay cost burden estimates',
+    doi: 'https://journal.chestnet.org/article/S0012-3692(23)00755-9/ppt',
+    claims: ['Economic burden of delayed PAH diagnosis'],
+  },
+  // [13] PAH economic burden in US (2024)
+  {
+    n: 13,
+    authors: 'Watzker A, et al.',
+    title: 'Economic Burden Associated with Pulmonary Arterial Hypertension in the United States.',
+    journal: 'Pulmonary Circulation.',
+    year: '2024',
+    detail: '',
+    note: 'Real-world economic burden of PAH in the U.S. healthcare system',
+    doi: 'https://experts.nebraska.edu/en/publications/economic-burden-associated-with-pulmonary-arterial-hypertension-i',
+    claims: ['Economic burden of PAH in the United States'],
   },
 ];
 

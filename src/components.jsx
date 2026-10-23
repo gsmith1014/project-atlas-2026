@@ -153,11 +153,10 @@ export function navTo(slug) {
 
 export function Cite({ n }) {
   return (
-    <sup style={{ fontSize: '0.6em', lineHeight: 1, marginLeft: 1 }}>
+    <sup className="site-cite">
       <a
         href={`#references`}
         onClick={e => { e.preventDefault(); navTo('references'); }}
-        style={{ color: 'var(--blue)', textDecoration: 'none', fontFamily: 'var(--f-mono)' }}
         aria-label={`Reference ${n}`}
       >[{n}]</a>
     </sup>

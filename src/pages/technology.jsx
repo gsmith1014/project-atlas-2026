@@ -200,25 +200,24 @@ export function TechnologyPage() {
             {/* Column header row */}
             <div className="perf-table-row" style={{ display: 'grid', gridTemplateColumns: '148px repeat(3, 1fr)', padding: '12px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
               <div />
-              {['CAD', 'PH', 'PCWP'].map(abbr => (
+              {[{abbr: 'CAD', ref: 1}, {abbr: 'PH', ref: 2}, {abbr: 'PCWP', ref: 3}].map(({abbr, ref}) => (
                 <div key={abbr} style={{ paddingLeft: 20 }}>
-                  <span className="chip chip-blue" style={{ fontSize: 11 }}>{abbr}</span>
+                  <span className="chip chip-blue" style={{ fontSize: 11 }}>{abbr}</span><Cite n={ref} />
                 </div>
               ))}
             </div>
 
             {/* Data rows */}
             {[
-              { label: 'Sensitivity', values: ['88%', '82%', '82%'], refs: [1, 2, 3] },
-              { label: 'Specificity', values: ['51%', '92%', '83%'], refs: [1, 2, 3] },
-              { label: 'NPV',         values: ['99%', '>99%', '>99%'], refs: [1, 2, 3] },
+              { label: 'Sensitivity', values: ['88%', '82%', '82%'] },
+              { label: 'Specificity', values: ['51%', '92%', '83%'] },
+              { label: 'NPV',         values: ['99%', '>99%', '>99%'] },
             ].map((row) => (
               <div key={row.label} className="perf-table-row" style={{ display: 'grid', gridTemplateColumns: '148px repeat(3, 1fr)', padding: '22px 0', borderBottom: '1px solid var(--rule)', alignItems: 'center' }}>
                 <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--mid)', letterSpacing: '0.1em', textTransform: 'uppercase', paddingRight: 16 }}>{row.label}</div>
                 {row.values.map((v, i) => (
                   <div key={i} style={{ paddingLeft: 20 }}>
                     <span style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(32px, 3.2vw, 46px)', fontWeight: 500, letterSpacing: '-0.025em', color: 'var(--blue)', lineHeight: 1 }}>{v}</span>
-                    <Cite n={row.refs[i]} />
                   </div>
                 ))}
               </div>

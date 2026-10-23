@@ -413,6 +413,19 @@ p { margin: 0; }
   background: rgba(91, 175, 232, 0.12);
 }
 
+/* Inline citation superscript — size locked with !important so no parent context overrides it */
+.site-cite {
+  font-size: 9px !important;
+  line-height: 1;
+  vertical-align: super;
+  margin-left: 1px;
+  font-family: var(--f-mono);
+}
+.site-cite a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
 /* Stat */
 .stat-num {
   font-family: var(--f-sans);

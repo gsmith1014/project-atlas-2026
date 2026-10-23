@@ -167,7 +167,7 @@ function DiseasePage({ d, activeKey }) {
               <div key={i} style={{ padding: '8px 24px', borderLeft: i > 0 ? '1px solid #1F2A3D' : 0 }}>
                 <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{m.k}</div>
                 <div style={{ fontFamily: 'var(--f-sans)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 500, color: '#F4F6F9', letterSpacing: '-0.02em', marginTop: 12, lineHeight: 1 }}>
-                  {m.v}{i === 0 && d.perfRef && <Cite n={d.perfRef} />}
+                  {m.v}
                 </div>
               </div>
             ))}
@@ -193,7 +193,7 @@ function DiseasePage({ d, activeKey }) {
           <div style={{ marginBottom: 40 }}><Eyebrow>The impact</Eyebrow></div>
           <div className="row row-3">
             {d.stats.map((s, i) => (
-              <Stat key={i} label={s.ref ? <>{s.label}<Cite n={s.ref} /></> : s.label} value={s.value} unit={s.unit} desc={s.desc} />
+              <Stat key={i} label={s.label} value={s.value} unit={s.unit} desc={s.desc} />
             ))}
           </div>
         </div>
