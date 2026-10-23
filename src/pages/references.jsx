@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eyebrow, Section, SectionHeader } from '../components.jsx';
+import { Eyebrow, Section } from '../components.jsx';
 
 export const REFS = [
   // [1] CAD validation
@@ -146,29 +146,13 @@ export function ReferencesPage() {
             References.
           </h1>
           <p className="lead" style={{ maxWidth: '64ch' }}>
-            Performance statistics, economic analyses, and epidemiological figures cited throughout this website are sourced from peer-reviewed publications, regulatory submissions, and recognized public health databases listed below.
+            Performance statistics, economic analyses, and epidemiological figures cited throughout this website are sourced from peer-reviewed publications and recognized public health databases listed below.
           </p>
         </div>
       </div>
 
       <Section>
-        <SectionHeader eyebrow="Clinical performance" title="Diagnostic accuracy studies." />
-        <RefList refs={REFS.filter(r => r.n <= 3)} />
-      </Section>
-
-      <Section>
-        <SectionHeader eyebrow="Health economics" title="Cost and pathway analyses." />
-        <RefList refs={REFS.filter(r => r.n === 4 || r.n === 5)} />
-      </Section>
-
-      <Section>
-        <SectionHeader eyebrow="Epidemiology" title="Background and burden of disease." />
-        <RefList refs={REFS.filter(r => r.n >= 6 && r.n <= 9)} />
-      </Section>
-
-      <Section>
-        <SectionHeader eyebrow="Case reports" title="Published clinical cases." />
-        <RefList refs={REFS.filter(r => r.n >= 10)} />
+        <RefList refs={REFS} />
       </Section>
 
       <Section>
