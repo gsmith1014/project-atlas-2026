@@ -53,13 +53,13 @@ export const REFS = [
   // [5] PH economics
   {
     n: 5,
-    authors: 'Fathieh F, et al.',
-    title: 'Pulmonary Hypertension Detection Non-Invasively at Point-of-Care Using a Machine-Learned Algorithm.',
-    journal: 'Diagnostics.',
-    year: '2024',
-    detail: '14(9):897.',
-    note: 'Validation and economic analysis',
-    doi: 'https://www.mdpi.com/2075-4418/14/9/897',
+    authors: 'CorVista Health.',
+    title: 'Pulmonary Hypertension (PH) Economic Burden and CorVista Solution.',
+    journal: 'Internal economic analysis.',
+    year: '2025',
+    detail: '',
+    note: 'Diagnostic cost range $9,085–$17,819; CorVista pathway $6,555–$10,034; modeled cost reduction 27–44%',
+    doi: '',
     claims: ['PH total cost of care −44%'],
   },
   // [6] Heart disease mortality
