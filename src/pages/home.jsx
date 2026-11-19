@@ -21,7 +21,7 @@ function HeroEditorial() {
               <span className="em">Answered.</span>
             </h1>
             <p className="lead" style={{ marginTop: 36, maxWidth: '48ch' }}>
-              Three of the most common — and most ambiguous — presentations in front-line care. Each could signal CAD, pulmonary hypertension, or heart failure. CorVista assesses all three from a single 3.5-minute resting capture. No radiation, no contrast, no referral needed.
+              Three of the most common — and most ambiguous — presentations in primary care. Each could signal CAD, pulmonary hypertension, or heart failure. CorVista assesses all three from a single 3.5-minute resting capture. No radiation, no contrast, no referral needed.
             </p>
             <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
               <Btn variant="primary" onClick={() => navTo('contact')}>Request a demo</Btn>
@@ -233,7 +233,7 @@ export function HomePage({ tweaks }) {
         </div>
       </Section>
 
-      <Section>
+      <Section className="home-testimonial">
         <div className="row row-2" style={{ gridTemplateColumns: '0.75fr 1fr', gap: 80, alignItems: 'center' }}>
           <img src={tracyImg} alt="Tracy Neal, MD" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', objectPosition: 'center 40%', display: 'block', borderRadius: 4 }} />
           <div>
@@ -249,26 +249,21 @@ export function HomePage({ tweaks }) {
         </div>
       </Section>
 
-      <div className="container">
-        <div style={{ marginBottom: 32 }}>
-          <Eyebrow>As seen in</Eyebrow>
+      <section className="home-press" aria-label="Press mentions">
+        <div className="container">
+          <div className="press-label"><Eyebrow>As seen in</Eyebrow></div>
+          <ul className="press-grid">
+            {['Fierce MedTech', 'Cardiovascular Business', 'DeviceTalks', 'TIME Magazine', 'Forbes', 'AI in Healthcare'].map(p => (
+              <li key={p} className="press-cell">{p}</li>
+            ))}
+          </ul>
         </div>
-      </div>
-      <div className="press-grid">
-        {['Fierce MedTech', 'Cardiovascular Bus.', 'DeviceTalks', 'TIME Magazine', 'Forbes', 'AI in Healthcare'].map(p => (
-          <div key={p} className="press-cell">{p}</div>
-        ))}
-      </div>
+      </section>
 
-      <Section dark>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 40 }}>
-          <div style={{ maxWidth: '24ch' }}>
-            <Eyebrow><span style={{ color: '#98A2B3' }}>Get started</span></Eyebrow>
-            <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(40px, 5vw, 84px)' }}>
-              Bring CorVista to <span className="serif-i" style={{ color: '#5BAFE8' }}>your</span> practice.
-            </h2>
-          </div>
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+      <Section dark className="closing-cta">
+        <div className="closing-cta-row">
+          <h2>Bring CorVista to your practice.</h2>
+          <div className="closing-actions">
             <NavA to="contact" className="btn btn-primary">Request a demo<span className="arrow">→</span></NavA>
             <NavA to="evidence" className="btn btn-ghost">Read the evidence<span className="arrow">→</span></NavA>
           </div>

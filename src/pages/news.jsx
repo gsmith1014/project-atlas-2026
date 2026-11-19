@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Eyebrow, Section, NavA, Tabs } from '../components.jsx';
 
-import { EmailSignup } from '../signup.jsx';
-
 const modules = import.meta.glob('../content/news/*.mdx', { eager: true });
 
 const ARTICLES = Object.entries(modules)
@@ -136,20 +134,7 @@ export function NewsPage({ articleSlug }) {
         </div>
       </Section>
 
-      <Section dark>
-        <div className="row row-2" style={{ gridTemplateColumns: '1.3fr 1fr', gap: 64, alignItems: 'center' }}>
-          <div>
-            <Eyebrow><span style={{ color: '#98A2B3' }}>Stay informed</span></Eyebrow>
-            <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(32px, 4vw, 56px)' }}>
-              Get CorVista updates in your inbox.
-            </h2>
-            <p className="lead" style={{ color: '#C8D0DC', marginTop: 18, maxWidth: '46ch' }}>
-              Clinical updates, regulatory milestones, and conference presentations — once a month, no fluff.
-            </p>
-          </div>
-          <EmailSignup />
-        </div>
-      </Section>
+      {/* Newsletter section hidden until subscriptions are available. */}
     </div>
   );
 }

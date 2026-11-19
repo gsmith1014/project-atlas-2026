@@ -220,6 +220,31 @@ p { margin: 0; }
 .arrow { display: inline-block; transition: transform 200ms ease; }
 .btn:hover .arrow, a:hover .arrow { transform: translateX(3px); }
 
+/* Legal documents */
+.legal-document {
+  max-width: 80ch;
+  margin-inline: auto;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.legal-document h1 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 40px;
+}
+.legal-document h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  line-height: 1.35;
+  margin-block: 40px 16px;
+}
+.legal-document h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  margin-block: 28px 12px;
+}
+.legal-document p { margin-block: 0 20px; }
+.legal-document a { text-decoration: underline; text-underline-offset: 3px; }
+
 /* Header / nav */
 .header {
   position: sticky;
@@ -247,9 +272,9 @@ p { margin: 0; }
 .brand-logo {
   width: 173px;
   height: 28px;
-  background-image: url('/corvista-logo.png');
-  background-size: 207px 117px;
-  background-position: -22px -44px;
+  background-image: url('/corvista-logo.svg');
+  background-size: contain;
+  background-position: center;
   background-repeat: no-repeat;
 }
 @media (prefers-color-scheme: dark) {
@@ -508,17 +533,91 @@ p { margin: 0; }
 }
 
 /* Footer */
+.closing-cta.section {
+  background: #091629;
+  padding-block: clamp(40px, 4vw, 64px);
+  padding-bottom: 0;
+}
+.closing-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #2B394B;
+}
+.closing-cta h2 {
+  color: #F4F6F9;
+  font-size: clamp(26px, 2.5vw, 36px);
+  line-height: 1.25;
+  max-width: none;
+  flex: 1 1 460px;
+}
+.closing-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.closing-actions .btn { white-space: normal; }
+.closing-light.section {
+  background: #F2F4F7;
+  color: #091629;
+  padding-block: clamp(40px, 4vw, 64px);
+}
+.closing-light .section-header { margin-bottom: 28px; }
+.closing-light .section-header h2 {
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.25;
+  max-width: none;
+}
+.closing-light .eyebrow { color: #246DA8; }
+.closing-light .closing-list { border-top: 1px solid #D4CFC3; }
+.closing-light .closing-actions { margin-top: 28px; }
+.closing-light .btn-primary { color: #091629; }
+.closing-light .btn-primary:hover { color: #fff; }
+.closing-light .btn-ghost { color: #091629; border-color: #091629; }
+.closing-light .btn-ghost:hover { color: #F4F6F9; background: #091629; }
+.disease-evidence .study-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 72px;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #D4CFC3;
+  align-items: center;
+}
+.disease-evidence .study-year,
+.disease-evidence .study-doi {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: #246DA8;
+}
+.disease-evidence .study-title { font-size: 16px; line-height: 1.4; text-wrap: pretty; }
+.disease-evidence .study-meta {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: #586577;
+  margin-top: 6px;
+}
+.disease-evidence .study-doi { text-align: right; white-space: nowrap; }
+.about-timeline .timeline-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 32px;
+  padding: 16px 0;
+  border-bottom: 1px solid #D4CFC3;
+  align-items: baseline;
+}
+.about-timeline .timeline-year { font-size: 22px; font-weight: 500; color: #246DA8; }
+.about-timeline .timeline-description { font-size: 16px; line-height: 1.5; }
+
 .footer {
-  background: var(--ink);
+  background: #091629;
   color: #C2C9D4;
-  padding: 80px 0 32px;
+  padding: 48px 0 32px;
   margin-top: 0;
 }
 .footer .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 40px;
-  margin-bottom: 64px;
+  margin-bottom: 40px;
 }
 @media (max-width: 900px) { .footer .footer-grid { grid-template-columns: 1fr 1fr; } }
 .footer h6 {
@@ -807,23 +906,33 @@ p { margin: 0; }
   border-radius: 999px;
 }
 
-/* Press logos placeholder */
+/* Compact press mentions, aligned with the closing CTA. */
+.home-testimonial.section { padding-bottom: 40px; }
+.home-press { padding-bottom: 38px; }
+.press-label { margin-bottom: 22px; }
 .press-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1px;
-  background: var(--rule);
-  border-block: 1px solid var(--rule);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
 }
-@media (max-width: 800px) { .press-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) { .press-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 650px) { .press-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .press-cell {
-  background: var(--bg);
-  padding: 32px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  padding: 18px 10px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
   text-align: center;
-  font-family: var(--f-mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
   color: var(--fg-muted);
 }
 
@@ -1838,12 +1947,13 @@ p { margin: 0; }
   .perf-table-row { min-width: 460px; }
 
   /* About timeline — stack year above description */
-  .timeline-row {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    padding: 28px 0 !important;
+  .about-timeline .timeline-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 0;
   }
-  .timeline-year { font-size: clamp(36px, 9vw, 52px) !important; }
+  .about-timeline .timeline-year { font-size: 22px; }
+  .disease-evidence .study-doi { text-align: left; }
 
   /* Evidence table — stack to title-led single column */
   .evidence-row {

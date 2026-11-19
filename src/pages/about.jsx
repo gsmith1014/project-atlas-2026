@@ -109,9 +109,9 @@ export function AboutPage() {
         ))}
       </Section>
 
-      <Section dark>
-        <SectionHeader eyebrow={<span style={{ color: '#98A2B3' }}>Our timeline</span>} title={<span style={{ color: '#F4F6F9' }}>Nine years. One mission.</span>} />
-        <div style={{ borderTop: '1px solid #1F2A3D' }}>
+      <Section className="closing-light about-timeline">
+        <SectionHeader eyebrow="Our timeline" title="Nine years. One mission." />
+        <div className="closing-list">
           {[
             ['2017', 'Analytics 4 Life named one of FierceMedTech\'s Fierce 15.'],
             ['2018', 'Research agreement with Johnson & Johnson (Actelion) for PH diagnostics.'],
@@ -122,9 +122,9 @@ export function AboutPage() {
             ['2025', 'FDA 510(k) submitted for PCWP (HF) indication.'],
             ['2026', 'CorVista and Mayo Clinic announce new collaboration for next gen PH diagnostics'],
           ].map(([y, d], i) => (
-            <div key={i} className="timeline-row" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, padding: '32px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'baseline', color: '#F4F6F9' }}>
-              <div className="display timeline-year" style={{ fontSize: 'clamp(48px, 5vw, 76px)', color: '#F4F6F9', letterSpacing: '-0.04em' }}>{y}</div>
-              <div style={{ fontSize: 22, lineHeight: 1.3, color: '#C8D0DC', maxWidth: '52ch' }}>{d}</div>
+            <div key={i} className="timeline-row">
+              <div className="timeline-year">{y}</div>
+              <div className="timeline-description">{d}</div>
             </div>
           ))}
         </div>

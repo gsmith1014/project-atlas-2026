@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Brand, NavA, navTo } from './components.jsx';
-import { EmailSignup } from './signup.jsx';
 
-// Develop Hub is reachable through the CorVista VPN.
-const CUSTOMER_HUB_URL = 'https://hub-research-pd.corvista.cc/';
+// Public build-time setting; preserve the existing research destination as fallback.
+const CUSTOMER_HUB_URL = import.meta.env.VITE_CUSTOMER_HUB_URL || 'https://hub-research-pd.corvista.cc/';
 
 function TechMenu({ page }) {
   const [open, setOpen] = useState(false);
@@ -168,11 +167,6 @@ export function Footer() {
             <p style={{ color: '#98A2B3', maxWidth: 320, fontSize: 14, lineHeight: 1.5 }}>
               The world's most comprehensive front-line cardiovascular test. Built to find potential disease earlier — at the point of care.
             </p>
-            <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
-              <a href="#contact" onClick={(e) => { e.preventDefault(); navTo('contact'); }} className="btn btn-primary" style={{ padding: '10px 18px', fontSize: 14 }}>
-                Request a demo<span className="arrow">→</span>
-              </a>
-            </div>
           </div>
           <div>
             <h6>Product</h6>
@@ -193,10 +187,7 @@ export function Footer() {
           <div>
             <h6>Connect</h6>
             <a href="https://www.linkedin.com/company/corvista-health" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <div style={{ paddingTop: 4 }}>
-              <div style={{ fontSize: 14, color: '#C2C9D4', paddingBottom: 2 }}>Email updates</div>
-              <EmailSignup />
-            </div>
+            <a href="mailto:info@corvista.com">info@corvista.com</a>
           </div>
         </div>
         <div style={{ padding: '16px 0', borderTop: '1px solid #1F2A3D', fontSize: 12, color: '#7A8899', lineHeight: 1.6 }}>
@@ -205,8 +196,8 @@ export function Footer() {
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} CorVista Health, Inc. — All rights reserved.</span>
           <div style={{ display: 'flex', gap: 32 }}>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <NavA to="privacy">Privacy</NavA>
+            <NavA to="terms">Terms</NavA>
             <a href="#">Accessibility</a>
           </div>
         </div>

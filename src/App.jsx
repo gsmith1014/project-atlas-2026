@@ -11,6 +11,7 @@ import { NewsPage } from './pages/news.jsx';
 import { ContactPage } from './pages/contact.jsx';
 import { ReimbursementPage } from './pages/reimbursement.jsx';
 import { ReferencesPage } from './pages/references.jsx';
+import { LegalPage } from './pages/legal.jsx';
 
 const TWEAK_DEFAULTS = {
   heroVariant: 'editorial',
@@ -53,6 +54,8 @@ function getPage(slug, sub, tweaks) {
     case 'contact': return <ContactPage />;
     case 'reimbursement': return <ReimbursementPage />;
     case 'references': return <ReferencesPage />;
+    case 'privacy': return <LegalPage type="privacy" />;
+    case 'terms': return <LegalPage type="terms" />;
     default: return <HomePage tweaks={tweaks} />;
   }
 }

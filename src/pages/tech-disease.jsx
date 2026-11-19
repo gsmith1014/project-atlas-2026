@@ -199,27 +199,24 @@ function DiseasePage({ d, activeKey }) {
         </div>
       </Section>
 
-      <Section dark>
-        <SectionHeader
-          eyebrow={<span style={{ color: '#98A2B3' }}>The evidence</span>}
-          title={<span style={{ color: '#F4F6F9' }}>Validated in peer-reviewed studies.</span>}
-        />
-        <div style={{ borderTop: '1px solid #1F2A3D' }}>
+      <Section className="closing-light disease-evidence">
+        <SectionHeader eyebrow="The evidence" title="Validated in peer-reviewed studies." />
+        <div className="closing-list">
           {STUDIES.filter(s => s.cat === activeKey).map((s, i) => (
-            <div key={i} className="study-row" style={{ display: 'grid', gridTemplateColumns: '52px 1fr 180px', gap: 28, padding: '24px 0', borderBottom: '1px solid #1F2A3D', alignItems: 'center', color: '#F4F6F9' }}>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8' }}>{s.y}</div>
+            <div key={i} className="study-row">
+              <div className="study-year">{s.y}</div>
               <div>
-                <div style={{ fontSize: 17, lineHeight: 1.3, letterSpacing: '-0.01em', textWrap: 'pretty' }}>{s.title}</div>
-                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: '#98A2B3', marginTop: 6 }}>{s.journal} · {s.meta}{s.n ? ` · ${s.n}` : ''}</div>
+                <div className="study-title">{s.title}</div>
+                <div className="study-meta">{s.journal} · {s.meta}{s.n ? ` · ${s.n}` : ''}</div>
               </div>
               {s.doi
-                ? <a href={s.doi} target="_blank" rel="noopener noreferrer" className="study-n" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, color: '#5BAFE8', textAlign: 'right', textDecoration: 'none' }}>DOI →</a>
+                ? <a href={s.doi} target="_blank" rel="noopener noreferrer" className="study-doi">DOI →</a>
                 : <div className="study-n" />}
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 56, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-          <NavA to="evidence" className="btn">Read the full evidence base<span className="arrow">{'→'}</span></NavA>
+        <div className="closing-actions">
+          <NavA to="evidence" className="btn btn-primary">Read the full evidence base<span className="arrow">{'→'}</span></NavA>
           <NavA to="contact" className="btn btn-ghost">Request a demo<span className="arrow">{'→'}</span></NavA>
         </div>
       </Section>
