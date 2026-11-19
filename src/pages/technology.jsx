@@ -253,6 +253,41 @@ export function TechnologyPage() {
           Coverage estimate based on AHA 2026 statistics for non-arrhythmia cardiovascular disease presentations.
         </div>
       </Section>
+
+      <Section dark>
+        <div className="row row-2" style={{ gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+          <div>
+            <Eyebrow><span style={{ color: '#5BAFE8' }}>Built on A4L technology</span></Eyebrow>
+            <h2 style={{ color: '#F4F6F9', marginTop: 20, fontSize: 'clamp(28px, 3.2vw, 46px)', letterSpacing: '-0.025em', lineHeight: 1.1 }}>
+              Interested in building the next cardiovascular product?
+            </h2>
+            <p style={{ color: '#C8D0DC', fontSize: 16, lineHeight: 1.72, marginTop: 20, maxWidth: '44ch' }}>
+              The CorVista platform is powered by the Analytics for Life cardiovascular data infrastructure — 3,300+ mapped features, 95+ issued patents, and a 10,000-patient dataset validated against invasive reference standards. That same platform is available to partners in consumer health, medtech, and clinical research.
+            </p>
+            <div style={{ marginTop: 32, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+              <button
+                className="btn btn-primary"
+                onClick={() => navTo('analytics-for-life')}
+              >
+                Explore the A4L platform<span className="arrow">→</span>
+              </button>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, background: 'rgba(60,80,120,.35)', border: '1px solid rgba(60,80,120,.35)' }}>
+            {[
+              { val: '3,300+', label: 'Cardiovascular features mapped' },
+              { val: '95+',    label: 'Issued patents' },
+              { val: '10K+',   label: 'Patients in dataset' },
+              { val: '3',      label: 'FDA-cleared algorithms' },
+            ].map(item => (
+              <div key={item.val} style={{ background: '#0D1829', padding: '28px 24px' }}>
+                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 'clamp(24px,2.4vw,36px)', fontWeight: 700, color: '#5BAFE8', letterSpacing: '-0.02em', lineHeight: 1 }}>{item.val}</div>
+                <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#7A8899', marginTop: 10, lineHeight: 1.4 }}>{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
     </div>
   );
 }

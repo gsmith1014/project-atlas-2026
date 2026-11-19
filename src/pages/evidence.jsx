@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eyebrow, Section, SectionHeader, Tabs, NavA, Stat } from '../components.jsx';
+import { Eyebrow, Section, SectionHeader, Tabs, NavA, Stat, navTo } from '../components.jsx';
 
 export const STUDIES = [
   // 2026
@@ -102,6 +102,47 @@ export function EvidencePage() {
               {s.doi ? <a href={s.doi} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--f-mono)', fontSize: 12, textAlign: 'right' }} className="ilink evidence-doi">DOI →</a> : <div />}
             </div>
           ))}
+        </div>
+      </Section>
+
+      <Section>
+        <div style={{ borderTop: '2px solid var(--blue)', paddingTop: 48, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+          <div>
+            <Eyebrow>Open to partners</Eyebrow>
+            <h2 style={{ marginTop: 20, fontSize: 'clamp(28px,3vw,44px)', letterSpacing: '-0.025em', lineHeight: 1.1, maxWidth: '20ch' }}>
+              This research record is the foundation of an open platform.
+            </h2>
+            <p style={{ color: 'var(--fg-muted)', fontSize: 16, lineHeight: 1.72, marginTop: 20, maxWidth: '48ch' }}>
+              The 30+ publications, 11,000+ patients, and three FDA clearances shown here were produced on the Analytics for Life cardiovascular data platform — 3,300+ mapped features, 95+ issued patents, validated against invasive reference standards. Academic researchers, medtech developers, and consumer health companies can build on the same foundation.
+            </p>
+            <div style={{ marginTop: 32, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+              <button className="btn btn-primary" onClick={() => navTo('analytics-for-life')}>
+                Explore the A4L platform<span className="arrow">→</span>
+              </button>
+              <a href="mailto:info@corvista.com?subject=Research%20collaboration%20inquiry" style={{ fontFamily: 'var(--f-sans)', fontSize: 14, color: 'var(--fg-muted)', textDecoration: 'none' }}>
+                Research inquiry →
+              </a>
+            </div>
+          </div>
+          <div>
+            <div style={{ background: 'var(--paper)', border: '1px solid var(--rule)', padding: '32px 36px' }}>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--mid)', marginBottom: 24 }}>Available to partners</div>
+              {[
+                { label: 'Full cardiovascular feature dataset', desc: '3,300+ features per test, structured and annotated' },
+                { label: 'AI model development', desc: 'Train on 10,000+ patients with invasive ground-truth labels' },
+                { label: 'IP licensing', desc: '95+ issued patents across the full technology stack' },
+                { label: 'Co-development programs', desc: 'From concept to FDA-cleared application' },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 16, padding: '16px 0', borderTop: '1px solid var(--rule)', alignItems: 'flex-start' }}>
+                  <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--blue)', flexShrink: 0, marginTop: 5 }} />
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>{item.label}</div>
+                    <div style={{ fontSize: 13, color: 'var(--fg-muted)', marginTop: 3, lineHeight: 1.5 }}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Section>
 
