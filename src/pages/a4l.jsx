@@ -2,6 +2,76 @@ import React, { useEffect, useRef } from 'react';
 import { navTo } from '../components.jsx';
 import './a4l.css';
 
+/* ── RADAR CHART ─────────────────────────────────────────────────────────── */
+/* Values: 6-axis polar, scale ±0.3. Axes match PHLEX/PHGEX feature families. */
+const RADAR_AXES = [
+  { lines: ['Hemodynamics'],          n: 39,  θ:  Math.PI / 2         },
+  { lines: ['Cardiac', 'Dynamics'],   n: 22,  θ:  Math.PI / 6         },
+  { lines: ['Ventricular', 'Repol.'], n: 29,  θ: -Math.PI / 6         },
+  { lines: ['Respiration'],           n: 24,  θ: -Math.PI / 2         },
+  { lines: ['Ventricular', 'Depol.'], n: 74,  θ: -5 * Math.PI / 6     },
+  { lines: ['Atrial', 'Conduction'],  n: 29,  θ:  5 * Math.PI / 6     },
+];
+// Reference profiles estimated from PHLEX/PHGEX validation (Intel.-Based Med. 2026)
+const TP_REF  = [ 0.30,  0.27, -0.18, -0.30, -0.26,  0.28]; // True positive
+const TN_REF  = [ 0.08,  0.10,  0.12, -0.08, -0.08,  0.18]; // True negative
+const PT_A    = [ 0.26,  0.22, -0.14, -0.28, -0.22,  0.26]; // Patient A — aligns with TP
+const PT_B    = [ 0.30,  0.19,  0.10, -0.12, -0.28,  0.26]; // Patient B — mixed signature
+
+function A4LRadar({ patient, patientLabel, size = 290 }) {
+  const cx = size / 2, cy = size / 2, r = size * 0.30;
+  const lpad = size * 0.20;
+
+  function pt(ai, v) {
+    const ax = RADAR_AXES[ai];
+    return { x: cx + (v / 0.3) * r * Math.cos(ax.θ), y: cy - (v / 0.3) * r * Math.sin(ax.θ) };
+  }
+  function poly(vals) {
+    return vals.map((v, i) => { const p = pt(i, v); return `${p.x.toFixed(1)},${p.y.toFixed(1)}`; }).join(' ');
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} style={{ overflow: 'visible' }}>
+        {/* Grid rings at 0.1, 0.2, 0.3 */}
+        {[1/3, 2/3, 1].map((f, i) => (
+          <circle key={i} cx={cx} cy={cy} r={f * r} fill="none" stroke="rgba(60,90,160,.28)" strokeWidth="0.75" />
+        ))}
+        {/* Spokes */}
+        {RADAR_AXES.map((ax, i) => {
+          const p = { x: cx + r * Math.cos(ax.θ), y: cy - r * Math.sin(ax.θ) };
+          return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="rgba(60,90,160,.32)" strokeWidth="0.75" />;
+        })}
+        {/* Outer reference boundary */}
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,80,60,.28)" strokeWidth="1" strokeDasharray="4 3" />
+        {/* True Negative */}
+        <polygon points={poly(TN_REF)} fill="rgba(0,210,100,.06)" stroke="rgba(0,210,100,.65)" strokeWidth="1.5" strokeLinejoin="round" />
+        {/* True Positive */}
+        <polygon points={poly(TP_REF)} fill="rgba(255,176,48,.07)" stroke="rgba(255,176,48,.7)" strokeWidth="1.5" strokeLinejoin="round" />
+        {/* Test patient */}
+        <polygon points={poly(patient)} fill="rgba(0,180,255,.11)" stroke="#00C8FF" strokeWidth="2.2" strokeLinejoin="round" />
+        {/* Axis labels */}
+        {RADAR_AXES.map((ax, i) => {
+          const lx = cx + (r + lpad * 0.55) * Math.cos(ax.θ);
+          const ly = cy - (r + lpad * 0.55) * Math.sin(ax.θ);
+          const anchor = Math.cos(ax.θ) > 0.3 ? 'start' : Math.cos(ax.θ) < -0.3 ? 'end' : 'middle';
+          const lh = 11, numLines = ax.lines.length + 1;
+          const y0 = ly - (numLines * lh) / 2 + lh * 0.75;
+          return (
+            <g key={i}>
+              {ax.lines.map((ln, li) => (
+                <text key={li} x={lx} y={y0 + li * lh} textAnchor={anchor} fontSize="8.5" fill="rgba(196,212,244,.8)" fontFamily="'Space Mono',monospace">{ln}</text>
+              ))}
+              <text x={lx} y={y0 + ax.lines.length * lh} textAnchor={anchor} fontSize="7.5" fill="rgba(122,144,200,.5)" fontFamily="'Space Mono',monospace">N={ax.n}</text>
+            </g>
+          );
+        })}
+      </svg>
+      <div style={{ fontFamily: "'Space Grotesk',system-ui,sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--fg)', marginTop: 14, letterSpacing: '-0.01em' }}>{patientLabel}</div>
+    </div>
+  );
+}
+
 export function A4LPage() {
   const phaseRef = useRef(null);
   const featureRef = useRef(null);
@@ -410,6 +480,34 @@ export function A4LPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* PATIENT INSIGHT */}
+      <section className="a4l-insight-band" id="a4l-insight">
+        <div className="a4l-inner">
+          <div className="a4l-reveal">
+            <div className="a4l-slabel">Patient-level insight</div>
+            <h2 className="a4l-insight-h2">From 3,300 features to a single patient's physiological signature.</h2>
+            <p className="a4l-insight-body">The feature map isn't only a training asset. At test time, the system profiles each patient across six cardiovascular feature families — showing which domains drive the prediction and how the individual signature compares to reference populations. Two patients, same test, different stories.</p>
+          </div>
+          <div className="a4l-radar-row a4l-reveal" style={{transitionDelay:'.1s'}}>
+            <A4LRadar patient={PT_A} patientLabel="Patient A" />
+            <A4LRadar patient={PT_B} patientLabel="Patient B" />
+          </div>
+          <div className="a4l-radar-legend a4l-reveal" style={{transitionDelay:'.18s'}}>
+            {[
+              { color: 'rgba(255,176,48,.85)', label: 'True positive reference' },
+              { color: 'rgba(0,210,100,.75)',  label: 'True negative reference' },
+              { color: '#00C8FF',              label: 'Test patient' },
+            ].map(({ color, label }) => (
+              <div key={label} className="a4l-radar-legend-item">
+                <svg width="28" height="10"><line x1="2" y1="5" x2="26" y2="5" stroke={color} strokeWidth="2.5" /></svg>
+                {label}
+              </div>
+            ))}
+          </div>
+          <p className="a4l-insight-cite">Feature family profiles from PHLEX / PHGEX validation · Intelligence-Based Medicine, 2026</p>
         </div>
       </section>
 
