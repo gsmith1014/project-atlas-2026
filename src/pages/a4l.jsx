@@ -209,8 +209,8 @@ export function A4LPage() {
           <div className="a4l-reveal" style={{transitionDelay:'.1s'}}>
             <div className="a4l-intro-body">
               <p>Standard diagnostics capture a fraction of what the cardiovascular system communicates. We went deeper — capturing oscilloimpedance (OVG) and photoplethysmography (PPG) simultaneously at 8,000 Hz, reconstructing each heartbeat as a 3D geometric object in phase space, and extracting 3,300+ features per test.</p>
-              <p>The result is the most precise non-invasive cardiovascular dataset ever assembled — validated against invasive reference standards, proven in <strong>FDA-cleared clinical applications</strong>, and protected by <strong>95+ patents across 40+ invention families</strong>.</p>
-              <p>Whether you're building a consumer wellness product, a medical monitoring device, or a clinical research platform, this is the data infrastructure that can accelerate your development by years.</p>
+              <p>The result is one of the world's leading databases of high-fidelity, synchronous multimodal cardiovascular data — 3,300+ features per recording, validated against invasive reference standards, and still growing with every clinical deployment. Proven in <strong>FDA-cleared clinical applications</strong>. Protected by <strong>95+ patents across 40+ invention families</strong>.</p>
+              <p>Whether you're training ML models on cardiovascular phenotypes, building a monitoring device that needs a precision calibration reference, or developing a consumer health product that understands what biosignals actually mean — this is the data infrastructure that can accelerate your development by years.</p>
             </div>
           </div>
         </div>
@@ -289,7 +289,7 @@ export function A4LPage() {
               <div className="a4l-stake-items">
                 <div className="a4l-stake-item"><strong>Cardiovascular intelligence for the wrist</strong>Your device captures biosignals. We tell you what they mean — from resting hemodynamics to cardiovascular indicators that no current wearable has mapped. If you're building for sport or daily wellness, there's signal here you're not yet using.</div>
                 <div className="a4l-stake-item"><strong>Longitudinal health tracking</strong>Our feature map enables day-over-day cardiovascular trending that goes far beyond heart rate or SpO2 — the kind of depth that changes how consumers understand their own health over time.</div>
-                <div className="a4l-stake-item"><strong>Population-level research</strong>Interested in cardiovascular phenotyping at scale? A partnership with A4L provides the feature vocabulary and the IP to build meaningful cardiovascular intelligence into consumer products.</div>
+                <div className="a4l-stake-item"><strong>Precision calibration reference</strong>The CorVista capture platform delivers invasive-grade cardiovascular resolution from a resting fingertip sensor. For teams building continuous monitoring products, it offers something rare: a high-fidelity reference against which daily wearable signals can be calibrated and given real clinical grounding.</div>
               </div>
             </div>
             <div className="a4l-stake-col">
@@ -347,8 +347,8 @@ export function A4LPage() {
       <section className="a4l-stats-band" id="a4l-data">
         <div className="a4l-inner">
           <div className="a4l-stats-top a4l-reveal">
-            <h2 className="a4l-stats-h2">The numbers behind the map.</h2>
-            <div className="a4l-slabel" style={{alignSelf:'flex-end'}}>Research dataset · 2017–2025</div>
+            <h2 className="a4l-stats-h2">The numbers behind the map — and the dataset behind the numbers.</h2>
+            <div className="a4l-slabel" style={{alignSelf:'flex-end'}}>Active research dataset · 2017–present</div>
           </div>
           <div className="a4l-stats-grid a4l-reveal" style={{transitionDelay:'.08s'}}>
             <div className="a4l-stat-cell">
@@ -422,7 +422,7 @@ export function A4LPage() {
             <div className="a4l-slabel">Why partner with us</div>
             <h2 className="a4l-mission-h2">What took a decade to build,<br />we can bring to your product <em>in months.</em></h2>
             <p className="a4l-mission-p">Building cardiovascular intelligence from scratch requires years of clinical study design, data collection, signal processing research, algorithm development, and regulatory navigation. We have already done all of it.</p>
-            <p className="a4l-mission-p">The A4L cardiovascular feature map is not a finished product — <strong>it is a platform</strong>. The 3,300 features, the 95+ patents, the 10,000-patient dataset, the FDA-cleared algorithms: all of these are starting points for what a partnership with A4L can produce. The question is what you want to build.</p>
+            <p className="a4l-mission-p">The A4L cardiovascular feature map is not a finished product — <strong>it is a platform</strong>. The 3,300 features, the 95+ patents, a growing database of high-fidelity synchronous cardiovascular data that may be among the most comprehensive of its kind, the FDA-cleared algorithms: all of these are starting points for what a partnership with A4L can produce. The question is what you want to build.</p>
             <div style={{marginTop:40, display:'flex', gap:14, flexWrap:'wrap'}}>
               <a href="#a4l-corvista" className="a4l-btn-p">See what a partnership produces →</a>
               <a href="#a4l-ip" className="a4l-btn-g">IP portfolio</a>
@@ -472,7 +472,7 @@ export function A4LPage() {
           <div className="a4l-pct-grid a4l-reveal" style={{transitionDelay:'.08s'}}>
             <div className="a4l-pct-card">
               <div className="a4l-pct-cat">Consumer health &amp; wearables</div>
-              <p className="a4l-pct-desc">Integrating cardiovascular intelligence into a fitness tracker, wellness app, or consumer biosensor? A4L's feature map offers a depth of physiological signal no current wearable uses. Let's talk about what that could mean for your product.</p>
+              <p className="a4l-pct-desc">Integrating cardiovascular intelligence into a fitness tracker, wellness app, or consumer biosensor? A4L's feature map offers signal depth no current wearable uses — and the CorVista capture platform can serve as a precision calibration reference for continuous monitoring devices. Let's talk about what that could mean for your product.</p>
               <a href="mailto:info@corvista.com?subject=Partnership%20inquiry%3A%20Consumer%20health%20%26%20wearables" className="a4l-pct-link">Start a conversation →</a>
             </div>
             <div className="a4l-pct-card">
