@@ -178,8 +178,8 @@ export function A4LPage() {
           <div className="a4l-hero-rule" aria-hidden="true" />
           <div className="a4l-hero-row">
             <p className="a4l-hero-desc">
-              A decade of research. 3,300+ physiological features validated against invasive ground truth in 10,000+ patients. 95+ patents protecting the IP.{' '}
-              <strong>Analytics for Life built the world's most comprehensive cardiovascular feature map — and now we're bringing it to partners who want to build the next generation of cardiovascular applications.</strong>
+              A decade of research. 3,300+ features. 10,000+ patients. 95+ patents.{' '}
+              <strong>Now available to partners building the next generation of cardiovascular products.</strong>
             </p>
             <div className="a4l-hero-actions">
               <a href="#a4l-contact" className="a4l-btn-p">Explore partnership →</a>
@@ -208,9 +208,9 @@ export function A4LPage() {
           </div>
           <div className="a4l-reveal" style={{transitionDelay:'.1s'}}>
             <div className="a4l-intro-body">
-              <p>Standard diagnostics capture a fraction of what the cardiovascular system communicates. We went deeper — capturing oscilloimpedance (OVG) and photoplethysmography (PPG) simultaneously at 8,000 Hz, reconstructing each heartbeat as a 3D geometric object in phase space, and extracting 3,300+ features per test.</p>
-              <p>The result is one of the world's leading databases of high-fidelity, synchronous multimodal cardiovascular data — 3,300+ features per recording, validated against invasive reference standards, and still growing with every clinical deployment. Proven in <strong>FDA-cleared clinical applications</strong>. Protected by <strong>95+ patents across 40+ invention families</strong>.</p>
-              <p>Whether you're training ML models on cardiovascular phenotypes, building a monitoring device that needs a precision calibration reference, or developing a consumer health product that understands what biosignals actually mean — this is the data infrastructure that can accelerate your development by years.</p>
+              <p>We capture OVG and PPG simultaneously at 8,000 Hz — reconstructing each heartbeat as a 3D geometric object and extracting 3,300+ cardiovascular features per test from a resting fingertip sensor.</p>
+              <p>The result is one of the world's leading databases of high-fidelity, synchronous multimodal cardiovascular data. Growing with every deployment. Validated against invasive reference standards. <strong>Proven in FDA-cleared applications</strong> and protected by <strong>95+ patents across 40+ invention families</strong>.</p>
+              <p>Whether you're training models on cardiovascular phenotypes, developing a monitoring device that needs a precision calibration reference, or building consumer health products with real physiological depth — this is the foundation that accelerates development by years.</p>
             </div>
           </div>
         </div>
@@ -229,7 +229,7 @@ export function A4LPage() {
                 <polyline points="2,24 8,24 12,13 16,32 20,10 24,38 28,16 32,30 36,24 44,24 46,24" fill="none" stroke="#00C8FF" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round"/>
               </svg>
               <div className="a4l-step-title">Dual-modal signal capture</div>
-              <div className="a4l-step-body">OVG and PPG recorded simultaneously from a resting fingertip sensor. 8,000 Hz across both channels. 270 heartbeats per test, every waveform timestamped to microsecond precision. The highest-resolution cardiovascular biosignal capture outside a catheterization lab.</div>
+              <div className="a4l-step-body">OVG and PPG recorded simultaneously from a resting fingertip sensor. 8,000 Hz. 270 heartbeats. The highest-resolution cardiovascular biosignal capture outside a catheterization lab.</div>
               <div className="a4l-step-metric">
                 <div className="a4l-step-mval">8,000 Hz</div>
                 <div className="a4l-step-mlabel">sampling rate · 160× clinical ECG</div>
@@ -246,7 +246,7 @@ export function A4LPage() {
                 <circle cx="14" cy="30" r="2" fill="#FFB030" opacity=".9"/>
               </svg>
               <div className="a4l-step-title">Phase-space reconstruction</div>
-              <div className="a4l-step-body">Each heartbeat is transformed from a time-domain waveform into a 3D geometric object via Cardiac Phase Space Tomography (CPST). The orbit shape simultaneously encodes electrical, mechanical, and hemodynamic cardiovascular variables.</div>
+              <div className="a4l-step-body">Each heartbeat becomes a 3D geometric object via Cardiac Phase Space Tomography (CPST). The orbit shape simultaneously encodes electrical, mechanical, and hemodynamic variables.</div>
               <div className="a4l-step-metric">
                 <div className="a4l-step-mval">270 beats</div>
                 <div className="a4l-step-mlabel">reconstructed per test</div>
@@ -266,7 +266,7 @@ export function A4LPage() {
                 <circle cx="28" cy="23" r="1.8" fill="#FFB030" opacity=".6"/>
               </svg>
               <div className="a4l-step-title">Feature extraction + AI training</div>
-              <div className="a4l-step-body">3,300+ geometric and spectral features extracted per orbit. Machine learned models trained on 10,000+ patients with invasive reference standards. The same feature map that drives FDA-cleared diagnostics is available as a development platform for partners.</div>
+              <div className="a4l-step-body">3,300+ features extracted per orbit. Models trained on 10,000+ patients with invasive reference labels. The same feature map that drives FDA-cleared diagnostics — available to partners as a development platform.</div>
               <div className="a4l-step-metric">
                 <div className="a4l-step-mval">3,300+</div>
                 <div className="a4l-step-mlabel">cardiovascular features per test</div>
@@ -287,25 +287,25 @@ export function A4LPage() {
             <div className="a4l-stake-col">
               <div className="a4l-stake-name"><div className="a4l-stake-dot" />Consumer health &amp; wearables</div>
               <div className="a4l-stake-items">
-                <div className="a4l-stake-item"><strong>Cardiovascular intelligence for the wrist</strong>Your device captures biosignals. We tell you what they mean — from resting hemodynamics to cardiovascular indicators that no current wearable has mapped. If you're building for sport or daily wellness, there's signal here you're not yet using.</div>
-                <div className="a4l-stake-item"><strong>Longitudinal health tracking</strong>Our feature map enables day-over-day cardiovascular trending that goes far beyond heart rate or SpO2 — the kind of depth that changes how consumers understand their own health over time.</div>
-                <div className="a4l-stake-item"><strong>Precision calibration reference</strong>The CorVista capture platform delivers invasive-grade cardiovascular resolution from a resting fingertip sensor. For teams building continuous monitoring products, it offers something rare: a high-fidelity reference against which daily wearable signals can be calibrated and given real clinical grounding.</div>
+                <div className="a4l-stake-item"><strong>Cardiovascular intelligence for the wrist</strong>Your device captures biosignals. We tell you what they mean — indicators no current wearable has mapped.</div>
+                <div className="a4l-stake-item"><strong>Longitudinal health tracking</strong>Day-over-day cardiovascular trending that goes far beyond heart rate or SpO2.</div>
+                <div className="a4l-stake-item"><strong>Precision calibration reference</strong>The CorVista capture platform provides a high-fidelity reference against which continuous monitoring devices can be calibrated and given real clinical grounding.</div>
               </div>
             </div>
             <div className="a4l-stake-col">
               <div className="a4l-stake-name"><div className="a4l-stake-dot" />Medical devices &amp; diagnostics</div>
               <div className="a4l-stake-items">
-                <div className="a4l-stake-item"><strong>Build on FDA-validated IP</strong>If you're developing a monitoring or diagnostic device, our cardiovascular feature map — and the 95+ patents protecting it — can be the science behind your product. CorVista demonstrates what's possible.</div>
-                <div className="a4l-stake-item"><strong>Monitoring applications</strong>Post-surgical monitoring, chronic disease management, remote patient monitoring — the same phase-space technology that detects disease can track its course longitudinally with precision unavailable elsewhere.</div>
-                <div className="a4l-stake-item"><strong>Accelerated development</strong>Our 95+ patents and 20+ peer-reviewed publications create a credentialed starting point. Partner with a team that has already navigated cardiovascular AI through regulatory clearance.</div>
+                <div className="a4l-stake-item"><strong>Build on FDA-validated IP</strong>Our feature map and 95+ patents can be the science behind your product. CorVista demonstrates what's possible.</div>
+                <div className="a4l-stake-item"><strong>Monitoring applications</strong>Post-surgical, chronic disease, remote — the same phase-space precision that detects disease can track its course longitudinally.</div>
+                <div className="a4l-stake-item"><strong>Accelerated development</strong>Skip years of regulatory navigation. We've already been there — and cleared three indications.</div>
               </div>
             </div>
             <div className="a4l-stake-col">
               <div className="a4l-stake-name"><div className="a4l-stake-dot" />Research &amp; clinical applications</div>
               <div className="a4l-stake-items">
-                <div className="a4l-stake-item"><strong>Cardiovascular phenotyping</strong>The most precise non-invasive cardiovascular phenotyping available. For drug development programs, population studies, or biomarker discovery that requires measuring cardiovascular physiology at a depth standard diagnostics cannot reach.</div>
-                <div className="a4l-stake-item"><strong>Custom algorithm development</strong>Build ML models on the most feature-rich cardiovascular dataset ever assembled: 3,300+ features, 10,000+ patients, invasive ground-truth labels. Train on our data or bring your own problem.</div>
-                <div className="a4l-stake-item"><strong>Novel endpoint development</strong>Define and validate cardiovascular endpoints for clinical trials. Our feature map offers measurement precision — and the validation record — that positions novel endpoints for regulatory acceptance.</div>
+                <div className="a4l-stake-item"><strong>Cardiovascular phenotyping</strong>The most precise non-invasive cardiovascular phenotyping available — for drug development, population studies, or biomarker discovery.</div>
+                <div className="a4l-stake-item"><strong>Custom algorithm development</strong>3,300+ features, 10,000+ patients, invasive ground-truth labels. Train on our data or bring your own problem.</div>
+                <div className="a4l-stake-item"><strong>Novel endpoint development</strong>Define and validate cardiovascular endpoints with measurement precision and a validation record regulators recognize.</div>
               </div>
             </div>
           </div>
@@ -318,7 +318,7 @@ export function A4LPage() {
           <div className="a4l-reveal">
             <div className="a4l-slabel">Intellectual property</div>
             <h2 className="a4l-ip-h2"><em>95+ patents.</em><br />The deepest IP portfolio in cardiovascular AI.</h2>
-            <p className="a4l-ip-sub">A decade of algorithmic innovation, signal processing research, and clinical validation has produced a patent portfolio that covers the full stack — from hardware sensing through mathematical transformation to AI-driven diagnostics. This IP is both a moat and a partnership asset: it protects what we've built, and anchors what we can build with you.</p>
+            <p className="a4l-ip-sub">A portfolio spanning the full stack — from hardware sensing through mathematical transformation to AI diagnostics. It protects what we've built, and anchors what we can build with you.</p>
           </div>
           <div className="a4l-reveal" style={{transitionDelay:'.1s'}}>
             <div className="a4l-ip-grid">
@@ -389,8 +389,7 @@ export function A4LPage() {
             <div className="a4l-slabel">The structured data map</div>
             <h2 className="a4l-map-h2">Every feature the heart can express — <em>captured, structured, yours to build on.</em></h2>
             <div className="a4l-map-body">
-              <p>The 3,300+ features span every domain of cardiovascular physiology. <strong>Geometric features</strong> of the phase-space orbit — topology, curvature, volume, trajectory. <strong>Spectral features</strong> across frequency bands. <strong>Temporal features</strong> characterizing inter-beat dynamics. <strong>Morphological features</strong> of raw waveforms.</p>
-              <p>No single feature predicts disease or describes health. The power is in the relationships — how features cluster, correlate, and combine in a patient population. Machine learning finds those relationships. The map is what makes training on them possible. For a partner, this is a decade of work you do not need to repeat.</p>
+              <p>The 3,300+ features span every domain: <strong>geometric</strong> properties of the phase-space orbit, <strong>spectral</strong> decomposition across frequency bands, <strong>temporal</strong> inter-beat dynamics, and <strong>morphological</strong> waveform metrics. No single feature predicts disease. The power is in the relationships — and the map is what makes finding them possible. For a partner, this is a decade of work you do not need to repeat.</p>
             </div>
             <div className="a4l-feature-list">
               <div className="a4l-feature-item">
@@ -421,8 +420,8 @@ export function A4LPage() {
           <div className="a4l-mission-content a4l-reveal">
             <div className="a4l-slabel">Why partner with us</div>
             <h2 className="a4l-mission-h2">What took a decade to build,<br />we can bring to your product <em>in months.</em></h2>
-            <p className="a4l-mission-p">Building cardiovascular intelligence from scratch requires years of clinical study design, data collection, signal processing research, algorithm development, and regulatory navigation. We have already done all of it.</p>
-            <p className="a4l-mission-p">The A4L cardiovascular feature map is not a finished product — <strong>it is a platform</strong>. The 3,300 features, the 95+ patents, a growing database of high-fidelity synchronous cardiovascular data that may be among the most comprehensive of its kind, the FDA-cleared algorithms: all of these are starting points for what a partnership with A4L can produce. The question is what you want to build.</p>
+            <p className="a4l-mission-p">Building cardiovascular AI from scratch means years of data collection, signal processing research, algorithm development, and regulatory navigation. We have already done all of it.</p>
+            <p className="a4l-mission-p">The A4L platform — 3,300 features, 95+ patents, a growing database that may be among the most comprehensive of its kind, three FDA-cleared algorithms — is a starting point. <strong>The question is what you want to build.</strong></p>
             <div style={{marginTop:40, display:'flex', gap:14, flexWrap:'wrap'}}>
               <a href="#a4l-corvista" className="a4l-btn-p">See what a partnership produces →</a>
               <a href="#a4l-ip" className="a4l-btn-g">IP portfolio</a>
@@ -437,7 +436,7 @@ export function A4LPage() {
           <div className="a4l-reveal">
             <div className="a4l-slabel">Proof of concept</div>
             <h3 className="a4l-cv-h3">CorVista Health is what a partnership with A4L produces.</h3>
-            <p className="a4l-cv-body">CorVista Health is the first product built on the A4L cardiovascular data platform — three FDA-cleared AI algorithms for the most common cardiovascular diseases, deployed at the point of primary care. The same technology stack, the same feature map, the same IP. Available to build on.</p>
+            <p className="a4l-cv-body">Three FDA-cleared AI algorithms. Deployed at the point of primary care. The same technology stack, the same feature map, the same IP — available to build on.</p>
             <button className="a4l-btn-g" style={{fontSize:13}} onClick={() => navTo('technology')}>See the CorVista platform →</button>
           </div>
           <div className="a4l-cv-inds a4l-reveal" style={{transitionDelay:'.1s'}}>
@@ -467,22 +466,22 @@ export function A4LPage() {
           <div className="a4l-reveal">
             <div className="a4l-slabel">Work with us</div>
             <h2 className="a4l-pct-h2">Ready to explore a partnership?</h2>
-            <p className="a4l-pct-sub">The A4L research team works with organizations across consumer health, academic research, and regulated medtech. Whether your interest is in collaboration, dataset access, algorithm development, or IP licensing, reach out and we'll connect you with the right people.</p>
+            <p className="a4l-pct-sub">Consumer health, academic research, regulated medtech. Tell us what you're building — we'll connect you with the right people.</p>
           </div>
           <div className="a4l-pct-grid a4l-reveal" style={{transitionDelay:'.08s'}}>
             <div className="a4l-pct-card">
               <div className="a4l-pct-cat">Consumer health &amp; wearables</div>
-              <p className="a4l-pct-desc">Integrating cardiovascular intelligence into a fitness tracker, wellness app, or consumer biosensor? A4L's feature map offers signal depth no current wearable uses — and the CorVista capture platform can serve as a precision calibration reference for continuous monitoring devices. Let's talk about what that could mean for your product.</p>
+              <p className="a4l-pct-desc">A4L's feature map offers signal depth no current wearable uses. The CorVista capture platform can also serve as a calibration reference for continuous monitoring devices.</p>
               <a href="mailto:info@corvista.com?subject=Partnership%20inquiry%3A%20Consumer%20health%20%26%20wearables" className="a4l-pct-link">Start a conversation →</a>
             </div>
             <div className="a4l-pct-card">
               <div className="a4l-pct-cat">Academic &amp; research institutions</div>
-              <p className="a4l-pct-desc">Collaborating on cardiovascular research, co-developing study methodologies, or seeking access to the cardiovascular feature dataset for a clinical or population study? The A4L team actively collaborates with academic partners.</p>
+              <p className="a4l-pct-desc">Research collaboration, dataset access, co-developed study methodologies. The A4L team actively works with academic partners.</p>
               <a href="mailto:info@corvista.com?subject=Research%20collaboration%20inquiry" className="a4l-pct-link">Research inquiry →</a>
             </div>
             <div className="a4l-pct-card">
               <div className="a4l-pct-cat">Medtech &amp; regulated healthcare</div>
-              <p className="a4l-pct-desc">Developing a regulated monitoring or diagnostic device? A4L offers IP licensing, co-development partnerships, and algorithm development services built on a patent portfolio and FDA clearance record that takes years to replicate from scratch.</p>
+              <p className="a4l-pct-desc">IP licensing, co-development, and algorithm services built on a patent portfolio and FDA clearance record that takes years to replicate from scratch.</p>
               <a href="mailto:info@corvista.com?subject=IP%20licensing%20and%20partnership%20inquiry" className="a4l-pct-link">Licensing inquiry →</a>
             </div>
           </div>
