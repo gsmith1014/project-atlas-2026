@@ -254,7 +254,7 @@ export function A4LPage() {
           <div className="a4l-hero-rule" aria-hidden="true" />
           <div className="a4l-hero-row">
             <p className="a4l-hero-desc">
-              A decade of research. 3,300+ features. 10,000+ patients. 95+ patents.{' '}
+              A decade of research. 10,000+ patients. 95+ patents.{' '}
               <strong>Now available to partners building the next generation of cardiovascular products.</strong>
             </p>
             <div className="a4l-hero-actions">
