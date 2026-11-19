@@ -12,11 +12,13 @@ const RADAR_AXES = [
   { lines: ['Ventricular', 'Depol.'], n: 74,  θ: -5 * Math.PI / 6     },
   { lines: ['Atrial', 'Conduction'],  n: 29,  θ:  5 * Math.PI / 6     },
 ];
-// Reference profiles estimated from PHLEX/PHGEX validation (Intel.-Based Med. 2026)
-const TP_REF  = [ 0.30,  0.27, -0.18, -0.30, -0.26,  0.28]; // True positive
-const TN_REF  = [ 0.08,  0.10,  0.12, -0.08, -0.08,  0.18]; // True negative
-const PT_A    = [ 0.26,  0.22, -0.14, -0.28, -0.22,  0.26]; // Patient A — aligns with TP
-const PT_B    = [ 0.30,  0.19,  0.10, -0.12, -0.28,  0.26]; // Patient B — mixed signature
+// Reference profiles from PHLEX/PHGEX validation (Intel.-Based Med. 2026)
+// Order: Hemodynamics, Cardiac Dynamics, Ventricular Repolarization,
+//        Respiration, Ventricular Depolarization, Atrial Conduction
+const TP_REF  = [ 0.25,  0.26,  0.17,  0.22,  0.25,  0.26]; // True positive
+const TN_REF  = [ 0.12,  0.10,  0.20,  0.08,  0.08,  0.17]; // True negative — elevated VR
+const PT_A    = [ 0.24,  0.24,  0.15,  0.21,  0.23,  0.25]; // Patient A — closely tracks TP
+const PT_B    = [ 0.29,  0.24,  0.21,  0.12,  0.28,  0.29]; // Patient B — mixed: high Hemo/VD/AC, elevated VR, low Resp
 
 function A4LRadar({ patient, patientLabel, size = 290 }) {
   const cx = size / 2, cy = size / 2, r = size * 0.30;
@@ -48,6 +50,10 @@ function A4LRadar({ patient, patientLabel, size = 290 }) {
         <polygon points={poly(TN_REF)} fill="rgba(0,210,100,.06)" stroke="rgba(0,210,100,.65)" strokeWidth="1.5" strokeLinejoin="round" />
         {/* True Positive */}
         <polygon points={poly(TP_REF)} fill="rgba(255,176,48,.07)" stroke="rgba(255,176,48,.7)" strokeWidth="1.5" strokeLinejoin="round" />
+        {/* Test patient band */}
+        {[0.90, 0.95, 0.98].map((s, i) => (
+          <polygon key={i} points={poly(patient.map(v => v * s))} fill="none" stroke="rgba(0,200,255,0.18)" strokeWidth="1.2" strokeLinejoin="round" />
+        ))}
         {/* Test patient */}
         <polygon points={poly(patient)} fill="rgba(0,180,255,.11)" stroke="#00C8FF" strokeWidth="2.2" strokeLinejoin="round" />
         {/* Axis labels */}
